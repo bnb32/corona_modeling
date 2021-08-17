@@ -9,7 +9,7 @@ import io
 from scipy import interpolate
 import progressbar
 
-api_key='AIzaSyAP2OeLuXst4yOAfK8ayKoeslE4GXUeNsg'
+api_key=''
 
 def interp_mat(M,old_domain,new_domain,rows,cols):
     lons=np.linspace(old_domain[0],old_domain[1],M.shape[1])
