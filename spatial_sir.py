@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import os
-from models import sir_spatial_rk,sir_spatial_euler
+from models import sim_sir_spatial
 
 # initial conditions
 total_population=100
@@ -56,21 +56,7 @@ for i in range(dimx):
         P[i,j]=Pop(i,j,dr)
         S[i,j]=P[i,j]-I[i,j]
 
-
-def sim_sir_spatial(S,I,R,P,beta,gamma,r0,dr,dt,n_days,beta_decay=None):
-    s,i,r=[S],[I],[R]
-    for days in range(int(n_days/dt)):
-        S,I,R=sir_spatial_rk(S,I,R,P,beta,gamma,r0,dr,dt)
-        #S,I,R=sir_spatial_euler(S,I,R,P,beta,gamma,r0,dr,dt)
-        if beta_decay:
-            beta*=(1-beta_decay)
-        s.append(S)
-        i.append(I)
-        r.append(R)
-    s,i,r=np.array(s),np.array(i),np.array(r)
-    return s,i,r
-
-s,i,r=sim_sir_spatial(S,I,R,P,beta,gamma,r0,dr,dt,n_days,beta_decay=beta_decay)
+s,i,r=sim_sir_spatial(S,I,R,P,beta,gamma,r0,dr,dr,dt,n_days,beta_decay=beta_decay)
 
 cmap=plt.cm.jet
 os.system('rm -f ./gif/*.png')

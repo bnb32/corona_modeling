@@ -1,6 +1,9 @@
+from covid.postprocessing import load_data,get_colormap,get_map
+from covid.models import sim_sir_spatial
+from covid.misc import interp_mat
+
 import numpy as np
 import matplotlib.pyplot as plt
-from model_functions import load_data,get_colormap,interp_mat,get_map,sim_sir_spatial
 import urllib.request as urllib2
 from PIL import Image
 import os

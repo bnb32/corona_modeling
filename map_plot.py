@@ -1,10 +1,11 @@
+from covid.postprocessing import load_data,latlontopixels,pixelstolatlon,get_map,get_colormap,interp_pop
+
 from PIL import Image
 from matplotlib.colors import LinearSegmentedColormap
 import urllib.parse, urllib.request
 import io
 from math import log, exp, tan, atan, pi, ceil
 import matplotlib.pyplot as plt
-from model_functions import load_data,latlontopixels,pixelstolatlon,get_map,get_colormap,interp_pop
 import numpy as np
 
 #data file
