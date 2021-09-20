@@ -1,6 +1,8 @@
 import os
 
-os.environ['LAMBDA_TASK_ROOT'] = '../data/'
+os.environ['COVID_REPO_DIR'] = '/home/ec2-user/environment/corona_modeling'
+os.environ['CORONA_FIG_DIR'] = f'{os.environ["COVID_REPO_DIR"]}/figs/'
+os.environ['LAMBDA_TASK_ROOT'] = f'{os.environ["COVID_REPO_DIR"]}/data/'
 covid_uri="https://covidtracking.com/api/states/daily?state={0}"
 
 google_api_key=''

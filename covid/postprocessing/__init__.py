@@ -1,3 +1,7 @@
+import covid.environment as env
+from covid.misc import get_logger
+
+import os
 import matplotlib.pyplot as plt
 from datetime import date, timedelta
 import numpy as np
@@ -8,6 +12,8 @@ from math import log, exp, tan, atan, pi
 import matplotlib.pyplot as plt
 import io
 from os import path
+
+logger = get_logger()
 
 def plot_infected(I):
     
@@ -29,9 +35,9 @@ def plot_infected(I):
 def plot_infected(I,state,county=None):
     
     if county==None:
-        filename='../../web/'+state.replace(' ','')+'_infected.png'
+        filename=f'{os.environ["CORONA_FIG_DIR"]}'+state.replace(' ','')+'_infected.png'
     else:
-        filename='../../web/'+state.replace(' ','')+'_'+county.replace(' ','')+'_infected.png'
+        filename=f'{os.environ["CORONA_FIG_DIR"]}'+state.replace(' ','')+'_'+county.replace(' ','')+'_infected.png'
     dates=[]
     for i in range(len(I)):
         day=str((date.today()+timedelta(days=i)).strftime('%m-%d'))
@@ -51,6 +57,7 @@ def plot_infected(I,state,county=None):
     else:    
         plt.title("%s-%s"%(state,county))
 
+    os.system(f'mkdir -p {os.environ["CORONA_FIG_DIR"]}')
     plt.savefig(filename)
 
 def get_colormap():
@@ -185,7 +192,7 @@ def plot_comparison_SIR(model):
     init_vals=model.init_vals
     data=model.data
     sim=model.results
-    plot_name = path.join(gettempdir(), 'comp_plot.png')
+    plot_name = path.join(os.environ['COVID_FIG_DIR'], 'comp_plot.png')
     dates=data['dates']
     data_length=len(dates)
 
@@ -225,7 +232,7 @@ def plot_comparison_SEAIQHRD(model):
     init_vals=model.init_vals
     data=model.data
     sim=model.results
-    plot_name = path.join(gettempdir(), 'comp_plot.png')
+    plot_name = path.join(os.environ['COVID_FIG_DIR'], 'comp_plot.png')
     dates=data['dates']
     data_length=len(dates)
 

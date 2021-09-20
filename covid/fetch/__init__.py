@@ -1,5 +1,5 @@
 import covid.environment as env
-from covid import get_logger
+from covid.misc import get_logger
 
 from datetime import date, timedelta, datetime
 from os import environ, path, system

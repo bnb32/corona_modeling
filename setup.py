@@ -8,5 +8,8 @@ setup(
       description='various utilities for modeling covid',
       packages=['covid'],
       package_dir={'covid':'./covid'},
-      install_requires=[]
+      install_requires=['numpy',
+                        'scipy',
+                        'progressbar',
+                        'matplotlib']
 )      

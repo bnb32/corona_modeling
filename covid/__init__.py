@@ -1,43 +1,8 @@
 import covid.models
 import covid.fetch
 import covid.postprocessing as display
+from covid.misc import get_logger   
 
-from datetime import date, datetime, timedelta
-from os import environ, path
-from tempfile import gettempdir
-import json
-import numpy as np
-import matplotlib.pyplot as plt
-import urllib.request
-from scipy import stats
-import logging
-from decimal import Decimal
-from sys import stdout
-
-logger = logging.getLogger()
-logger.setLevel(logging.INFO)
-sh = logging.StreamHandler(stdout)
-formatter = logging.Formatter('[%(levelname)s] %(asctime)s %(message)s')
-sh.setFormatter(formatter)
-logger.addHandler(sh)
-logging.getLogger('boto').setLevel(logging.WARN)
-logging.getLogger('boto3').setLevel(logging.WARN)
-logging.getLogger('botocore').setLevel(logging.WARN)
-logging.getLogger('s3transfer').setLevel(logging.WARN)
-logging.getLogger('urllib3').setLevel(logging.WARN)
-
-def get_logger():
-    return logger
-
-def json_handler(o):
-    if isinstance(o, datetime):
-        return o.isoformat()
-    elif isinstance(o, Decimal):
-        return float(o)
-    else:
-        logger.warning('Unknown Type in json_handler: ' + str(o))
-        return str(o)
-    
 logger = get_logger()
 
 def run_comp_and_plot(state,county=None,
@@ -62,6 +27,7 @@ def run_comp_and_plot(state,county=None,
 
     logger.info('Running run_comp_and_plot')
     
+    '''
     model = models.SEAIQHRD(state,county,
                             n_days,n_substeps,n_ramp,
                             Tea,Tai,Tir,Tiq,Tid,
@@ -74,8 +40,6 @@ def run_comp_and_plot(state,county=None,
                        n_days,n_substeps,n_ramp,
                        Tir,Sd,Sd_delay,detection_rate,
                        data_days,refit)
-    
-    '''
     
     #get data and initial values
     model.initialize()    
@@ -93,7 +57,7 @@ def run_comp_and_plot(state,county=None,
     print("Data difference: %s" %err)
     
     #plot results
-    #comp_plot_path = display.plot_comparison_SIR(model)
-    comp_plot_path = display.plot_comparison_SEAIQHRD(model)
+    comp_plot_path = display.plot_comparison_SIR(model)
+    #comp_plot_path = display.plot_comparison_SEAIQHRD(model)
     
     return comp_plot_path
