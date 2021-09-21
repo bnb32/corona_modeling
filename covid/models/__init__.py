@@ -17,6 +17,9 @@ class CompartmentalModel:
         self.compartment_names = {compartment_names[i]:i for i in range(self.compartment_number)}
         self.compartment_index = {i:compartment_names[i] for i in range(self.compartment_number)}
         self.compartment_series = {}
+        self.parameter_index = {}
+        self.initial_values = None
+        self.fit_compartment = None
         
         if parameters is None:
             self.params = {}
@@ -67,23 +70,37 @@ class CompartmentalModel:
     def last_compartment_value(self,compartment):
         return self.compartment_series[compartment][-1]
 
-    def fit_parameters(self,data,lower_bounds,upper_bounds):
+    def fit_parameters(self,data,lower_bounds,upper_bounds,initial_parameters):
+        
+        self.parameter_index = {k:v for k,v in enumerate(initial_parameters.keys())}
+        lower_bounds = [lower_bounds[k] for k in self.parameter_index.values()]
+        upper_bounds = [upper_bounds[k] for k in self.parameter_index.values()]
+        initial_parameters = [initial_parameters[k] for k in self.parameter_index.values()]
+
         days = [i for i in range(len(data))]
         popt,pconv = curve_fit(self.model_fit_function,
                                days,data,method='trf',
                                bounds=(lower_bounds,
-                                       upper_bounds))
+                                       upper_bounds),
+                               p0=initial_parameters)
+        for k,v in self.parameter_index.items():
+            self.params[v] = popt[k]
         return popt
 
-    def model_fit_function(self,t,**kwargs):
-        for k,v in kwargs.items():
-            self.params[k] = v
-        results = self.run_model(len(t))
-        return results
+    def model_fit_function(self,t,*args):
+        for i,v in enumerate(args):
+            self.params[self.parameter_index[i]] = v
+        results = self.run_model(len(t)-1)
+        return results[self.fit_compartment]
 
-    def initialize(self,initial_values):
+    def set_initial_values(self,initial_values):
+        self.initial_values = initial_values
+    
+    def initialize(self,initial_values=None):
+        if initial_values is not None:
+            self.set_initial_values(initial_values)
         for name in self.compartment_names:
-            self.compartment_series[name] = [initial_values[name]]
+            self.compartment_series[name] = [self.initial_values[name]]
 
     def model_eqns(self,last_compartments):
         
@@ -119,12 +136,15 @@ class CompartmentalModel:
 
     def run_model(self,n_days):
         
+        self.initialize()
+        self.define_transfer_matrix()
+        
         last_compartments = [self.compartment_series[name][0] for name in self.compartment_names]
         for day in range(n_days):
             for t in range(self.params['n_substeps']):
                 last_compartments=self.rk_step(last_compartments)
-                for i,name in enumerate(self.compartment_names):
-                    self.compartment_series[name].append(last_compartments[i])
+            for i,name in enumerate(self.compartment_names):
+                self.compartment_series[name].append(last_compartments[i])
 
         return self.compartment_series
 
@@ -134,8 +154,12 @@ class SIR(CompartmentalModel):
     
     def define_parameters(self):
 
-        self.params['infection_rate'] = 3*14.0
+        self.params['R0'] = 3.0
         self.params['recovery_rate'] = 1.0/14.0
+        self.params['infection_rate'] = self.params['R0']*self.params['recovery_rate']
+        self.fit_compartment = 'I'
+        self.parameter_index = {0:'infection_rate',
+                                1:'recovery_rate'}
 
     def define_transfer_matrix(self):
         
@@ -156,8 +180,9 @@ class SIRV(CompartmentalModel):
     
     def define_parameters(self):
 
-        self.params['infection_rate'] = 3*14.0
+        self.params['R0'] = 3.0
         self.params['recovery_rate'] = 1.0/14.0
+        self.params['infection_rate'] = self.params['R0']*self.params['recovery_rate']
         self.params['vaccination_rate'] = 1.0/7.0
 
     def define_transfer_matrix(self):
@@ -180,8 +205,9 @@ class SIRD(CompartmentalModel):
     
     def define_parameters(self):
 
-        self.params['infection_rate'] = 3*14.0
+        self.params['R0'] = 3.0
         self.params['recovery_rate'] = 1.0/14.0
+        self.params['infection_rate'] = self.params['R0']*self.params['recovery_rate']
         self.params['death_rate'] = 1.0/14.0
 
     def define_transfer_matrix(self):
@@ -204,8 +230,9 @@ class Spatial_SIR(CompartmentalModel):
         
     def define_parameters(self):
 
-        self.params['infection_rate'] = 3*14.0
+        self.params['R0'] = 3.0
         self.params['recovery_rate'] = 1.0/14.0
+        self.params['infection_rate'] = self.params['R0']*self.params['recovery_rate']
         
         self.params['grid_size_x'] = 20
         self.params['grid_size_y'] = 20
@@ -255,9 +282,10 @@ class SEIR(CompartmentalModel):
     
     def define_parameters(self):
         
-        self.params['infection_rate'] = 3*14.0
+        self.params['R0'] = 3.0
+        self.params['recovery_rate'] = 1.0/14.0
+        self.params['infection_rate'] = self.params['R0']*self.params['recovery_rate']
         self.params['latency_rate'] = 1.0/7.0
-        self.params['recovery_rate'] = 1.0/7.0
 
     def define_transfer_matrix(self):
 
@@ -280,7 +308,8 @@ class SEAIQHRD(CompartmentalModel):
        
     def define_parameters(self):
 
-        self.params['infection_rate'] = 3*14.0
+        self.params['R0'] = 3.0
+        self.params['infection_rate'] = self.params['R0']/14.0
         
         self.params['E_to_A_rate'] = 1.0/4.0
         
