@@ -1,5 +1,5 @@
 import covid.environment as env
-from covid.misc import get_logger
+from covid.misc import get_logger, params, int_to_date, date_to_int
 
 from datetime import date, timedelta, datetime
 from os import environ, path, system
@@ -8,6 +8,7 @@ import numpy as np
 import urllib.request
 from scipy import stats
 from tempfile import gettempdir
+import pandas as pd
 
 logger = get_logger()
 
@@ -23,87 +24,71 @@ orders_path = path.join(environ['LAMBDA_TASK_ROOT'], 'sah_order_dates.json')
 api_key=env.google_api_key
 covid_uri=env.covid_uri
 
-class initial_values:
-    pass
+class Dataset:
+    def __init__(self,parameters=None):
+        self.uri = env.covid_uri
 
-with open(pop_path, 'rt') as pop_json:
-    pop_data = json.load(pop_json)
-
-with open(states_path, 'rt') as states_json:
-    us_states = json.load(states_json)
-
-with open(orders_path, 'rt') as orders_json:
-    order_dates = json.load(orders_json)
-
-
-def download_data_file(case_file):    
-    url="https://covidtracking.com/api/v1/states/daily.json"
-    if not path.exists(case_file):
-        system('rm -rf %s/case_data*'%(gettempdir()))
-        logger.info("Downloading case data: %s"%(case_file))
-        v=urllib.request.urlopen(url).read()
-        j=json.loads(v)
-        with open(case_file, 'w') as outfile:
-            json.dump(j,outfile)
-    else:
-        logger.info("Case data already downloaded: %s"%(case_file))
- 
-download_data_file(cases_path)
-with open(cases_path, 'rt') as data_json:
-    case_data = json.load(data_json)       
-
-def latlon_to_place(api_key, lat, lon):
-    uri = 'https://maps.googleapis.com/maps/api/geocode/json?latlng={Lat},{Lon}&key={ApiKey}'.format(
-        ApiKey=api_key,
-        Lat=lat,
-        Lon=lon,
-    )
-    
-    logger.info('Retrieving GeoCoding for ({0}, {1})...'.format(lat, lon))
-    
-    v=urllib.request.urlopen(uri).read()
-    logger.info(v)
-    j=json.loads(v)
-    
-    components=j['results'][0]['address_components']
-    country=state=county=None
-    for c in components:
-        if "country" in c['types']:
-            country=c['long_name']
-        if "administrative_area_level_1" in c['types']:
-            state=c['long_name']
-        if "administrative_area_level_2" in c['types']:
-            county=c['long_name']
-
-    return county,state,country        
-
-def format_date(d):
-    return datetime.strptime(str(d),'%Y%m%d').date()
-
-def location_to_population(state,county=None):
-    if county==None: county=state
-    N=pop_data[state][county] 
-    return N
-    
-def location_to_data(params):
-    
-    abbrev=us_states[params.state]
-    data={}
-    
-    I_total=np.array([case_data[i].get("positive",0) for i in range(len(case_data)) if case_data[i]['state']==abbrev])
+        with open(pop_path, 'rt') as pop_json:
+            self.pop_data = json.load(pop_json)
+        with open(states_path, 'rt') as states_json:
+            self.us_states = json.load(states_json)
+        with open(orders_path, 'rt') as orders_json:
+            self.order_dates = json.load(orders_json)
         
-    I_new=np.array([case_data[i].get("positiveIncrease",0) for i in range(len(case_data)) if case_data[i]['state']==abbrev])
+        if parameters is None:
+            self.params = {}
+            self.define_parameters()
+        else:
+            self.params = parameters
+            self.params['N'] = self.get_pop()
+    
+    def compartment_map(self,data):    
+        self.data_dict = {'S':[],
+                          'E':[],
+                          'A':[],
+                          'Q':[],
+                          'I':['positive'],
+                          'H':['hospitalizedCurrently'],
+                          'R':['recovered','hospitalizedDischarged'],
+                          'D':['death']}
+        return self.data_dict
+        
+    def define_parameters(self):
 
-    D=np.array([case_data[i].get("death",0) for i in range(len(case_data)) if case_data[i]['state']==abbrev])
+        self.params['state'] = 'Washington'
+        self.params['county'] = 'Washington'
+        self.params['n_days'] = 7
     
-    R=np.array([case_data[i].get("recovered",0) for i in range(len(case_data)) if case_data[i]['state']==abbrev])
+    def get_data(self):
+        url="https://covidtracking.com/api/v1/states/daily.json"
+        data = pd.read_json(url)
+        data = data[(data['state']==self.us_states[self.params['state']])]
+        min_date = int_to_date(max(data['date'].values))-timedelta(days=self.params['n_days'])
+        self.data = data[(data['date'] > date_to_int(min_date))]
+        return self.data
+
+    def get_pop(self):
+        if self.params['county']==None: 
+            self.county=state
+        return self.pop_data[self.params['state']][self.params['county']] 
+ 
+def select_data(case_data):
     
-    H_total=np.array([case_data[i].get("hospitalizedCumulative",0) for i in range(len(case_data)) if case_data[i]['state']==abbrev])
+    data = {}
+
+    I_total=case_data["positive"].values
+        
+    I_new=case_data["positiveIncrease"].values
+
+    D=case_data["death"].values
     
-    H=np.array([case_data[i].get("hospitalizedCurrently",0) for i in range(len(case_data)) if case_data[i]['state']==abbrev])
+    R=case_data["recovered"].values 
+    
+    H_total=case_data["hospitalizedCumulative"].values
+    
+    H=case_data["hospitalizedCurrently"].values
      
-    dates=np.array([case_data[i].get("date",0) for i in range(len(case_data)) if case_data[i]['state']==abbrev])
-    dates=[format_date(x) for x in dates]
+    dates=[int_to_date(x) for x in case_data["date"].values]
 
     I_total[np.where(I_total==None)[0]]=0
     data['I_cum']=I_total[::-1]
@@ -135,96 +120,80 @@ def refine_data(data,params):
     #approx detected active cases
     tmp=(data['I_act']-data['H'])
 
-    data['I_act']=data['I_act']/params.detection_rate
-    data['I_cum']=data['I_cum']/params.detection_rate
+    data['I_act']=data['I_act']/params['detection_rate']
+    data['I_cum']=data['I_cum']/params['detection_rate']
     
-    data['I_new']=data['I_new']/params.detection_rate
+    data['I_new']=data['I_new']/params['detection_rate']
     
-    data['R']=data['R']/params.detection_rate
+    data['R']=data['R']/params['detection_rate']
     
     #approx undetected cases
-    data['I_total']=tmp/params.detection_rate
+    data['I_total']=tmp/params['detection_rate']
     
-    data['A']=(data['I_total'])*params.rai/(1+params.rai)
+    data['A']=(data['I_total'])*params['A_to_I_ratio']/(1+params['A_to_I_ratio'])
 
+    data['E']=np.array([0]*len(data['A']))
     data['I']=np.array([0]*len(data['A']))
     data['Q']=np.array([0]*len(data['A']))
 
     for n in range(1,len(data['A'])):
-        data['I'][n]=data['I'][n-1]*(1-params.i_decay)+params.i_growth*data['A'][n-1]
+        data['I'][n]=data['I'][n-1]*(1-params['I_decay_rate'])+params['A_to_I_rate']*data['A'][n-1]
         if data['I'][n]<0: data['I'][n]=0
-        data['Q'][n]=data['Q'][n-1]*(1-params.q_decay)+params.q_growth*data['I'][n-1]
+        data['Q'][n]=data['Q'][n-1]*(1-params['Q_decay_rate'])+params['I_to_Q_rate']*data['I'][n-1]
         if data['Q'][n]<0: data['Q'][n]=0
         
     return data
 
 def data_to_initial_values(data,params):
-    v=initial_values()   
 
+    S = params.N-data['A'][-1]-data['I'][-1]-data['Q'][-1]
+    S += -data['E'][-1]-data['R'][-1]-data['D'][-1]-data['H'][-1]
     #initialize compartments
-    v.E=0
-    v.Q=data['Q'][-1]
-    v.R=data['R'][-1]
-    v.I=data['I'][-1]
-    v.A=data['A'][-1]
-    v.H=data['H'][-1]
-    v.D=data['D'][-1]
-    v.N=params.N
-    v.S=v.N-v.A-v.I-v.Q-v.E-v.R-v.D-v.H
+    initial_values = {'E':data['E'][-1],
+                      'Q':data['Q'][-1],
+                      'R':data['R'][-1],
+                      'I':data['I'][-1],
+                      'A':data['A'][-1],
+                      'H':data['H'][-1],
+                      'D':data['D'][-1],
+                      'S':S}
 
-    return v
+    return initial_values
 
 def data_to_rates(data,params):
     
     #death rate of symptomatic
-    r=initial_values()
+    r={}
     
     min_death_rate=0.001
-    r.death_rate=max((params.detection_rate*data['D'][-1]/(data['I_cum'][-1]/(1+params.rai)),min_death_rate))
-    r.pid=r.pqd=r.phd=r.death_rate
+    r['death_rate']=max((params['detection_rate']*data['D'][-1]/(data['I_cum'][-1]/(1+params['A_to_I_ratio'])),min_death_rate))
+    r['I_to_D_prob']=r['Q_to_D_prob']=r['H_to_D_prob']=r['death_rate']
 
     #hosp rate of symptomatic
     min_hosp_rate=0.001
-    r.hosp_rate=max((params.detection_rate*data['H_cum'][-1]/(data['I_cum'][-1]/(1+params.rai)),min_hosp_rate))
-    
-    r.pih=r.pqh=r.hosp_rate
+    r['hosp_rate']=max((params['detection_rate']*data['H_cum'][-1]/(data['I_cum'][-1]/(1+params['A_to_I_ratio'])),min_hosp_rate))
+    r['I_to_H_prob']=r['Q_to_H_prob']=r['hosp_rate']
 
     return r
 
-def location_to_cases(state):
-    url="https://covidtracking.com/api/states?state=%s"%(state)
-    v=urllib.request.urlopen(url).read()
-    j=json.loads(v)
-    return j["positive"]
-
-def location_to_ts(state):
-    url="https://covidtracking.com/api/states/daily?state=%s"%(state)
-    v=urllib.request.urlopen(url).read()
-    j=json.loads(v)
-    return j
-
-def location_to_doubling_time(state):
-    j=location_to_ts(state)
-    f_date=str(j[1]["date"])
-    l_date=str(j[0]["date"])
-    f_date=date(int(f_date[0:4]),int(f_date[4:6]),int(f_date[6:]))
-    l_date=date(int(l_date[0:4]),int(l_date[4:6]),int(l_date[6:]))
-    delta=l_date-f_date
-    days=delta.days
-    
-    Td=days/np.log2(j[0]["positive"]/j[1]["positive"])
+def doubling_time(case_data):
+    days=len(case_data)
+    Td=days/np.log2(case_data[-1]/case_data[0])
     return Td
 
-def location_to_population(state,county=None):
-    if county==None: county=state
-    N=pop_data[state][county]    
-    return N
-
-def latlon_to_place(lat,lon):
-    url="https://maps.googleapis.com/maps/api/geocode/json?"
-    url+="latlng=%s,%s&sensor=false&key=%s" %(lat,lon,api_key)
-    v=urllib.request.urlopen(url).read()
+def latlon_to_place(api_key, lat, lon):
+    uri = 'https://maps.googleapis.com/maps/api/geocode/json?latlng={Lat},{Lon}&key={ApiKey}'.format(
+        ApiKey=api_key,
+        Lat=lat,
+        Lon=lon,
+    )
+    
+    logger.info('Retrieving GeoCoding for ({0}, {1})...'.format(lat, lon))
+    
+    v=urllib.request.urlopen(uri).read()
+    logger.info(v)
     j=json.loads(v)
+    
     components=j['results'][0]['address_components']
     country=state=county=None
     for c in components:
@@ -234,4 +203,6 @@ def latlon_to_place(lat,lon):
             state=c['long_name']
         if "administrative_area_level_2" in c['types']:
             county=c['long_name']
+
     return county,state,country        
+

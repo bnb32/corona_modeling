@@ -10,6 +10,6 @@ Instantiate model `spatial_sir = Spatial_SIR()` and intialize using `spatial_sir
 
 Run model using `output = spatial_sir.run_model(<n_days>)`
 
-Plot output of specific compartment with `output[compartment_name]`
+Plot output of specific compartment with `output[<compartment_name>]`
 
 Can change model parameters with `spatial_sir.update_parameters(<params>)`

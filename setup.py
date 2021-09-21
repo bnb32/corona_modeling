@@ -11,5 +11,6 @@ setup(
       install_requires=['numpy',
                         'scipy',
                         'progressbar',
-                        'matplotlib']
+                        'matplotlib',
+                        'pandas']
 )      

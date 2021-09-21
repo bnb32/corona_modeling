@@ -21,8 +21,17 @@ logging.getLogger('botocore').setLevel(logging.WARN)
 logging.getLogger('s3transfer').setLevel(logging.WARN)
 logging.getLogger('urllib3').setLevel(logging.WARN)
 
+class params:
+    pass
+
 def get_logger():
     return logger
+
+def date_to_int(d):
+    return int(datetime.strftime(d,'%Y%m%d'))
+
+def int_to_date(d):
+    return datetime.strptime(str(d),'%Y%m%d').date()
 
 def json_handler(o):
     if isinstance(o, datetime):
@@ -146,11 +155,9 @@ def logistic_func(t,a,b,c,d,e):
 class initial_values:
     pass
 
-def cases_to_beta(data,params,init_vals):
+def cases_to_beta(data,params):
     
-    tmp=data['I_ref']
-    e_idx=params.Sd_delay 
-    popt,pconv=curve_fit(exp_func,[i for i in range(len(tmp[:e_idx]))],tmp[:e_idx])
+    popt,pconv=curve_fit(exp_func,[i for i in range(len(data))],data)
     
     params.R0=(popt[1]/params.gamma+1)
     params.beta=params.R0*params.gamma
@@ -158,21 +165,18 @@ def cases_to_beta(data,params,init_vals):
     return params
 
 def cases_to_intercepts(data,params):
-    vals=initial_values()
-    e_idx=params.Sd_delay
     
     vals={}
-    days=[i for i in range(len(data['dates'][:e_idx]))]
+    days=[i for i in range(len(data['date']))]
     for k,v in data.items():
         if k in ['S','E','A','I','Q','H','R','D']:
             try:
-                #popt,pconv=curve_fit(exp_func,days,
-                #                     v[:e_idx])
+                #popt,pconv=curve_fit(exp_func,days,v)
                 #intercept=popt[0]
 
             #except:
                 r=stats.linregress(days,
-                [np.log(x+1) for x in v[:e_idx]])
+                [np.log(x+1) for x in v])
                 intercept=np.exp(r.intercept)
             except:
                 pass

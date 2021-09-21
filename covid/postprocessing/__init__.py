@@ -15,23 +15,6 @@ from os import path
 
 logger = get_logger()
 
-def plot_infected(I):
-    
-    dates=[]
-    for i in range(len(I)):
-        day=str((date.today()+timedelta(days=i)).strftime('%m-%d'))
-        dates+=[day]
-    plt.plot(dates,I)
-    ax=plt.gca()
-    plt.xticks(rotation=60)
-    for i,label in enumerate(ax.get_xticklabels()): 
-        if i % int(len(I)/10):
-            label.set_visible(False)
-    plt.ylabel("Number Infected")
-    plt.xlabel("Date")
-
-    plt.savefig('test.png')
-
 def plot_infected(I,state,county=None):
     
     if county==None:
