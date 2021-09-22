@@ -15,33 +15,54 @@ from os import path
 
 logger = get_logger()
 
-def plot_infected(I,state,county=None):
-    
-    if county==None:
-        filename=f'{os.environ["CORONA_FIG_DIR"]}'+state.replace(' ','')+'_infected.png'
-    else:
-        filename=f'{os.environ["CORONA_FIG_DIR"]}'+state.replace(' ','')+'_'+county.replace(' ','')+'_infected.png'
+def plot_compartment_comparison(sim_data=None,raw_data=None,params=None,compartment=None):
+
+    fig = plt.figure()
+
+    plt.title(f'{params["state"]}')
+    plt.xlabel(f'days since {params["min_date"]}')
+
+    plt.plot(sim_data[compartment],label=f'{k} - simulation')
+    plt.plot(raw_data[compartment],label=f'{k} - data')
+
+    plt.legend()
+    filename = f'{os.environ["COVID_FIG_DIR"]}/{params["state"]}_{compartment}_comp_fig.png'
+    plt.savefig(filename)
+    print(f'Saved figure: {filename}')
+
+def plot_comparison(sim_data=None,raw_data=None,params=None):
+
+    fig = plt.figure()
+
+    plt.title(f'{params["state"]}')
+    plt.xlabel(f'days since {params["min_date"]}')
+
+    for k in sim_data:
+        plt.plot(sim_data[k],label=f'{k} - simulation')
+        plt.plot(raw_data[k],label=f'{k} - data')
+
+    plt.legend()
+    filename = f'{os.environ["COVID_FIG_DIR"]}/{params["state"]}_comp_fig.png'
+    plt.savefig(filename)
+    print(f'Saved figure: {filename}')
+
+def get_date_labels(n_days=None,min_date=None):
+
     dates=[]
-    for i in range(len(I)):
-        day=str((date.today()+timedelta(days=i)).strftime('%m-%d'))
+    for i in range(n_days):
+        day=str((min_date+timedelta(days=i)).strftime('%Y-%m-%d'))
         dates+=[day]
-    plt.plot(dates,I)
+    return dates
+
+def plot_date_labels(dates=None,data=None):
+
+    plt.plot(dates,data)
     ax=plt.gca()
     plt.xticks(rotation=60)
     
     for i,label in enumerate(ax.get_xticklabels()): 
-        if i % int(len(I)/10):
+        if i % int(len(data)/10):
             label.set_visible(False)
-    
-    plt.ylabel("Number Infected")
-    plt.xlabel("Date")
-    if county==None:
-        plt.title("%s"%(state))
-    else:    
-        plt.title("%s-%s"%(state,county))
-
-    os.system(f'mkdir -p {os.environ["CORONA_FIG_DIR"]}')
-    plt.savefig(filename)
 
 def get_colormap():
 
@@ -90,7 +111,6 @@ def get_map(domain):
     
     return im
 
-
 EARTH_RADIUS = 6378137
 EQUATOR_CIRCUMFERENCE = 2 * pi * EARTH_RADIUS
 INITIAL_RESOLUTION = EQUATOR_CIRCUMFERENCE / 256.0
@@ -109,7 +129,6 @@ def latlonrangetozoom(lat_min,lat_max,lon_min,lon_max):
     x_zoom = np.log2(640.0/(mx_max-mx_min)*INITIAL_RESOLUTION)
     y_zoom = np.log2(640.0/(my_max-my_min)*INITIAL_RESOLUTION)
     return np.min([int(x_zoom),int(y_zoom)])
-
 
 def latlontopixels(lat, lon, zoom):
     mx = (lon * ORIGIN_SHIFT) / 180.0
@@ -166,97 +185,6 @@ def plot_doubling_trend(dates,data,state):
     plt.ylabel("Doubling Time (days)")
     plt.xlabel("Date")
     plt.tight_layout()
-    plt.savefig('Td_trend.png')
+    plt.savefig(f'{os.environ["COVID_FIG_DIR"]}/Td_trend.png')
     plt.clf()
 
-
-def plot_comparison_SIR(model):
-    params=model.params
-    init_vals=model.init_vals
-    data=model.data
-    sim=model.results
-    plot_name = path.join(os.environ['COVID_FIG_DIR'], 'comp_plot.png')
-    dates=data['dates']
-    data_length=len(dates)
-
-    dates=[str((dates[0]+timedelta(days=i)).strftime('%m-%d-%y')) for i in range(len(sim['I']))]
-    dat_days=[i for i in range(len(data['I_ref']))]
-    sim_days=[i for i in range(len(sim['I']))]
-    
-    
-    plt.scatter(dat_days,data['I_ref'],color=(0,0,1),marker='x',label='Infections-Data')
-    
-    plt.plot(sim_days,sim['I'],color=(0,0,1),label='Infections-Sim')
- 
-    tick_step=max((1,int(len(sim_days)/10)-1))
-    plt.xticks(sim_days[0::tick_step],dates[0::tick_step],rotation=90)
-    
-    if params.county==None:
-        plt.title(params.state+' (R0=%s, Rf=%s)'%(float('%.3g' %(params.R0)),float('%.3g' %(params.Rf))))
-    else:    
-        plt.title(params.state+'-'+params.county+' (R0=%s, Rf=%s)'%(float('%.3g' %(params.R0)),float('%.3g' %(params.Rf))))
-    
-    ax=plt.gca()
-    ax.axvline(x=data_length-1,color='k')    
-    plt.grid(True)
-    
-    plt.legend()
-    plt.tight_layout()
-    
-    plt.savefig(plot_name)
-    logger.info("Saved plot as {0}".format(plot_name))
-    
-    plt.clf()
-
-    return plot_name
-
-def plot_comparison_SEAIQHRD(model):
-    params=model.params
-    init_vals=model.init_vals
-    data=model.data
-    sim=model.results
-    plot_name = path.join(os.environ['COVID_FIG_DIR'], 'comp_plot.png')
-    dates=data['dates']
-    data_length=len(dates)
-
-    dates=[str((dates[0]+timedelta(days=i)).strftime('%m-%d-%y')) for i in range(len(sim['I']))]
-    dat_days=[i for i in range(len(data['I_ref']))]
-    sim_days=[i for i in range(len(sim['I']))]
-    
-    #plt.scatter(dat_days,data['I']+data['Q']+data['A'],color=(0,0,1),marker='x', label='Infected-Data')
-    #plt.plot(sim_days,sim['I']+sim['Q']+sim['A'],color=(0,0,1),label='Infected-Sim')
-    
-    plt.scatter(dat_days,data['I']+data['Q'],color=(0,1,0),marker='x', label='I-Data')
-    plt.plot(sim_days,sim['I']+sim['Q'],color=(0,1,0),label='I-Sim')
-    
-    plt.scatter(dat_days,data['A'],color=(0,0,1),marker='x', label='A-Data')
-    
-    plt.plot(sim_days,sim['A'],color=(0,0,1),label='A-Sim')
-
-    plt.scatter(dat_days,data['H'],color=(1,0,1),marker='x',label='H-Data')
-    plt.plot(sim_days,sim['H'],color=(1,0,1),label='H-Sim')
-    
-    plt.scatter(dat_days,data['D'],color=(1,0,0),marker='x',label='D-Data')
-    
-    plt.plot(sim_days,sim['D'],color=(1,0,0),label='D-Sim')
-    tick_step=max((1,int(len(sim_days)/10)-1))
-    plt.xticks(sim_days[0::tick_step],dates[0::tick_step],rotation=90)
-    
-    if params.county==None:
-        plt.title(params.state+' (R0=%s, Rf=%s)'%(float('%.3g' %(params.R0)),float('%.3g' %(params.Rf))))
-    else:    
-        plt.title(params.state+'-'+params.county+' (R0=%s, Rf=%s)'%(float('%.3g' %(params.R0)),float('%.3g' %(params.Rf))))
-    
-    ax=plt.gca()
-    ax.axvline(x=data_length-1,color='k')    
-    plt.grid(True)
-    
-    plt.legend()
-    plt.tight_layout()
-    
-    plt.savefig(plot_name)
-    logger.info("Saved plot as {0}".format(plot_name))
-    
-    plt.clf()
-
-    return plot_name

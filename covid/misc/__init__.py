@@ -21,8 +21,8 @@ logging.getLogger('botocore').setLevel(logging.WARN)
 logging.getLogger('s3transfer').setLevel(logging.WARN)
 logging.getLogger('urllib3').setLevel(logging.WARN)
 
-class params:
-    pass
+def flatten(t):
+    return [item for sublist in t for item in sublist]
 
 def get_logger():
     return logger
@@ -32,6 +32,11 @@ def date_to_int(d):
 
 def int_to_date(d):
     return datetime.strptime(str(d),'%Y%m%d').date()
+
+def doubling_time(case_data):
+    days=len(case_data)
+    Td=days/np.log2(case_data[-1]/case_data[0])
+    return Td
 
 def json_handler(o):
     if isinstance(o, datetime):

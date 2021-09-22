@@ -1,44 +1,37 @@
-from covid.misc import laplacian, params
+from covid.misc import laplacian, flatten
 from scipy.optimize import curve_fit
-#, cases_to_intercepts, cases_to_infection_rate, vec_diff, get_infection_rate_ramp, cost_func
-#import covid.fetch as fetch
-
-
 import numpy as np
 
-#logger = get_logger()
-#parallel_execute=False
-#parallel_execute=True
-
 class CompartmentalModel:
+    """Super class for compartmental models
+       from which specific models like SIR
+       can be derived
+    """
+    
     def __init__(self,compartment_names,parameters=None):
         self.compartment_number = len(compartment_names)
         self.transfer_matrix = np.zeros((self.compartment_number,self.compartment_number),dtype=object)
         self.compartment_names = {compartment_names[i]:i for i in range(self.compartment_number)}
         self.compartment_index = {i:compartment_names[i] for i in range(self.compartment_number)}
         self.compartment_series = {}
-        self.parameter_index = {}
         self.initial_values = None
-        self.fit_compartment = None
+        self.fit_compartment = 'all'
+        self.model_params = []
+        self.params = {}
         
-        if parameters is None:
-            self.params = {}
-            self.define_parameters()
-        else:
-            self.params = parameters
-
         self.params['n_substeps'] = 20
         self.params['dt'] = 1.0/self.params['n_substeps']
+        self.define_parameters()
+        
+        if parameters is not None:
+            for k,v in parameters.items():
+                self.params[k] = v
 
         self.define_transfer_matrix()
 
     def define_parameters(self):
         return
 
-    def update_parameters(self,params):
-        self.params = params
-        self.define_transfer_matrix()
-    
     def define_transfer_matrix(self):
         return
 
@@ -59,6 +52,21 @@ class CompartmentalModel:
     def get_parameters(self):
         return
 
+    def get_parameters_from_data(self,data):
+        if self.fit_compartment == 'all':
+            input = flatten([list(data[name]) for name in self.compartment_names])
+        else:
+            input = data[self.fit_compartment]
+        lower_bounds = {k:0 for k in self.model_params}
+        upper_bounds = {k:np.inf for k in self.model_params}
+        initial_parameters = {k:self.params[k] for k in self.model_params}
+        return self.fit_parameters(input,lower_bounds,upper_bounds,initial_parameters)
+    
+    def update_parameters(self,params):
+        for k,v in params.items():
+            self.params[k] = v
+        self.define_transfer_matrix()
+
     def transfer_value(self,to_compartment,from_compartment):
         return self.transfer_matrix[self.compartment_names[to_compartment],
                                     self.compartment_names[from_compartment]]
@@ -71,13 +79,17 @@ class CompartmentalModel:
         return self.compartment_series[compartment][-1]
 
     def fit_parameters(self,data,lower_bounds,upper_bounds,initial_parameters):
-        
         self.parameter_index = {k:v for k,v in enumerate(initial_parameters.keys())}
         lower_bounds = [lower_bounds[k] for k in self.parameter_index.values()]
         upper_bounds = [upper_bounds[k] for k in self.parameter_index.values()]
         initial_parameters = [initial_parameters[k] for k in self.parameter_index.values()]
 
-        days = [i for i in range(len(data))]
+        if self.fit_compartment == 'all':
+            n_days = len(data)//self.compartment_number
+        else:
+            n_days = len(data)
+
+        days = [i for i in range(n_days)]
         popt,pconv = curve_fit(self.model_fit_function,
                                days,data,method='trf',
                                bounds=(lower_bounds,
@@ -91,7 +103,12 @@ class CompartmentalModel:
         for i,v in enumerate(args):
             self.params[self.parameter_index[i]] = v
         results = self.run_model(len(t)-1)
-        return results[self.fit_compartment]
+        
+        if self.fit_compartment == 'all':
+            output = flatten([list(results[name]) for name in self.compartment_names])
+        else:
+            output = results[self.fit_compartment]
+        return output
 
     def set_initial_values(self,initial_values):
         self.initial_values = initial_values
@@ -134,7 +151,7 @@ class CompartmentalModel:
     
         return next_compartments
 
-    def run_model(self,n_days):
+    def run_model(self,n_days=100):
         
         self.initialize()
         self.define_transfer_matrix()
@@ -151,15 +168,14 @@ class CompartmentalModel:
 class SIR(CompartmentalModel):
     def __init__(self,parameters=None):
         super().__init__(['S','I','R'],parameters)
+        self.model_params = ['recovery_rate',
+                             'infection_rate']
     
     def define_parameters(self):
 
         self.params['R0'] = 3.0
         self.params['recovery_rate'] = 1.0/14.0
         self.params['infection_rate'] = self.params['R0']*self.params['recovery_rate']
-        self.fit_compartment = 'I'
-        self.parameter_index = {0:'infection_rate',
-                                1:'recovery_rate'}
 
     def define_transfer_matrix(self):
         
@@ -177,6 +193,9 @@ class SIR(CompartmentalModel):
 class SIRV(CompartmentalModel):
     def __init__(self,parameters=None):
         super().__init__(['S','I','R','V'],parameters)
+        self.model_params = ['recovery_rate',
+                             'infection_rate',
+                             'vaccination_rate']
     
     def define_parameters(self):
 
@@ -202,6 +221,9 @@ class SIRV(CompartmentalModel):
 class SIRD(CompartmentalModel):
     def __init__(self,parameters=None):
         super().__init__(['S','I','R','D'],parameters)
+        self.model_params = ['recovery_rate',
+                             'infection_rate',
+                             'death_rate']
     
     def define_parameters(self):
 
@@ -227,6 +249,8 @@ class SIRD(CompartmentalModel):
 class Spatial_SIR(CompartmentalModel):
     def __init__(self,parameters=None):
         super().__init__(['S','I','R'],parameters)
+        self.model_params = ['recovery_rate',
+                             'infection_rate']
         
     def define_parameters(self):
 
@@ -279,6 +303,9 @@ class Spatial_SIR(CompartmentalModel):
 class SEIR(CompartmentalModel):
     def __init__(self,parameters=None):
         super().__init__(['S','E','I','R'],parameters)
+        self.model_params = ['recovery_rate',
+                             'infection_rate',
+                             'latency_rate']
     
     def define_parameters(self):
         
@@ -305,6 +332,13 @@ class SEIR(CompartmentalModel):
 class SEAIQHRD(CompartmentalModel):
     def __init__(self,parameters=None):
         super().__init__(['S','E','A','I','Q','H','R','D'],parameters)
+        self.model_params = ['infection_rate',
+                             'E_to_A_rate','A_to_I_rate',
+                             'A_to_R_rate','I_to_Q_rate',
+                             'I_to_H_rate','I_to_R_rate',
+                             'I_to_D_rate','Q_to_H_rate',
+                             'Q_to_R_rate','Q_to_D_rate',
+                             'H_to_R_rate','H_to_D_rate']
        
     def define_parameters(self):
 
@@ -328,6 +362,8 @@ class SEAIQHRD(CompartmentalModel):
         self.params['H_to_R_rate'] = 1.0/3.0
         self.params['H_to_D_rate'] = 1.0/3.0
 
+    def define_transfer_matrix(self):
+        
         self.params['E_decay_rate'] = self.params['E_to_A_rate']
         self.params['A_decay_rate'] = np.sum([self.params['A_to_I_rate'],
                                               self.params['A_to_R_rate']])
@@ -340,8 +376,6 @@ class SEAIQHRD(CompartmentalModel):
                                               self.params['I_to_H_rate'],
                                               self.params['I_to_R_rate'],
                                               self.params['I_to_D_rate']])
-
-    def define_transfer_matrix(self):
 
         self.update_transfer_value(-self.params['A_decay_rate'],'A','A')
         self.update_transfer_value(-self.params['E_decay_rate'],'E','E')
