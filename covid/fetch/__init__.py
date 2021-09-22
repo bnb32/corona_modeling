@@ -30,7 +30,14 @@ covid_uri=env.covid_uri
 
 estimation_params = {}
 estimation_params['death_rate'] = 0.01
-estimation_params['hospitalization_rate'] = 0.1
+estimation_params['hospitalization_rate'] = 1.0/6.0
+estimation_params['vaccination_rate'] = 0.6
+
+def artificial_V(n_days,N):
+
+    V_final = N*estimation_params['vaccination_rate']
+    V_initial = 0
+    return np.linspace(V_initial,V_final,n_days)
 
 class Dataset:
     """Dataset class for getting and
@@ -68,8 +75,9 @@ class Dataset:
         self.data['I'] = self.data['H']+self.data['H']/estimation_params['hospitalization_rate']
         self.data['D'] = self.raw_data['death'].values
         self.data['R'] = self.data['D']+self.data['D']/estimation_params['death_rate']
-        self.data['S'] = self.params['N']-self.data['I']-self.data['R'] 
-        
+        self.data['V'] = artificial_V(self.params['n_days'],self.params['N'])
+        self.data['S'] = self.params['N']-self.data['I']-self.data['R']-self.data['V'] 
+
         return self.data
     
     def get_data(self):

@@ -22,8 +22,8 @@ def plot_compartment_comparison(sim_data=None,raw_data=None,params=None,compartm
     plt.title(f'{params["state"]}')
     plt.xlabel(f'days since {params["min_date"]}')
 
-    plt.plot(sim_data[compartment],label=f'{k} - simulation')
-    plt.plot(raw_data[compartment],label=f'{k} - data')
+    plt.plot(sim_data[compartment],label=f'{compartment} - simulation')
+    plt.plot(raw_data[compartment],label=f'{compartment} - data')
 
     plt.legend()
     filename = f'{os.environ["COVID_FIG_DIR"]}/{params["state"]}_{compartment}_comp_fig.png'

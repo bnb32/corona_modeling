@@ -170,15 +170,16 @@ class SIR(CompartmentalModel):
         super().__init__(['S','I','R'],parameters)
         self.model_params = ['recovery_rate',
                              'infection_rate']
+        self.fit_compartment = 'I'
     
     def define_parameters(self):
 
-        self.params['R0'] = 3.0
         self.params['recovery_rate'] = 1.0/14.0
-        self.params['infection_rate'] = self.params['R0']*self.params['recovery_rate']
+        self.params['infection_rate'] = 3.0/14.0
 
     def define_transfer_matrix(self):
         
+        self.params['R0'] = self.params['infection_rate']/self.params['recovery_rate']
         self.update_transfer_value(-self.params['recovery_rate'],'I','I')
         self.update_transfer_value(self.params['recovery_rate'],'R','I')
 
@@ -196,16 +197,17 @@ class SIRV(CompartmentalModel):
         self.model_params = ['recovery_rate',
                              'infection_rate',
                              'vaccination_rate']
+        self.fit_compartment = 'I'
     
     def define_parameters(self):
 
-        self.params['R0'] = 3.0
         self.params['recovery_rate'] = 1.0/14.0
-        self.params['infection_rate'] = self.params['R0']*self.params['recovery_rate']
+        self.params['infection_rate'] = 3.0/14.0
         self.params['vaccination_rate'] = 1.0/7.0
 
     def define_transfer_matrix(self):
         
+        self.params['R0'] = self.params['infection_rate']/self.params['recovery_rate']
         self.update_transfer_value(-self.params['recovery_rate'],'I','I')
         self.update_transfer_value(self.params['recovery_rate'],'R','I')
         self.update_transfer_value(self.params['vaccination_rate'],'V','S')
@@ -227,13 +229,13 @@ class SIRD(CompartmentalModel):
     
     def define_parameters(self):
 
-        self.params['R0'] = 3.0
         self.params['recovery_rate'] = 1.0/14.0
-        self.params['infection_rate'] = self.params['R0']*self.params['recovery_rate']
+        self.params['infection_rate'] = 3.0/14.0
         self.params['death_rate'] = 1.0/14.0
 
     def define_transfer_matrix(self):
         
+        self.params['R0'] = self.params['infection_rate']/self.params['recovery_rate']
         self.update_transfer_value(-self.params['recovery_rate']-self.params['death_rate'],'I','I')
         self.update_transfer_value(self.params['recovery_rate'],'R','I')
         self.update_transfer_value(self.params['death_rate'],'D','I')
@@ -254,9 +256,8 @@ class Spatial_SIR(CompartmentalModel):
         
     def define_parameters(self):
 
-        self.params['R0'] = 3.0
         self.params['recovery_rate'] = 1.0/14.0
-        self.params['infection_rate'] = self.params['R0']*self.params['recovery_rate']
+        self.params['infection_rate'] = 3.0/14.0
         
         self.params['grid_size_x'] = 20
         self.params['grid_size_y'] = 20
@@ -268,6 +269,7 @@ class Spatial_SIR(CompartmentalModel):
 
     def define_transfer_matrix(self):
         
+        self.params['R0'] = self.params['infection_rate']/self.params['recovery_rate']
         self.update_transfer_value(-self.params['recovery_rate'],'I','I')
         self.update_transfer_value(self.params['recovery_rate'],'R','I')
 
@@ -309,13 +311,13 @@ class SEIR(CompartmentalModel):
     
     def define_parameters(self):
         
-        self.params['R0'] = 3.0
         self.params['recovery_rate'] = 1.0/14.0
-        self.params['infection_rate'] = self.params['R0']*self.params['recovery_rate']
+        self.params['infection_rate'] = 3.0/14.0
         self.params['latency_rate'] = 1.0/7.0
 
     def define_transfer_matrix(self):
 
+        self.params['R0'] = self.params['infection_rate']/self.params['recovery_rate']
         self.update_transfer_value(-self.params['latency_rate'],'E','E')
         self.update_transfer_value(self.params['latency_rate'],'I','E')
         self.update_transfer_value(-self.params['recovery_rate'],'I','I')
@@ -342,8 +344,7 @@ class SEAIQHRD(CompartmentalModel):
        
     def define_parameters(self):
 
-        self.params['R0'] = 3.0
-        self.params['infection_rate'] = self.params['R0']/14.0
+        self.params['infection_rate'] = 3.0/14.0
         
         self.params['E_to_A_rate'] = 1.0/4.0
         
@@ -364,6 +365,13 @@ class SEAIQHRD(CompartmentalModel):
 
     def define_transfer_matrix(self):
         
+        self.params['recovery_rate'] = np.sum([self.params['A_to_R_rate'],
+                                               self.params['I_to_R_rate'],
+                                               self.params['Q_to_R_rate'],
+                                               self.params['H_to_R_rate']])
+
+        self.params['R0'] = self.params['infection_rate']/self.params['recovery_rate']
+
         self.params['E_decay_rate'] = self.params['E_to_A_rate']
         self.params['A_decay_rate'] = np.sum([self.params['A_to_I_rate'],
                                               self.params['A_to_R_rate']])
