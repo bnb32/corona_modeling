@@ -1,27 +1,37 @@
-from covid.models import SIR, SIRV
+from covid.models import SIR, SIRVD
 from covid.fetch import Dataset
-from covid.postprocessing import plot_comparison, plot_compartment_comparison
+from covid.postprocessing import plot_compartments_comparison, plot_compartment_comparison, plot_compartments, plot_compartment
 
-sirv = SIRV()
+import pandas as pd
 
-ds = Dataset({'state':'Washington','n_days':150})
+model = SIRVD()
+
+ds = Dataset({'state':'Washington','n_days':50})
 
 data = ds.get_data()
 
-sirv.initialize({'S':data['S'][0],
-                'I':data['I'][0],
-                'R':data['R'][0],
-                'V':data['V'][0]})
+#model.fit_derivatives = False
+#model.fit_compartments = ['I','D']
 
-sirv.fit_compartment = 'I'
+model.get_parameters_from_data(data)
 
-sirv.get_parameters_from_data({'S':data['S'],
-                              'I':data['I'],
-                              'R':data['R'],
-                              'V':data['V']})
+#print(f'model parameters: \n{pd.DataFrame(model.params,index=[0])}')
+print(f'model parameters: {model.params}')
 
-output = sirv.run_model(n_days=300)
+model.initialize({k:data[k][-1] for k in model.compartment_names})
 
-plot_comparison(sim_data=output,raw_data=data,params=ds.params)
+output = model.run_model(n_days=90)
+
+plot_compartments(sim_data=output,raw_data=data,params=ds.params)
+
+plot_compartment(sim_data=output,raw_data=data,params=ds.params,compartment='I')
+
+model.initialize({k:data[k][0] for k in model.compartment_names})
+
+model.start_step = 0
+
+output = model.run_model(n_days=300)
+
+plot_compartments_comparison(sim_data=output,raw_data=data,params=ds.params)
 
 plot_compartment_comparison(sim_data=output,raw_data=data,params=ds.params,compartment='I')

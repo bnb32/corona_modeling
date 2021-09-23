@@ -3,46 +3,139 @@ from covid.misc import get_logger
 
 import os
 import matplotlib.pyplot as plt
-from datetime import date, timedelta
+from datetime import date, datetime, timedelta
 import numpy as np
 from matplotlib.colors import ListedColormap
 from PIL import Image
 import urllib.parse, urllib.request
 from math import log, exp, tan, atan, pi
 import matplotlib.pyplot as plt
+import matplotlib.dates as mdates
 import io
 from os import path
 
 logger = get_logger()
+
+long_names = {'S': 'Susceptible',
+              'E': 'Exposed',
+              'A': 'Asymptomatic',
+              'I': 'Infected',
+              'H': 'Hospitalized',
+              'Q': 'Quarantined',
+              'R': 'Recovered',
+              'D': 'Deaths',
+              'V': 'Vaccinated'}
+
+def plot_compartment(sim_data=None,raw_data=None,params=None,compartment=None):
+
+    fig = plt.figure()
+
+    plt.title(f'{params["state"]}')
+
+    data = np.concatenate((raw_data[compartment],sim_data[compartment]))
+    dates = get_date_labels(n_days=len(data),min_date=params['min_date'])
+    x_values = [datetime.strptime(d,"%Y-%m-%d").date() for d in dates]
+    
+    ax=plt.gca()
+    formatter = mdates.DateFormatter("%Y-%m-%d")
+    ax.xaxis.set_major_formatter(formatter)
+    locator = mdates.DayLocator(interval=len(dates)//10)
+    ax.xaxis.set_major_locator(locator)
+
+    plt.plot(x_values,data,label=f'{long_names[compartment]}')
+    
+    plt.axvline(x=x_values[params['n_days']-1],color='black')
+    plt.xticks(rotation=60)
+    plt.legend()
+    plt.tight_layout()
+
+    filename = path.join(f'{os.environ["COVID_FIG_DIR"]}',f'{params["state"]}_{compartment}_fig.png')
+    plt.savefig(filename)
+    print(f'Saved figure: {filename}')
 
 def plot_compartment_comparison(sim_data=None,raw_data=None,params=None,compartment=None):
 
     fig = plt.figure()
 
     plt.title(f'{params["state"]}')
-    plt.xlabel(f'days since {params["min_date"]}')
 
-    plt.plot(sim_data[compartment],label=f'{compartment} - simulation')
-    plt.plot(raw_data[compartment],label=f'{compartment} - data')
+    n_days = max((len(raw_data[compartment]),len(sim_data[compartment])))
+    dates = get_date_labels(n_days=n_days,min_date=params['min_date'])
+    x_values = [datetime.strptime(d,"%Y-%m-%d").date() for d in dates]
+    
+    ax=plt.gca()
+    formatter = mdates.DateFormatter("%Y-%m-%d")
+    ax.xaxis.set_major_formatter(formatter)
+    locator = mdates.DayLocator(interval=len(dates)//10)
+    ax.xaxis.set_major_locator(locator)
 
+    plt.plot(x_values[:len(sim_data[compartment])],sim_data[compartment],label=f'{long_names[compartment]} - Simulation')
+    plt.plot(x_values[:len(raw_data[compartment])],raw_data[compartment],label=f'{long_names[compartment]} - Data')
+    
+    plt.xticks(rotation=60)
     plt.legend()
-    filename = f'{os.environ["COVID_FIG_DIR"]}/{params["state"]}_{compartment}_comp_fig.png'
+    plt.tight_layout()
+
+    filename = path.join(f'{os.environ["COVID_FIG_DIR"]}',f'{params["state"]}_{compartment}_comparison_fig.png')
     plt.savefig(filename)
     print(f'Saved figure: {filename}')
 
-def plot_comparison(sim_data=None,raw_data=None,params=None):
+def plot_compartments(sim_data=None,raw_data=None,params=None):
 
     fig = plt.figure()
 
     plt.title(f'{params["state"]}')
-    plt.xlabel(f'days since {params["min_date"]}')
+    
+    first_key = list(sim_data.keys())[0]
+    data = np.concatenate((raw_data[first_key],sim_data[first_key]))
+    dates = get_date_labels(n_days=len(data),min_date=params['min_date'])
+    x_values = [datetime.strptime(d,"%Y-%m-%d").date() for d in dates]
+    
+    ax=plt.gca()
+    formatter = mdates.DateFormatter("%Y-%m-%d")
+    ax.xaxis.set_major_formatter(formatter)
+    locator = mdates.DayLocator(interval=len(dates)//10)
+    ax.xaxis.set_major_locator(locator)
 
-    for k in sim_data:
-        plt.plot(sim_data[k],label=f'{k} - simulation')
-        plt.plot(raw_data[k],label=f'{k} - data')
-
+    for i,k in enumerate(sim_data):
+        data = np.concatenate((raw_data[k],sim_data[k]))
+        plt.plot(x_values,data,label=f'{long_names[k]}')         
+    
+    plt.xticks(rotation=60)
+    plt.axvline(x=x_values[params['n_days']-1],color='black')
     plt.legend()
-    filename = f'{os.environ["COVID_FIG_DIR"]}/{params["state"]}_comp_fig.png'
+    plt.tight_layout()
+
+    filename = path.join(f'{os.environ["COVID_FIG_DIR"]}',f'{params["state"]}_fig.png')
+    plt.savefig(filename)
+    print(f'Saved figure: {filename}')
+
+def plot_compartments_comparison(sim_data=None,raw_data=None,params=None):
+
+    fig = plt.figure()
+
+    plt.title(f'{params["state"]}')
+
+    first_key = list(sim_data.keys())[0]
+    n_days = max((len(raw_data[first_key]),len(sim_data[first_key])))
+    dates = get_date_labels(n_days=n_days,min_date=params['min_date'])
+    x_values = [datetime.strptime(d,"%Y-%m-%d").date() for d in dates]
+    
+    ax=plt.gca()
+    formatter = mdates.DateFormatter("%Y-%m-%d")
+    ax.xaxis.set_major_formatter(formatter)
+    locator = mdates.DayLocator(interval=len(dates)//10)
+    ax.xaxis.set_major_locator(locator)
+
+    for i,k in enumerate(sim_data):
+        plt.plot(x_values[:len(sim_data[k])],sim_data[k],label=f'{long_names[k]} - Simulation')
+        plt.plot(x_values[:len(raw_data[k])],raw_data[k],label=f'{long_names[k]} - Data')
+    
+    plt.xticks(rotation=60)
+    plt.legend()
+    plt.tight_layout()
+    
+    filename = path.join(f'{os.environ["COVID_FIG_DIR"]}',f'{params["state"]}_comparison_fig.png')
     plt.savefig(filename)
     print(f'Saved figure: {filename}')
 
@@ -50,19 +143,9 @@ def get_date_labels(n_days=None,min_date=None):
 
     dates=[]
     for i in range(n_days):
-        day=str((min_date+timedelta(days=i)).strftime('%Y-%m-%d'))
+        day=(min_date+timedelta(days=i)).strftime('%Y-%m-%d')
         dates+=[day]
     return dates
-
-def plot_date_labels(dates=None,data=None):
-
-    plt.plot(dates,data)
-    ax=plt.gca()
-    plt.xticks(rotation=60)
-    
-    for i,label in enumerate(ax.get_xticklabels()): 
-        if i % int(len(data)/10):
-            label.set_visible(False)
 
 def get_colormap():
 

@@ -1,6 +1,11 @@
-from covid.misc import laplacian, flatten
+from covid.misc import laplacian, flatten, get_logger, vec_diff
 from scipy.optimize import curve_fit
 import numpy as np
+
+logger = get_logger()
+
+def ramp_function(constant,amplitude,ramp_rate,shift,t):
+    return constant+amplitude/(1+np.exp(-ramp_rate*(t+shift)))
 
 class CompartmentalModel:
     """Super class for compartmental models
@@ -15,12 +20,15 @@ class CompartmentalModel:
         self.compartment_index = {i:compartment_names[i] for i in range(self.compartment_number)}
         self.compartment_series = {}
         self.initial_values = None
-        self.fit_compartment = 'all'
+        self.fit_compartments = list(self.compartment_names.keys())
+        self.fit_derivatives = True
         self.model_params = []
         self.params = {}
-        
-        self.params['n_substeps'] = 20
-        self.params['dt'] = 1.0/self.params['n_substeps']
+       
+        self.epsilon = 1.0e-3
+        self.n_substeps = 20
+        self.dt = 1.0/self.n_substeps
+        self.start_step = 0
         self.define_parameters()
         
         if parameters is not None:
@@ -35,7 +43,7 @@ class CompartmentalModel:
     def define_transfer_matrix(self):
         return
 
-    def update_transfer_matrix(self,last_compartments):
+    def update_transfer_matrix(self,last_compartments,step_number):
         return
 
     def get_data(self):
@@ -53,15 +61,22 @@ class CompartmentalModel:
         return
 
     def get_parameters_from_data(self,data):
-        if self.fit_compartment == 'all':
-            input = flatten([list(data[name]) for name in self.compartment_names])
-        else:
-            input = data[self.fit_compartment]
-        lower_bounds = {k:0 for k in self.model_params}
+        self.initialize(initial_values={compartment:data[compartment][0] for compartment in data})
+
+        input = flatten([list(data[name]) for name in self.fit_compartments])
+        if self.fit_derivatives:
+            input += flatten([vec_diff(list(data[name])) for name in self.fit_compartments])
+
+        lower_bounds = {}
+        for k in self.model_params:
+            if 'ramp' in str(k) or 'adjustment' in str(k):
+                lower_bounds[k] = -np.inf
+            else:
+                lower_bounds[k] = 0.0
         upper_bounds = {k:np.inf for k in self.model_params}
         initial_parameters = {k:self.params[k] for k in self.model_params}
         return self.fit_parameters(input,lower_bounds,upper_bounds,initial_parameters)
-    
+
     def update_parameters(self,params):
         for k,v in params.items():
             self.params[k] = v
@@ -84,10 +99,10 @@ class CompartmentalModel:
         upper_bounds = [upper_bounds[k] for k in self.parameter_index.values()]
         initial_parameters = [initial_parameters[k] for k in self.parameter_index.values()]
 
-        if self.fit_compartment == 'all':
-            n_days = len(data)//self.compartment_number
-        else:
-            n_days = len(data)
+        self.start_step = 0
+        n_days = len(data)//len(self.fit_compartments)
+        if self.fit_derivatives:
+            n_days //= 2
 
         days = [i for i in range(n_days)]
         popt,pconv = curve_fit(self.model_fit_function,
@@ -97,17 +112,17 @@ class CompartmentalModel:
                                p0=initial_parameters)
         for k,v in self.parameter_index.items():
             self.params[v] = popt[k]
-        return popt
+        self.start_step = n_days    
+        return self.params
 
     def model_fit_function(self,t,*args):
         for i,v in enumerate(args):
             self.params[self.parameter_index[i]] = v
         results = self.run_model(len(t)-1)
         
-        if self.fit_compartment == 'all':
-            output = flatten([list(results[name]) for name in self.compartment_names])
-        else:
-            output = results[self.fit_compartment]
+        output = flatten([list(results[name]) for name in self.fit_compartments])
+        if self.fit_derivatives:
+            output += flatten([vec_diff(list(results[name])) for name in self.fit_compartments])
         return output
 
     def set_initial_values(self,initial_values):
@@ -119,20 +134,20 @@ class CompartmentalModel:
         for name in self.compartment_names:
             self.compartment_series[name] = [self.initial_values[name]]
 
-    def model_eqns(self,last_compartments):
+    def model_eqns(self,last_compartments,step_number):
         
-        self.update_transfer_matrix(last_compartments)
+        self.update_transfer_matrix(last_compartments,step_number)
 
         next_compartments = []
         for i in range(self.compartment_number):
             entry = 0
             for j in range(self.compartment_number):
                 entry += self.transfer_matrix[i,j]*last_compartments[j]
-            next_compartments.append(entry*self.params['dt'])
+            next_compartments.append(entry*self.dt)
 
         return next_compartments
         
-    def rk_step(self,last_compartments):
+    def rk_step(self,last_compartments,step_number):
 
         rk_step=[0.5,0.5,1,0]
         tmp = [x for x in last_compartments]
@@ -140,14 +155,14 @@ class CompartmentalModel:
 
         for t in range(4):
             
-            tmp = self.model_eqns(tmp)
+            tmp = self.model_eqns(tmp,step_number)
             for i in range(self.compartment_number):
                 compartments_k[i].append(tmp[i])
             tmp = np.multiply(tmp,rk_step[t]) + last_compartments
 
         stencil=[1,2,2,1]
         next_compartments = last_compartments + 1.0/6.0*np.tensordot(compartments_k,stencil,axes=(1,0))
-        next_compartments[next_compartments < 0]=0
+        next_compartments[next_compartments < 0]=0.0
     
         return next_compartments
 
@@ -158,8 +173,8 @@ class CompartmentalModel:
         
         last_compartments = [self.compartment_series[name][0] for name in self.compartment_names]
         for day in range(n_days):
-            for t in range(self.params['n_substeps']):
-                last_compartments=self.rk_step(last_compartments)
+            for t in range(self.n_substeps):
+                last_compartments=self.rk_step(last_compartments,day)
             for i,name in enumerate(self.compartment_names):
                 self.compartment_series[name].append(last_compartments[i])
 
@@ -169,13 +184,16 @@ class SIR(CompartmentalModel):
     def __init__(self,parameters=None):
         super().__init__(['S','I','R'],parameters)
         self.model_params = ['recovery_rate',
-                             'infection_rate']
-        self.fit_compartment = 'I'
+                             'infection_rate',
+                             'infection_rate_adjustment',
+                             'infection_rate_ramp']
     
     def define_parameters(self):
 
         self.params['recovery_rate'] = 1.0/14.0
         self.params['infection_rate'] = 3.0/14.0
+        self.params['infection_rate_ramp'] = 0.0
+        self.params['infection_rate_adjustment'] = 0.0
 
     def define_transfer_matrix(self):
         
@@ -183,42 +201,133 @@ class SIR(CompartmentalModel):
         self.update_transfer_value(-self.params['recovery_rate'],'I','I')
         self.update_transfer_value(self.params['recovery_rate'],'R','I')
 
-    def update_transfer_matrix(self,last_compartments):
+    def update_transfer_matrix(self,last_compartments,step_number):
 
         self.params['N'] = sum(last_compartments)
-        alpha = self.params['infection_rate']*last_compartments[self.compartment_names['I']]/self.params['N']
+        infection_rate_ramped = ramp_function(self.params['infection_rate'],
+                                              self.params['infection_rate_adjustment'],
+                                              self.params['infection_rate_ramp'],
+                                              self.start_step,step_number)
+        infection_rate_ramped *= last_compartments[self.compartment_names['I']]/self.params['N']
         
-        self.update_transfer_value(-alpha,'S','S') 
-        self.update_transfer_value(alpha,'I','S')
+        self.update_transfer_value(-infection_rate_ramped,'S','S') 
+        self.update_transfer_value(infection_rate_ramped,'I','S')
 
 class SIRV(CompartmentalModel):
     def __init__(self,parameters=None):
         super().__init__(['S','I','R','V'],parameters)
         self.model_params = ['recovery_rate',
                              'infection_rate',
-                             'vaccination_rate']
-        self.fit_compartment = 'I'
+                             'vaccination_rate',
+                             'recovery_rate_adjustment',
+                             'infection_rate_adjustment',
+                             'vaccination_rate_adjustment',
+                             'infection_rate_ramp',
+                             'vaccination_rate_ramp',
+                             'recovery_rate_ramp']
     
     def define_parameters(self):
 
         self.params['recovery_rate'] = 1.0/14.0
         self.params['infection_rate'] = 3.0/14.0
         self.params['vaccination_rate'] = 1.0/7.0
+        self.params['recovery_rate_adjustment'] = 0.0
+        self.params['infection_rate_adjustment'] = 0.0
+        self.params['vaccination_rate_adjustment'] = 0.0
+        self.params['infection_rate_ramp'] = 0.0
+        self.params['vaccination_rate_ramp'] = 0.0
+        self.params['recovery_rate_ramp'] = 0.0
 
     def define_transfer_matrix(self):
         
         self.params['R0'] = self.params['infection_rate']/self.params['recovery_rate']
-        self.update_transfer_value(-self.params['recovery_rate'],'I','I')
-        self.update_transfer_value(self.params['recovery_rate'],'R','I')
-        self.update_transfer_value(self.params['vaccination_rate'],'V','S')
 
-    def update_transfer_matrix(self,last_compartments):
+    def update_transfer_matrix(self,last_compartments,step_number):
 
         self.params['N'] = sum(last_compartments)
-        alpha = self.params['infection_rate']*last_compartments[self.compartment_names['I']]/self.params['N']
+        recovery_rate_ramped = ramp_function(self.params['recovery_rate'],
+                                             self.params['recovery_rate_adjustment'],
+                                             self.params['recovery_rate_ramp'],
+                                             self.start_step,step_number)
+        vaccination_rate_ramped = ramp_function(self.params['vaccination_rate'],
+                                                self.params['vaccination_rate_adjustment'],
+                                                self.params['vaccination_rate_ramp'],
+                                                self.start_step,step_number)
+        infection_rate_ramped = ramp_function(self.params['infection_rate'],
+                                              self.params['infection_rate_adjustment'],
+                                              self.params['infection_rate_ramp'],
+                                              self.start_step,step_number)
+        infection_rate_ramped *= last_compartments[self.compartment_names['I']]/self.params['N']
         
-        self.update_transfer_value(-alpha-self.params['vaccination_rate'],'S','S') 
-        self.update_transfer_value(alpha,'I','S')
+        self.update_transfer_value(-recovery_rate_ramped,'I','I')
+        self.update_transfer_value(recovery_rate_ramped,'R','I')
+        self.update_transfer_value(vaccination_rate_ramped,'V','S')
+        self.update_transfer_value(-infection_rate_ramped-vaccination_rate_ramped,'S','S') 
+        self.update_transfer_value(infection_rate_ramped,'I','S')
+
+class SIRVD(CompartmentalModel):
+    def __init__(self,parameters=None):
+        super().__init__(['S','I','R','V','D'],parameters)
+        self.model_params = ['recovery_rate',
+                             'infection_rate',
+                             'vaccination_rate',
+                             'death_rate',
+                             #'recovery_rate_adjustment',
+                             'infection_rate_adjustment',
+                             'vaccination_rate_adjustment',
+                             'death_rate_adjustment',
+                             'infection_rate_ramp',
+                             'vaccination_rate_ramp',
+                             #'recovery_rate_ramp',
+                             'death_rate_ramp',
+                             ]
+    
+    def define_parameters(self):
+
+        self.params['recovery_rate'] = 1.0/14.0
+        self.params['infection_rate'] = 3.0/14.0
+        self.params['vaccination_rate'] = 1.0/7.0
+        self.params['death_rate'] = 0.02
+        self.params['recovery_rate_adjustment'] = 0.0
+        self.params['infection_rate_adjustment'] = 0.0
+        self.params['vaccination_rate_adjustment'] = 0.0
+        self.params['death_rate_adjustment'] = 0.0
+        self.params['infection_rate_ramp'] = 0.0
+        self.params['vaccination_rate_ramp'] = 0.0
+        self.params['recovery_rate_ramp'] = 0.0
+        self.params['death_rate_ramp'] = 0.0
+
+    def define_transfer_matrix(self):
+        
+        self.params['R0'] = self.params['infection_rate']/self.params['recovery_rate']
+
+    def update_transfer_matrix(self,last_compartments,step_number):
+
+        self.params['N'] = sum(last_compartments)
+        recovery_rate_ramped = ramp_function(self.params['recovery_rate'],
+                                             self.params['recovery_rate_adjustment'],
+                                             self.params['recovery_rate_ramp'],
+                                             self.start_step,step_number)
+        vaccination_rate_ramped = ramp_function(self.params['vaccination_rate'],
+                                                self.params['vaccination_rate_adjustment'],
+                                                self.params['vaccination_rate_ramp'],
+                                                self.start_step,step_number)
+        death_rate_ramped = ramp_function(self.params['death_rate'],
+                                          self.params['death_rate_adjustment'],
+                                          self.params['death_rate_ramp'],
+                                          self.start_step,step_number)
+        infection_rate_ramped = ramp_function(self.params['infection_rate'],
+                                              self.params['infection_rate_adjustment'],
+                                              self.params['infection_rate_ramp'],
+                                              self.start_step,step_number)
+        infection_rate_ramped *= last_compartments[self.compartment_names['I']]/self.params['N']
+        
+        self.update_transfer_value(-recovery_rate_ramped-death_rate_ramped,'I','I')
+        self.update_transfer_value(recovery_rate_ramped,'R','I')
+        self.update_transfer_value(death_rate_ramped,'D','I')
+        self.update_transfer_value(vaccination_rate_ramped,'V','S')
+        self.update_transfer_value(-infection_rate_ramped-vaccination_rate_ramped,'S','S') 
+        self.update_transfer_value(infection_rate_ramped,'I','S')
 
 class SIRD(CompartmentalModel):
     def __init__(self,parameters=None):

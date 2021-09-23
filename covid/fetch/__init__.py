@@ -22,16 +22,14 @@ params_path = path.join(gettempdir(), 'params_%s-%s-%s.json'%(date.today().day,d
 orders_path = path.join(environ['LAMBDA_TASK_ROOT'], 'sah_order_dates.json')
 
 api_key=env.google_api_key
-covid_uri=env.covid_uri
 
 """Use estimated death rate and hospitalization rate
    to estimate infections and recovered
 """
 
 estimation_params = {}
-estimation_params['death_rate'] = 0.01
-estimation_params['hospitalization_rate'] = 1.0/6.0
-estimation_params['vaccination_rate'] = 0.6
+estimation_params['death_rate'] = 0.02
+estimation_params['hospitalization_rate'] = 0.005
 
 def artificial_V(n_days,N):
 
@@ -45,8 +43,8 @@ class Dataset:
        and simluation by model
     """   
     def __init__(self,parameters=None):
-        self.uri = env.covid_uri
-        self.url = "https://covidtracking.com/api/v1/states/daily.json"
+        self.current_url = f'https://api.covidactnow.org/v2/states.json?apiKey={env.covid_act_api}'
+        self.timeseries_url = f'https://api.covidactnow.org/v2/states.timeseries.json?apiKey={env.covid_act_api}'
 
         with open(pop_path, 'rt') as pop_json:
             self.pop_data = json.load(pop_json)
@@ -71,12 +69,12 @@ class Dataset:
     
     def compartment_map(self):    
         self.data = {}
-        self.data['H'] = self.raw_data['hospitalizedCurrently'].values                 
-        self.data['I'] = self.data['H']+self.data['H']/estimation_params['hospitalization_rate']
-        self.data['D'] = self.raw_data['death'].values
-        self.data['R'] = self.data['D']+self.data['D']/estimation_params['death_rate']
-        self.data['V'] = artificial_V(self.params['n_days'],self.params['N'])
-        self.data['S'] = self.params['N']-self.data['I']-self.data['R']-self.data['V'] 
+        self.data['H'] = self.raw_data['hospital'].values+self.raw_data['icu'].values                 
+        self.data['D'] = self.raw_data['deaths'].values
+        self.data['R'] = self.data['D']/estimation_params['death_rate']
+        self.data['I'] = self.raw_data['cases'].values-self.data['R']-self.data['D']
+        self.data['V'] = self.raw_data['vaccinationsCompleted'].values
+        self.data['S'] = self.params['N']-self.data['I']-self.data['R']-self.data['V']-self.data['D'] 
 
         return self.data
     
@@ -85,18 +83,29 @@ class Dataset:
         return self.compartment_map()
         
     def get_raw_data(self):
-        data = pd.read_json(self.url)
-        data = data[(data['state']==self.us_states[self.params['state']])]
+        data = pd.read_json(self.timeseries_url)
+        data_metrics = pd.DataFrame(data[data['state']==self.us_states[self.params['state']]]['metricsTimeseries'].values[0])
+        data = pd.DataFrame(data[data['state']==self.us_states[self.params['state']]]['actualsTimeseries'].values[0])
+        data['infections'] = data_metrics['caseDensity'].apply(lambda x: x*self.params['N']/10**5)
+        data['date'] = data['date'].apply(lambda x: int(x.replace('-','')))
         self.params['min_date'] = int_to_date(max(data['date'].values))-timedelta(days=self.params['n_days'])
-        data = data[(data['date'] > date_to_int(self.params['min_date']))]
+        self.params['max_date'] = int_to_date(max(data['date'].values))
+        data = data[(data['date'] > date_to_int(self.params['min_date'])) &
+                    (data['date'] < date_to_int(self.params['max_date']))]
+        data['hospital'] = data['hospitalBeds'].apply(lambda x: x['currentUsageTotal'])
+        data['icu'] = data['icuBeds'].apply(lambda x: x['currentUsageTotal'])
         self.raw_data = data.sort_values(by='date',ascending=True)
-        self.raw_data.fillna(0,inplace=True)
+        self.raw_data = self.raw_data.fillna(self.raw_data.rolling(6, min_periods=1).mean())
+        self.raw_data = self.raw_data.fillna(0)
+        self.raw_data = self.raw_data.ewm(span=10).mean()
         return self.raw_data
 
     def get_pop(self):
-        if self.params['county']==None: 
-            self.county=state
-        return self.pop_data[self.params['state']][self.params['county']] 
+        data = pd.read_json(self.current_url)
+        return data[data['state']==self.us_states[self.params['state']]]['population'].values[0]
+        #if self.params['county']==None: 
+        #    self.county=state
+        #return self.pop_data[self.params['state']][self.params['county']] 
  
 def latlon_to_place(api_key, lat, lon):
     uri = 'https://maps.googleapis.com/maps/api/geocode/json?latlng={Lat},{Lon}&key={ApiKey}'.format(

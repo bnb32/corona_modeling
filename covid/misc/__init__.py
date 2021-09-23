@@ -103,7 +103,8 @@ def laplacian(M,dx,dy):
     return L
 
 def vec_diff(v):
-    diff=[v[i+1]-v[i] for i in range(len(v)-1)]
+    tmp = [v[0]-(v[1]-v[0])]+list(v)
+    diff=[tmp[i+1]-tmp[i] for i in range(len(v))]
     return diff
 
 def get_beta_ramp(p):
