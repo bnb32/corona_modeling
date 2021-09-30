@@ -15,11 +15,6 @@ sh = logging.StreamHandler(stdout)
 formatter = logging.Formatter('[%(levelname)s] %(asctime)s %(message)s')
 sh.setFormatter(formatter)
 logger.addHandler(sh)
-logging.getLogger('boto').setLevel(logging.WARN)
-logging.getLogger('boto3').setLevel(logging.WARN)
-logging.getLogger('botocore').setLevel(logging.WARN)
-logging.getLogger('s3transfer').setLevel(logging.WARN)
-logging.getLogger('urllib3').setLevel(logging.WARN)
 
 def flatten(t):
     return [item for sublist in t for item in sublist]
