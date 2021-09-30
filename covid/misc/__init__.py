@@ -9,17 +9,16 @@ from decimal import Decimal
 from sys import stdout
 import logging
 
-logger = logging.getLogger()
-logger.setLevel(logging.INFO)
-sh = logging.StreamHandler(stdout)
-formatter = logging.Formatter('[%(levelname)s] %(asctime)s %(message)s')
-sh.setFormatter(formatter)
-logger.addHandler(sh)
-
 def flatten(t):
     return [item for sublist in t for item in sublist]
 
 def get_logger():
+    logger = logging.getLogger()
+    logger.setLevel(logging.INFO)
+    sh = logging.StreamHandler(stdout)
+    formatter = logging.Formatter('[%(levelname)s] %(asctime)s %(message)s')
+    sh.setFormatter(formatter)
+    logger.addHandler(sh)
     return logger
 
 def date_to_int(d):
@@ -165,29 +164,8 @@ def cases_to_beta(data,params):
 
     return params
 
-def cases_to_intercepts(data,params):
-    
-    vals={}
-    days=[i for i in range(len(data['date']))]
-    for k,v in data.items():
-        if k in ['S','E','A','I','Q','H','R','D']:
-            try:
-                #popt,pconv=curve_fit(exp_func,days,v)
-                #intercept=popt[0]
-
-            #except:
-                r=stats.linregress(days,
-                [np.log(x+1) for x in v])
-                intercept=np.exp(r.intercept)
-            except:
-                pass
-            
-            vals[k]=intercept
-    return vals
-
 def doubling_trend_to_Sd(Td_array):
     days=[i for i in range(len(Td_array))]
     r=stats.linregress(days,Td_array)
     Sd=r.slope/(1+r.slope)
     return Sd 
-
