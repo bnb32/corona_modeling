@@ -9,16 +9,17 @@ from decimal import Decimal
 from sys import stdout
 import logging
 
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)
+sh = logging.StreamHandler(stdout)
+formatter = logging.Formatter('[%(levelname)s] %(asctime)s %(message)s')
+sh.setFormatter(formatter)
+logger.addHandler(sh)
+
 def flatten(t):
     return [item for sublist in t for item in sublist]
 
 def get_logger():
-    logger = logging.getLogger()
-    logger.setLevel(logging.INFO)
-    sh = logging.StreamHandler(stdout)
-    formatter = logging.Formatter('[%(levelname)s] %(asctime)s %(message)s')
-    sh.setFormatter(formatter)
-    logger.addHandler(sh)
     return logger
 
 def date_to_int(d):
