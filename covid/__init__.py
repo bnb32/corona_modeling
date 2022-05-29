@@ -2,8 +2,10 @@ from covid.models import SIR, SIRV
 from covid.fetch import Dataset
 from covid.postprocessing import plot_compartments_comparison, plot_compartment_comparison, plot_compartment, plot_compartments
 
+import pickle
 import argparse
 import pandas as pd
+
 
 def covid_argparse():
 
@@ -13,6 +15,11 @@ def covid_argparse():
     parser.add_argument('-plot_compartment', default='I')
     parser.add_argument('-sim_days', default=100, type=int)
     parser.add_argument('-data_days', default=100, type=int)
+    parser.add_argument('-out_file', type=str)
+    return parser
+
+if __name__ == '__main__':
+    parser = covid_argparse()
     args = parser.parse_args()
 
     model = SIRV()
@@ -45,7 +52,5 @@ def covid_argparse():
 
     plot_compartment_comparison(sim_data=output,raw_data=data,params=ds.params,compartment=args.compartment)
 
-    return output
-
-if __name__=='__main__':
-    covid_argparse()
+    with open(args.out_file, 'wb') as fh:
+        pickle.dump(output, fh)
