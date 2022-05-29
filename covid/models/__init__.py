@@ -450,9 +450,9 @@ class Spatial_SIR(CompartmentalModel):
         self.update_transfer_value(alpha, 'I', 'S')
 
     def example(self):
-
+        """Spatial SIR example"""
         S = np.zeros((self.params['nx'], self.params['ny']))
-        I = np.zeros((self.params['nx'], self.params['ny']))
+        I = np.zeros((self.params['nx'], self.params['ny']))  # noqa: E741
         R = np.zeros((self.params['nx'], self.params['ny']))
 
         S[:, :] = 10
