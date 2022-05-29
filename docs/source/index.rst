@@ -12,6 +12,3 @@ Welcome to covid's documentation!
    Home page <includeme>
    API reference <_autosummary/covid>
    Command Line Use <cmd>
-
-.. include:: ../../README.rst
-   :start-after: inclusion-intro

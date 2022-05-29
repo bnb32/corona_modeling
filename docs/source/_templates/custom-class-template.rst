@@ -1,18 +1,18 @@
 {{ fullname | escape | underline}}
 
-.. currentmodule: : {{ module }}
+.. currentmodule:: {{ module }}
 
-.. autoclass: : {{ objname }}
-   : members:
-   : show-inheritance:
-   : inherited-members:
-   : special-members: __call__, __add__, __mul__
+.. autoclass:: {{ objname }}
+   :members:
+   :show-inheritance:
+   :inherited-members:
+   :special-members: __call__, __add__, __mul__
 
    {% block methods %}
    {% if methods %}
-   .. rubric: : {{ _('Methods') }}
+   .. rubric:: {{ _('Methods') }}
 
-   .. autosummary: :
+   .. autosummary::
    {% for item in methods %}
       {%- if not item.startswith('_') %}
       ~{{ name }}.{{ item }}
@@ -23,9 +23,9 @@
 
    {% block attributes %}
    {% if attributes %}
-   .. rubric: : {{ _('Attributes') }}
+   .. rubric:: {{ _('Attributes') }}
 
-   .. autosummary: :
+   .. autosummary::
    {% for item in attributes %}
       ~{{ name }}.{{ item }}
    {%- endfor %}

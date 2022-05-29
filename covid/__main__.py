@@ -10,8 +10,6 @@ from covid.postprocessing import (plot_compartments_comparison,
                                   plot_compartment, plot_compartments)
 
 
-
-
 if __name__ == '__main__':
     parser = covid_argparse()
     args = parser.parse_args()
