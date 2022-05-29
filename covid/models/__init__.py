@@ -32,6 +32,7 @@ class CompartmentalModel(ABC):
         self.initial_values = None
         self.fit_compartments = list(self.compartment_names.keys())
         self.fit_derivatives = True
+        self.parameter_index = 0
         self.model_params = []
         self.params = {}
 
@@ -115,7 +116,7 @@ class CompartmentalModel(ABC):
         if self.fit_derivatives:
             n_days //= 2
 
-        days = [i for i in range(n_days)]
+        days = list(range(n_days))
         popt, _ = curve_fit(self.model_fit_function,
                             days, data, method='trf',
                             bounds=(lower_bounds,
@@ -130,7 +131,7 @@ class CompartmentalModel(ABC):
         """Model function providing fit interface"""
         for i, v in enumerate(args):
             self.params[self.parameter_index[i]] = v
-        results = self.run_model(len(t)-1)
+        results = self.run_model(len(t) - 1)
 
         output = flatten([list(results[name])
                           for name in self.fit_compartments])
@@ -158,8 +159,8 @@ class CompartmentalModel(ABC):
         for i in range(self.compartment_number):
             entry = 0
             for j in range(self.compartment_number):
-                entry += self.transfer_matrix[i, j]*last_compartments[j]
-            next_compartments.append(entry*self.dt)
+                entry += self.transfer_matrix[i, j] * last_compartments[j]
+            next_compartments.append(entry * self.dt)
 
         return next_compartments
 
@@ -180,7 +181,7 @@ class CompartmentalModel(ABC):
         next_compartments = (last_compartments
                              + 1.0 / 6.0 * np.tensordot(compartments_k,
                                                         stencil,
-                                                        axes = (1, 0)))
+                                                        axes=(1, 0)))
         next_compartments[next_compartments < 0] = 0.0
 
         return next_compartments
@@ -193,7 +194,7 @@ class CompartmentalModel(ABC):
         last_compartments = [self.compartment_series[name][0]
                              for name in self.compartment_names]
         for day in range(n_days):
-            for t in range(self.n_substeps):
+            for _ in range(self.n_substeps):
                 last_compartments = self.rk_step(last_compartments, day)
             for i, name in enumerate(self.compartment_names):
                 self.compartment_series[name].append(last_compartments[i])
@@ -202,6 +203,7 @@ class CompartmentalModel(ABC):
 
 
 class SIR(CompartmentalModel):
+    """Susceptible, Infected, Recovered Compartmental Model"""
     def __init__(self, parameters=None):
         super().__init__(['S', 'I', 'R'], parameters)
         self.model_params = ['recovery_rate',
@@ -211,8 +213,8 @@ class SIR(CompartmentalModel):
 
     def define_parameters(self):
 
-        self.params['recovery_rate'] = 1.0/14.0
-        self.params['infection_rate'] = 3.0/14.0
+        self.params['recovery_rate'] = 1.0 / 14.0
+        self.params['infection_rate'] = 3.0 / 14.0
         self.params['infection_rate_ramp'] = 0.0
         self.params['infection_rate_adjustment'] = 0.0
 
@@ -239,6 +241,7 @@ class SIR(CompartmentalModel):
 
 
 class SIRV(CompartmentalModel):
+    """Susceptible, Infected, Recovered, Vaccinated Model"""
     def __init__(self, parameters=None):
         super().__init__(['S', 'I', 'R', 'V'], parameters)
         self.model_params = ['recovery_rate',
@@ -253,9 +256,9 @@ class SIRV(CompartmentalModel):
 
     def define_parameters(self):
 
-        self.params['recovery_rate'] = 1.0/14.0
-        self.params['infection_rate'] = 3.0/14.0
-        self.params['vaccination_rate'] = 1.0/7.0
+        self.params['recovery_rate'] = 1.0 / 14.0
+        self.params['infection_rate'] = 3.0 / 14.0
+        self.params['vaccination_rate'] = 1.0 / 7.0
         self.params['recovery_rate_adjustment'] = 0.0
         self.params['infection_rate_adjustment'] = 0.0
         self.params['vaccination_rate_adjustment'] = 0.0
@@ -298,6 +301,7 @@ class SIRV(CompartmentalModel):
 
 
 class SIRVD(CompartmentalModel):
+    """Susceptible, Infected, Recovered, Vaccinated, Died Model"""
     def __init__(self, parameters=None):
         super().__init__(['S', 'I', 'R', 'V', 'D'], parameters)
         self.model_params = ['recovery_rate',
@@ -316,9 +320,9 @@ class SIRVD(CompartmentalModel):
 
     def define_parameters(self):
 
-        self.params['recovery_rate'] = 1.0/14.0
-        self.params['infection_rate'] = 3.0/14.0
-        self.params['vaccination_rate'] = 1.0/7.0
+        self.params['recovery_rate'] = 1.0 / 14.0
+        self.params['infection_rate'] = 3.0 / 14.0
+        self.params['vaccination_rate'] = 1.0 / 7.0
         self.params['death_rate'] = 0.02
         self.params['recovery_rate_adjustment'] = 0.0
         self.params['infection_rate_adjustment'] = 0.0
@@ -371,6 +375,7 @@ class SIRVD(CompartmentalModel):
 
 
 class SIRD(CompartmentalModel):
+    """Susceptible, Infected, Recovered, Died Model"""
     def __init__(self, parameters=None):
         super().__init__(['S', 'I', 'R', 'D'], parameters)
         self.model_params = ['recovery_rate',
@@ -405,6 +410,7 @@ class SIRD(CompartmentalModel):
 
 
 class Spatial_SIR(CompartmentalModel):
+    """Susceptible, Infected, Recovered Model with spatial variation"""
     def __init__(self, parameters=None):
         super().__init__(['S', 'I', 'R'], parameters)
         self.model_params = ['recovery_rate',
@@ -412,7 +418,7 @@ class Spatial_SIR(CompartmentalModel):
 
     def define_parameters(self):
 
-        self.params['recovery_rate'] = 1.0/14.0
+        self.params['recovery_rate'] = 1.0 / 14.0
         self.params['infection_rate'] = 3.0/14.0
 
         self.params['grid_size_x'] = 20
@@ -465,6 +471,7 @@ class Spatial_SIR(CompartmentalModel):
 
 
 class SEIR(CompartmentalModel):
+    """Susceptible, Exposed, Infected, Recovered Model"""
     def __init__(self, parameters=None):
         super().__init__(['S', 'E', 'I', 'R'], parameters)
         self.model_params = ['recovery_rate',
@@ -498,6 +505,8 @@ class SEIR(CompartmentalModel):
 
 
 class SEAIQHRD(CompartmentalModel):
+    """Susceptible, Exposed, Asymptomatic, Infected, Quarantined, Hospitalized,
+    Recovered, Died Model"""
     def __init__(self, parameters = None):
         super().__init__(['S', 'E', 'A', 'I', 'Q', 'H', 'R', 'D'], parameters)
         self.model_params = ['infection_rate',
@@ -510,24 +519,24 @@ class SEAIQHRD(CompartmentalModel):
 
     def define_parameters(self):
 
-        self.params['infection_rate'] = 3.0/14.0
+        self.params['infection_rate'] = 3.0 / 14.0
 
-        self.params['E_to_A_rate'] = 1.0/4.0
+        self.params['E_to_A_rate'] = 1.0 / 4.0
 
-        self.params['A_to_I_rate'] = 1.0/7.0
-        self.params['A_to_R_rate'] = 1.0/3.0
+        self.params['A_to_I_rate'] = 1.0 / 7.0
+        self.params['A_to_R_rate'] = 1.0 / 3.0
 
-        self.params['I_to_Q_rate'] = 1.0/2.0
-        self.params['I_to_H_rate'] = 1.0/3.0
-        self.params['I_to_R_rate'] = 1.0/3.0
-        self.params['I_to_D_rate'] = 1.0/3.0
+        self.params['I_to_Q_rate'] = 1.0 / 2.0
+        self.params['I_to_H_rate'] = 1.0 / 3.0
+        self.params['I_to_R_rate'] = 1.0 / 3.0
+        self.params['I_to_D_rate'] = 1.0 / 3.0
 
-        self.params['Q_to_H_rate'] = 1.0/5.0
-        self.params['Q_to_R_rate'] = 1.0/3.0
-        self.params['Q_to_D_rate'] = 1.0/3.0
+        self.params['Q_to_H_rate'] = 1.0 / 5.0
+        self.params['Q_to_R_rate'] = 1.0 / 3.0
+        self.params['Q_to_D_rate'] = 1.0 / 3.0
 
-        self.params['H_to_R_rate'] = 1.0/3.0
-        self.params['H_to_D_rate'] = 1.0/3.0
+        self.params['H_to_R_rate'] = 1.0 / 3.0
+        self.params['H_to_D_rate'] = 1.0 / 3.0
 
     def define_transfer_matrix(self):
 
