@@ -1,14 +1,15 @@
-import covid.environment as env
-from covid.misc import get_logger, int_to_date, date_to_int
-
-from datetime import date, timedelta, datetime
-from os import environ, path, system
+"""Fetch data"""
+from datetime import date, timedelta
+from os import environ, path
 import json
 import numpy as np
 import urllib.request
-from scipy import stats
 from tempfile import gettempdir
 import pandas as pd
+
+import covid.environment as env
+from covid.misc import get_logger, int_to_date, date_to_int
+
 
 logger = get_logger()
 
@@ -35,13 +36,14 @@ def artificial_V(n_days,N):
 
     V_final = N*estimation_params['vaccination_rate']
     V_initial = 0
-    return np.linspace(V_initial,V_final,n_days)
+    return np.linspace(V_initial, V_final, n_days)
+
 
 class Dataset:
     """Dataset class for getting and
        formatting covid data for processing
        and simluation by model
-    """   
+    """
     def __init__(self,parameters=None):
         self.current_url = f'https://api.covidactnow.org/v2/states.json?apiKey={env.covid_act_api}'
         self.timeseries_url = f'https://api.covidactnow.org/v2/states.timeseries.json?apiKey={env.covid_act_api}'
@@ -52,36 +54,36 @@ class Dataset:
             self.us_states = json.load(states_json)
         with open(orders_path, 'rt') as orders_json:
             self.order_dates = json.load(orders_json)
-        
+
         self.params = {}
         self.define_parameters()
 
         if parameters is not None:
             for k,v in parameters.items():
                 self.params[k] = v
-        
+
         self.params['N'] = self.get_pop()
-    
+
     def define_parameters(self):
         self.params['state'] = 'Washington'
         self.params['county'] = 'Washington'
         self.params['n_days'] = 100
-    
-    def compartment_map(self):    
+
+    def compartment_map(self):
         self.data = {}
-        self.data['H'] = self.raw_data['hospital'].values+self.raw_data['icu'].values                 
+        self.data['H'] = self.raw_data['hospital'].values+self.raw_data['icu'].values
         self.data['D'] = self.raw_data['deaths'].values
         self.data['R'] = self.data['D']/estimation_params['death_rate']
         self.data['I'] = self.raw_data['cases'].values-self.data['R']-self.data['D']
         self.data['V'] = self.raw_data['vaccinationsCompleted'].values
-        self.data['S'] = self.params['N']-self.data['I']-self.data['R']-self.data['V']-self.data['D'] 
+        self.data['S'] = self.params['N']-self.data['I']-self.data['R']-self.data['V']-self.data['D']
 
         return self.data
-    
+
     def get_data(self):
         self.get_raw_data()
         return self.compartment_map()
-        
+
     def get_raw_data(self):
         data = pd.read_json(self.timeseries_url)
         data_metrics = pd.DataFrame(data[data['state']==self.us_states[self.params['state']]]['metricsTimeseries'].values[0])
@@ -103,23 +105,23 @@ class Dataset:
     def get_pop(self):
         data = pd.read_json(self.current_url)
         return data[data['state']==self.us_states[self.params['state']]]['population'].values[0]
-        #if self.params['county']==None: 
+        #if self.params['county']==None:
         #    self.county=state
-        #return self.pop_data[self.params['state']][self.params['county']] 
- 
+        #return self.pop_data[self.params['state']][self.params['county']]
+
 def latlon_to_place(api_key, lat, lon):
     uri = 'https://maps.googleapis.com/maps/api/geocode/json?latlng={Lat},{Lon}&key={ApiKey}'.format(
         ApiKey=api_key,
         Lat=lat,
         Lon=lon,
     )
-    
+
     logger.info('Retrieving GeoCoding for ({0}, {1})...'.format(lat, lon))
-    
+
     v=urllib.request.urlopen(uri).read()
     logger.info(v)
     j=json.loads(v)
-    
+
     components=j['results'][0]['address_components']
     country=state=county=None
     for c in components:
@@ -130,5 +132,5 @@ def latlon_to_place(api_key, lat, lon):
         if "administrative_area_level_2" in c['types']:
             county=c['long_name']
 
-    return county,state,country        
+    return county,state,country
 

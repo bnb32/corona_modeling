@@ -1,0 +1,3 @@
+CoronaModeling
+**************
+.. include:: ../../README.rst
