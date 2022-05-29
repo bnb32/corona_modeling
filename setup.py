@@ -12,5 +12,6 @@ setup(
                         'scipy',
                         'progressbar',
                         'matplotlib',
-                        'pandas']
-)      
+                        'pandas',
+                        'sphinx-argparse']
+)

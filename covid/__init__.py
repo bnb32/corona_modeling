@@ -5,7 +5,7 @@ from covid.postprocessing import plot_compartments_comparison, plot_compartment_
 import argparse
 import pandas as pd
 
-def main():
+def covid_argparse():
 
     parser = argparse.ArgumentParser(description='Plot SIRV Model')
     parser.add_argument('-state', default='Washington')
@@ -40,7 +40,7 @@ def main():
     model.start_step = 0
 
     output = model.run_model(n_days=args.sim_days)
-    
+
     plot_compartments_comparison(sim_data=output,raw_data=data,params=ds.params)
 
     plot_compartment_comparison(sim_data=output,raw_data=data,params=ds.params,compartment=args.compartment)
@@ -48,4 +48,4 @@ def main():
     return output
 
 if __name__=='__main__':
-    main()
+    covid_argparse()
