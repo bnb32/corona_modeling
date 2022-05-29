@@ -45,7 +45,7 @@ def json_handler(o):
     elif isinstance(o, Decimal):
         return float(o)
     else:
-        logger.warning('Unknown Type in json_handler: ', str(o))
+        logger.warning('Unknown Type in json_handler: %s', str(o))
         return str(o)
 
 
@@ -90,7 +90,7 @@ def laplacian(M, dx, dy):
                 L[i, j] /= (dx * dx)
 
             # sides
-            if i == 0 and 1 <= j <= (cols-2):
+            if i == 0 and 1 <= j <= (cols - 2):
                 L[i, j] = (M[i + 1, j] - 2 * M[i, j]) / (dy * dy)
                 L[i, j] += (M[i, j - 1] + M[i, j + 1] - 2 * M[i, j])
                 L[i, j] /= (dx * dx)
@@ -173,7 +173,7 @@ def beta_interp(t, beta, Sd, t0, n_ramp):
     if t < t0:
         return beta
     elif t0 <= t <= t0 + n_ramp:
-        return (1 - (t - t0) * Sd/ (n_ramp)) * beta
+        return (1 - (t - t0) * Sd / (n_ramp)) * beta
     else:
         return (1 - Sd) * beta
 

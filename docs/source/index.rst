@@ -6,12 +6,12 @@
 Welcome to covid's documentation!
 =================================
 
-.. toctree: :
-   : hidden:
+.. toctree::
+   :hidden:
 
    Home page <includeme>
    API reference <_autosummary/covid>
    Command Line Use <cmd>
 
-.. include: : ../../README.rst
-   : start-after: inclusion-intro
+.. include:: ../../README.rst
+   :start-after: inclusion-intro

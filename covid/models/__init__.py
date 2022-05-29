@@ -384,9 +384,9 @@ class SIRD(CompartmentalModel):
 
     def define_parameters(self):
 
-        self.params['recovery_rate'] = 1.0/14.0
-        self.params['infection_rate'] = 3.0/14.0
-        self.params['death_rate'] = 1.0/14.0
+        self.params['recovery_rate'] = 1.0 / 14.0
+        self.params['infection_rate'] = 3.0 / 14.0
+        self.params['death_rate'] = 1.0 / 14.0
 
     def define_transfer_matrix(self):
 
@@ -419,14 +419,14 @@ class Spatial_SIR(CompartmentalModel):
     def define_parameters(self):
 
         self.params['recovery_rate'] = 1.0 / 14.0
-        self.params['infection_rate'] = 3.0/14.0
+        self.params['infection_rate'] = 3.0 / 14.0
 
         self.params['grid_size_x'] = 20
         self.params['grid_size_y'] = 20
         self.params['dx'] = 1
         self.params['dy'] = 1
-        self.params['nx'] = int(self.params['grid_size_x']/self.params['dx'])
-        self.params['ny'] = int(self.params['grid_size_y']/self.params['dy'])
+        self.params['nx'] = int(self.params['grid_size_x'] / self.params['dx'])
+        self.params['ny'] = int(self.params['grid_size_y'] / self.params['dy'])
         self.params['r0'] = 1.0
 
     def define_transfer_matrix(self):
@@ -441,8 +441,8 @@ class Spatial_SIR(CompartmentalModel):
         self.params['N'] = sum(last_compartments)
         alpha = (self.params['infection_rate']
                  / self.params['N']
-                 * (last_compartments[self.compartment_names['I']] +
-                    self.params['r0']**2 / 8.0
+                 * (last_compartments[self.compartment_names['I']]
+                    + self.params['r0']**2 / 8.0
                     * laplacian(last_compartments[self.compartment_names['I']],
                                 self.params['dx'], self.params['dy'])))
 
@@ -455,16 +455,16 @@ class Spatial_SIR(CompartmentalModel):
         I = np.zeros((self.params['nx'], self.params['ny']))
         R = np.zeros((self.params['nx'], self.params['ny']))
 
-        S[:, : ] = 10
-        midx = self.params['nx']//2
-        midy = self.params['ny']//2
-        I[midx-2: midx+2, midy-2: midy+2] = 3
+        S[:, :] = 10
+        midx = self.params['nx'] // 2
+        midy = self.params['ny'] // 2
+        I[midx - 2: midx + 2, midy - 2: midy + 2] = 3
 
         self.compartment_series['S'] = [S]
         self.compartment_series['I'] = [I]
         self.compartment_series['R'] = [R]
 
-    def initialize(self, initial_values = None):
+    def initialize(self, initial_values=None):
 
         if initial_values is None:
             self.example()
@@ -480,9 +480,9 @@ class SEIR(CompartmentalModel):
 
     def define_parameters(self):
 
-        self.params['recovery_rate'] = 1.0/14.0
-        self.params['infection_rate'] = 3.0/14.0
-        self.params['latency_rate'] = 1.0/7.0
+        self.params['recovery_rate'] = 1.0 / 14.0
+        self.params['infection_rate'] = 3.0 / 14.0
+        self.params['latency_rate'] = 1.0 / 7.0
 
     def define_transfer_matrix(self):
 
@@ -507,7 +507,7 @@ class SEIR(CompartmentalModel):
 class SEAIQHRD(CompartmentalModel):
     """Susceptible, Exposed, Asymptomatic, Infected, Quarantined, Hospitalized,
     Recovered, Died Model"""
-    def __init__(self, parameters = None):
+    def __init__(self, parameters=None):
         super().__init__(['S', 'E', 'A', 'I', 'Q', 'H', 'R', 'D'], parameters)
         self.model_params = ['infection_rate',
                              'E_to_A_rate', 'A_to_I_rate',
@@ -594,4 +594,3 @@ class SEAIQHRD(CompartmentalModel):
 
         self.update_transfer_value(-alpha, 'S', 'S')
         self.update_transfer_value(alpha, 'E', 'S')
-
