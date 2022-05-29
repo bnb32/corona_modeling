@@ -1,6 +1,7 @@
 """Covid module"""
 import argparse
 
+
 def covid_argparse():
     """Parse args for running compartmental model"""
     parser = argparse.ArgumentParser(description='Plot SIRV Model')

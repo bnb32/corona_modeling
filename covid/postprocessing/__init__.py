@@ -49,7 +49,7 @@ def plot_compartment(sim_data = None, raw_data = None, params = None, compartmen
     plt.legend()
     plt.tight_layout()
 
-    filename = path.join(f'{os.environ["COVID_FIG_DIR"]}', f'{params["state"]}_{compartment}_fig.png')
+    filename = path.join(env.COVID_FIG_DIR, f'{params["state"]}_{compartment}_fig.png')
     plt.savefig(filename)
     print(f'Saved figure: {filename}')
 
@@ -76,7 +76,7 @@ def plot_compartment_comparison(sim_data = None, raw_data = None, params = None,
     plt.legend()
     plt.tight_layout()
 
-    filename = path.join(f'{os.environ["COVID_FIG_DIR"]}', f'{params["state"]}_{compartment}_comparison_fig.png')
+    filename = path.join(env.COVID_FIG_DIR, f'{params["state"]}_{compartment}_comparison_fig.png')
     plt.savefig(filename)
     print(f'Saved figure: {filename}')
 
@@ -106,7 +106,7 @@ def plot_compartments(sim_data = None, raw_data = None, params = None):
     plt.legend()
     plt.tight_layout()
 
-    filename = path.join(f'{os.environ["COVID_FIG_DIR"]}', f'{params["state"]}_fig.png')
+    filename = path.join(env.COVID_FIG_DIR, f'{params["state"]}_fig.png')
     plt.savefig(filename)
     print(f'Saved figure: {filename}')
 
@@ -135,7 +135,7 @@ def plot_compartments_comparison(sim_data = None, raw_data = None, params = None
     plt.legend()
     plt.tight_layout()
 
-    filename = path.join(f'{os.environ["COVID_FIG_DIR"]}', f'{params["state"]}_comparison_fig.png')
+    filename = path.join(env.COVID_FIG_DIR, f'{params["state"]}_comparison_fig.png')
     plt.savefig(filename)
     print(f'Saved figure: {filename}')
 
@@ -268,6 +268,6 @@ def plot_doubling_trend(dates, data, state):
     plt.ylabel("Doubling Time (days)")
     plt.xlabel("Date")
     plt.tight_layout()
-    plt.savefig(f'{os.environ["COVID_FIG_DIR"]}/Td_trend.png')
+    plt.savefig(f'{env.COVID_FIG_DIR}/Td_trend.png')
     plt.clf()
 
