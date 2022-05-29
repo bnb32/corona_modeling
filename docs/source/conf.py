@@ -3,7 +3,7 @@
 #
 # This file only contains a selection of the most common options. For a full
 # list see the documentation:
-# https://www.sphinx-doc.org/en/master/usage/configuration.html
+# https: //www.sphinx-doc.org/en/master/usage/configuration.html
 
 # -- Path setup --------------------------------------------------------------
 
@@ -59,7 +59,7 @@ exclude_patterns = [
     "**.ipynb_checkpoints",
     "**__pycache__**",
     # to ensure that include files (partial pages) aren't built, exclude them
-    # https://github.com/sphinx-doc/sphinx/issues/1965#issuecomment-124732907
+    # https: //github.com/sphinx-doc/sphinx/issues/1965#issuecomment-124732907
     "**/includes/**",
 ]
 
