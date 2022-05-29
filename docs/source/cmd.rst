@@ -1,5 +1,5 @@
 Command Line utilities
- == == == == == == == == == == ==
+======================
 
 .. toctree: :
     : maxdepth: 1
