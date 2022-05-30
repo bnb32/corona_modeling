@@ -10,5 +10,6 @@ Welcome to covid's documentation!
    :hidden:
 
    Home page <includeme>
+   Installation <misc/install>
    API reference <_autosummary/covid>
-   Command Line Use <cmd>
+   Command Line Use <misc/cmd>

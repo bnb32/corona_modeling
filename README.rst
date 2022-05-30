@@ -2,12 +2,18 @@
 COVID MODELING
 **************
 
-Install package:
+Documentation
+=============
+`<https://bnb32.github.io/corona_modeling>`_
 
-.. code-block:: bash
+Installation
+============
 
-    pip install -e .
+Follow instructions `here <https://bnb32.github.io/corona_modeling/misc/install.html>`_
 
+
+Usage
+=====
 
 Instantiate model:
 
