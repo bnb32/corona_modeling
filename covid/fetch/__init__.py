@@ -40,8 +40,9 @@ def init_estimation_params():
     estimation_params['hospitalization_rate'] = 0.005
     return estimation_params
 
-def artificial_V(n_days, N, estimation_params):
 
+def artificial_V(n_days, N, estimation_params):
+    """Get vaccination timeseries"""
     V_final = N * estimation_params['vaccination_rate']
     V_initial = 0
     return np.linspace(V_initial, V_final, n_days)
@@ -59,6 +60,7 @@ class Dataset:
         self.timeseries_url += 'states.timeseries.json?'
         self.timeseries_url += f'apiKey = {env.COVID_ACT_API}'
         self.data = None
+        self.raw_data = None
         self.estimation_params = init_estimation_params()
 
         with open(pop_path, 'rt') as pop_json:
@@ -78,11 +80,14 @@ class Dataset:
         self.params['N'] = self.get_pop()
 
     def define_parameters(self):
+        """Define location and model parameters"""
         self.params['state'] = 'Washington'
         self.params['county'] = 'Washington'
         self.params['n_days'] = 100
 
     def compartment_map(self):
+        """Define data compartment map. Shows how to get initial vals for model
+        from data"""
         self.data = {}
         self.data['H'] = self.raw_data['hospital'].values
         self.data['H'] += self.raw_data['icu'].values
@@ -97,33 +102,43 @@ class Dataset:
         return self.data
 
     def get_data(self):
+        """Get data and map to model compartments"""
         self.get_raw_data()
         return self.compartment_map()
 
     def get_raw_data(self):
+        """Get raw data from API"""
         data = pd.read_json(self.timeseries_url)
-        data_metrics = pd.DataFrame(data[data['state'] == self.us_states[self.params['state']]]['metricsTimeseries'].values[0])
-        data = pd.DataFrame(data[data['state'] == self.us_states[self.params['state']]]['actualsTimeseries'].values[0])
-        data['infections'] = data_metrics['caseDensity'].apply(lambda x: x * self.params['N'] / 10**5)
+        mask = data['state'] == self.us_states[self.params['state']]
+        data_metrics = pd.DataFrame(data[mask]['metricsTimeseries'].values[0])
+        data = pd.DataFrame(data[mask]['actualsTimeseries'].values[0])
+        data['infections'] = data_metrics['caseDensity'].apply(
+            lambda x: x * self.params['N'] / 10**5)
         data['date'] = data['date'].apply(lambda x: int(x.replace('-', '')))
-        self.params['min_date'] = int_to_date(max(data['date'].values)) - timedelta(days=self.params['n_days'])
+        self.params['min_date'] = int_to_date(max(data['date'].values))
+        self.params['min_data'] -= timedelta(days=self.params['n_days'])
         self.params['max_date'] = int_to_date(max(data['date'].values))
-        data = data[(data['date'] > date_to_int(self.params['min_date'])) &
-                    (data['date'] < date_to_int(self.params['max_date']))]
-        data['hospital'] = data['hospitalBeds'].apply(lambda x: x['currentUsageTotal'])
+        data = data[(data['date'] > date_to_int(self.params['min_date']))
+                    & (data['date'] < date_to_int(self.params['max_date']))]
+        data['hospital'] = data['hospitalBeds'].apply(
+            lambda x: x['currentUsageTotal'])
         data['icu'] = data['icuBeds'].apply(lambda x: x['currentUsageTotal'])
         self.raw_data = data.sort_values(by='date', ascending=True)
-        self.raw_data = self.raw_data.fillna(self.raw_data.rolling(6, min_periods=1).mean())
+        self.raw_data = self.raw_data.fillna(
+            self.raw_data.rolling(6, min_periods=1).mean())
         self.raw_data = self.raw_data.fillna(0)
         self.raw_data = self.raw_data.ewm(span=10).mean()
         return self.raw_data
 
     def get_pop(self):
+        """Get population"""
         data = pd.read_json(self.current_url)
         return data[data['state'] == self.us_states[
             self.params['state']]]['population'].values[0]
 
+
 def latlon_to_place(api_key, lat, lon):
+    """Get location info from lat lon"""
     uri = 'https: //maps.googleapis.com/maps/api/geocode/json?'
     uri += 'latlng={Lat},{Lon}&key={ApiKey}'.format(ApiKey=api_key, Lat=lat,
                                                     Lon=lon)
@@ -145,4 +160,3 @@ def latlon_to_place(api_key, lat, lon):
                 county = c['long_name']
 
     return county, state, country
-
