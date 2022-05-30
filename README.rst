@@ -1,6 +1,6 @@
-**************
-COVID MODELING
-**************
+***********************
+COVID Modeling Overview
+***********************
 
 Documentation
 =============
