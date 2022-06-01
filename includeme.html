@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>COVID Modeling Overview &mdash; CoronaModeling v1.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Clone repo (recommended for developers)" href="misc/install.html" />
+    <link rel="prev" title="Welcome to covid’s documentation!" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> CoronaModeling
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Home page</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#documentation">Documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#usage">Usage</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="misc/install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_autosummary/covid.html">API reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="_autosummary/covid.covid_argparse.html">covid.covid_argparse</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_autosummary/covid.environment.html">covid.environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_autosummary/covid.fetch.html">covid.fetch</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/covid.fetch.artificial_V.html">covid.fetch.artificial_V</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/covid.fetch.init_estimation_params.html">covid.fetch.init_estimation_params</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/covid.fetch.latlon_to_place.html">covid.fetch.latlon_to_place</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/covid.fetch.Dataset.html">covid.fetch.Dataset</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="_autosummary/covid.models.html">covid.models</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/covid.models.ramp_function.html">covid.models.ramp_function</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/covid.models.CompartmentalModel.html">covid.models.CompartmentalModel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/covid.models.SEAIQHRD.html">covid.models.SEAIQHRD</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/covid.models.SEIR.html">covid.models.SEIR</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/covid.models.SIR.html">covid.models.SIR</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/covid.models.SIRD.html">covid.models.SIRD</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/covid.models.SIRV.html">covid.models.SIRV</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/covid.models.SIRVD.html">covid.models.SIRVD</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/covid.models.Spatial_SIR.html">covid.models.Spatial_SIR</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="_autosummary/covid.postprocessing.html">covid.postprocessing</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/covid.postprocessing.get_colormap.html">covid.postprocessing.get_colormap</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/covid.postprocessing.get_date_labels.html">covid.postprocessing.get_date_labels</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/covid.postprocessing.get_map.html">covid.postprocessing.get_map</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/covid.postprocessing.latlonrangetozoom.html">covid.postprocessing.latlonrangetozoom</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/covid.postprocessing.latlontopixels.html">covid.postprocessing.latlontopixels</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/covid.postprocessing.load_data.html">covid.postprocessing.load_data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/covid.postprocessing.pixelstolatlon.html">covid.postprocessing.pixelstolatlon</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/covid.postprocessing.plot_compartment.html">covid.postprocessing.plot_compartment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/covid.postprocessing.plot_compartment_comparison.html">covid.postprocessing.plot_compartment_comparison</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/covid.postprocessing.plot_compartments.html">covid.postprocessing.plot_compartments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/covid.postprocessing.plot_compartments_comparison.html">covid.postprocessing.plot_compartments_comparison</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/covid.postprocessing.plot_doubling_trend.html">covid.postprocessing.plot_doubling_trend</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="_autosummary/covid.utilities.html">covid.utilities</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/covid.utilities.beta_interp.html">covid.utilities.beta_interp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/covid.utilities.cases_to_beta.html">covid.utilities.cases_to_beta</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/covid.utilities.cost_func.html">covid.utilities.cost_func</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/covid.utilities.csv_to_json.html">covid.utilities.csv_to_json</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/covid.utilities.date_to_int.html">covid.utilities.date_to_int</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/covid.utilities.doubling_time.html">covid.utilities.doubling_time</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/covid.utilities.doubling_trend_to_Sd.html">covid.utilities.doubling_trend_to_Sd</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/covid.utilities.exp_decay_func.html">covid.utilities.exp_decay_func</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/covid.utilities.exp_func.html">covid.utilities.exp_func</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/covid.utilities.exp_lin_func.html">covid.utilities.exp_lin_func</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/covid.utilities.flatten.html">covid.utilities.flatten</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/covid.utilities.get_beta_ramp.html">covid.utilities.get_beta_ramp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/covid.utilities.get_logger.html">covid.utilities.get_logger</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/covid.utilities.get_seasonal_beta_variation.html">covid.utilities.get_seasonal_beta_variation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/covid.utilities.grad_descent.html">covid.utilities.grad_descent</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/covid.utilities.int_to_date.html">covid.utilities.int_to_date</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/covid.utilities.interp_mat.html">covid.utilities.interp_mat</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/covid.utilities.json_handler.html">covid.utilities.json_handler</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/covid.utilities.laplacian.html">covid.utilities.laplacian</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/covid.utilities.logistic_func.html">covid.utilities.logistic_func</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/covid.utilities.vec_diff.html">covid.utilities.vec_diff</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/covid.utilities.initial_values.html">covid.utilities.initial_values</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="misc/cmd.html">Command Line Use</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="misc/cmd_covid.html">Run COVID model</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="misc/cmd_covid.html#Named Arguments">Named Arguments</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">CoronaModeling</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>COVID Modeling Overview</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/bnb32/covid/blob/main/docs/source/includeme.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="covid-modeling-overview">
+<h1>COVID Modeling Overview<a class="headerlink" href="#covid-modeling-overview" title="Permalink to this heading"></a></h1>
+<section id="documentation">
+<h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this heading"></a></h2>
+<p><a class="reference external" href="https://bnb32.github.io/corona_modeling">https://bnb32.github.io/corona_modeling</a></p>
+</section>
+<section id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this heading"></a></h2>
+<p>Follow instructions <a class="reference external" href="https://bnb32.github.io/corona_modeling/misc/install.html">here</a></p>
+</section>
+<section id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this heading"></a></h2>
+<p>Instantiate model:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">covid.models</span> <span class="kn">import</span> <span class="n">SIR</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">SIR</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Instantiate dataset:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">covid.fetch</span> <span class="kn">import</span> <span class="n">Dataset</span>
+<span class="n">ds</span> <span class="o">=</span> <span class="n">Dataset</span><span class="p">({</span><span class="s1">&#39;state&#39;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">state</span><span class="o">&gt;</span><span class="p">,</span> <span class="s1">&#39;n_days&#39;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">n_days</span><span class="o">&gt;</span><span class="p">})</span>
+</pre></div>
+</div>
+<p>Get data:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">get_data</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Fit model parameters:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">fit_parameters_from_data</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Run model:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">initialize</span><span class="p">({</span><span class="n">k</span><span class="p">:</span> <span class="n">data</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">compartment_names</span><span class="p">})</span>
+<span class="n">output</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">run_model</span><span class="p">(</span><span class="n">n_days</span><span class="o">=&lt;</span><span class="n">n_days</span><span class="o">&gt;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Plot output of specific compartment:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">covid.postprocessing</span> <span class="kn">import</span> <span class="n">plot_compartment</span>
+<span class="n">plot_compartment</span><span class="p">(</span><span class="n">sim_data</span><span class="o">=</span><span class="n">output</span><span class="p">,</span> <span class="n">raw_data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">ds</span><span class="o">.</span><span class="n">params</span><span class="p">,</span> <span class="n">compartment</span><span class="o">=&lt;</span><span class="n">compartment_name</span><span class="o">&gt;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Change model parameters:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">update_parameters</span><span class="p">(</span><span class="o">&lt;</span><span class="n">params</span><span class="o">&gt;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Welcome to covid’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="misc/install.html" class="btn btn-neutral float-right" title="Clone repo (recommended for developers)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Brandon Benton.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

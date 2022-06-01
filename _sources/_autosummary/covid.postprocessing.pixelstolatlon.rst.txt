@@ -1,0 +1,6 @@
+covid.postprocessing.pixelstolatlon
+===================================
+
+.. currentmodule:: covid.postprocessing
+
+.. autofunction:: pixelstolatlon

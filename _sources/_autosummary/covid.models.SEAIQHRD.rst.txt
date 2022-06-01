@@ -1,0 +1,38 @@
+covid.models.SEAIQHRD
+=====================
+
+.. currentmodule:: covid.models
+
+.. autoclass:: SEAIQHRD
+   :members:
+   :show-inheritance:
+   :inherited-members:
+   :special-members: __call__, __add__, __mul__
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~SEAIQHRD.define_parameters
+      ~SEAIQHRD.define_transfer_matrix
+      ~SEAIQHRD.fit_parameters
+      ~SEAIQHRD.get_parameters_from_data
+      ~SEAIQHRD.initialize
+      ~SEAIQHRD.last_compartment_value
+      ~SEAIQHRD.model_eqns
+      ~SEAIQHRD.model_fit_function
+      ~SEAIQHRD.rk_step
+      ~SEAIQHRD.run_model
+      ~SEAIQHRD.set_initial_values
+      ~SEAIQHRD.transfer_value
+      ~SEAIQHRD.update_parameters
+      ~SEAIQHRD.update_transfer_matrix
+      ~SEAIQHRD.update_transfer_value
+   
+   
+
+   
+   
+   

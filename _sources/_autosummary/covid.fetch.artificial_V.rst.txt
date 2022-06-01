@@ -1,0 +1,6 @@
+covid.fetch.artificial\_V
+=========================
+
+.. currentmodule:: covid.fetch
+
+.. autofunction:: artificial_V

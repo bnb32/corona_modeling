@@ -1,0 +1,6 @@
+covid.utilities.doubling\_trend\_to\_Sd
+=======================================
+
+.. currentmodule:: covid.utilities
+
+.. autofunction:: doubling_trend_to_Sd

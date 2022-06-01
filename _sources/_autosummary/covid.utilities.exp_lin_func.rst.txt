@@ -1,0 +1,6 @@
+covid.utilities.exp\_lin\_func
+==============================
+
+.. currentmodule:: covid.utilities
+
+.. autofunction:: exp_lin_func

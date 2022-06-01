@@ -1,0 +1,6 @@
+covid.models.ramp\_function
+===========================
+
+.. currentmodule:: covid.models
+
+.. autofunction:: ramp_function

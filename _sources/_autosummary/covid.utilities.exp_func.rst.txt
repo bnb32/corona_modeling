@@ -1,0 +1,6 @@
+covid.utilities.exp\_func
+=========================
+
+.. currentmodule:: covid.utilities
+
+.. autofunction:: exp_func

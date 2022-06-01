@@ -1,0 +1,58 @@
+covid.utilities
+===============
+
+.. automodule:: covid.utilities
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+      :toctree:
+   
+      beta_interp
+      cases_to_beta
+      cost_func
+      csv_to_json
+      date_to_int
+      doubling_time
+      doubling_trend_to_Sd
+      exp_decay_func
+      exp_func
+      exp_lin_func
+      flatten
+      get_beta_ramp
+      get_logger
+      get_seasonal_beta_variation
+      grad_descent
+      int_to_date
+      interp_mat
+      json_handler
+      laplacian
+      logistic_func
+      vec_diff
+   
+   
+
+   
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+      :toctree:
+      :template: custom-class-template.rst
+   
+      initial_values
+   
+   
+
+   
+   
+   
+
+
+

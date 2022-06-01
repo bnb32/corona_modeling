@@ -1,0 +1,6 @@
+covid.utilities.vec\_diff
+=========================
+
+.. currentmodule:: covid.utilities
+
+.. autofunction:: vec_diff

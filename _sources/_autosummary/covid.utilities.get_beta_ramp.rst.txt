@@ -1,0 +1,6 @@
+covid.utilities.get\_beta\_ramp
+===============================
+
+.. currentmodule:: covid.utilities
+
+.. autofunction:: get_beta_ramp

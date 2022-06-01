@@ -1,0 +1,23 @@
+covid.utilities.initial\_values
+===============================
+
+.. currentmodule:: covid.utilities
+
+.. autoclass:: initial_values
+   :members:
+   :show-inheritance:
+   :inherited-members:
+   :special-members: __call__, __add__, __mul__
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+   
+   
+
+   
+   
+   

@@ -1,0 +1,6 @@
+covid.utilities.interp\_mat
+===========================
+
+.. currentmodule:: covid.utilities
+
+.. autofunction:: interp_mat

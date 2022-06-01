@@ -1,0 +1,6 @@
+covid.covid\_argparse
+=====================
+
+.. currentmodule:: covid
+
+.. autofunction:: covid_argparse

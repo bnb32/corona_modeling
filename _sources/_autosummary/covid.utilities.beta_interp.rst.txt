@@ -1,0 +1,6 @@
+covid.utilities.beta\_interp
+============================
+
+.. currentmodule:: covid.utilities
+
+.. autofunction:: beta_interp

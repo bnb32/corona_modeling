@@ -1,0 +1,6 @@
+covid.utilities.date\_to\_int
+=============================
+
+.. currentmodule:: covid.utilities
+
+.. autofunction:: date_to_int

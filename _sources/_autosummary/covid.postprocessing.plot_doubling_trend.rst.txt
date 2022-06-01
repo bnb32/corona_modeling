@@ -1,0 +1,6 @@
+covid.postprocessing.plot\_doubling\_trend
+==========================================
+
+.. currentmodule:: covid.postprocessing
+
+.. autofunction:: plot_doubling_trend

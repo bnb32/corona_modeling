@@ -1,0 +1,6 @@
+covid.utilities.csv\_to\_json
+=============================
+
+.. currentmodule:: covid.utilities
+
+.. autofunction:: csv_to_json

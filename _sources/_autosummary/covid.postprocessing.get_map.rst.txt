@@ -1,0 +1,6 @@
+covid.postprocessing.get\_map
+=============================
+
+.. currentmodule:: covid.postprocessing
+
+.. autofunction:: get_map

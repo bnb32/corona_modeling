@@ -1,0 +1,38 @@
+covid.models.SIRD
+=================
+
+.. currentmodule:: covid.models
+
+.. autoclass:: SIRD
+   :members:
+   :show-inheritance:
+   :inherited-members:
+   :special-members: __call__, __add__, __mul__
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~SIRD.define_parameters
+      ~SIRD.define_transfer_matrix
+      ~SIRD.fit_parameters
+      ~SIRD.get_parameters_from_data
+      ~SIRD.initialize
+      ~SIRD.last_compartment_value
+      ~SIRD.model_eqns
+      ~SIRD.model_fit_function
+      ~SIRD.rk_step
+      ~SIRD.run_model
+      ~SIRD.set_initial_values
+      ~SIRD.transfer_value
+      ~SIRD.update_parameters
+      ~SIRD.update_transfer_matrix
+      ~SIRD.update_transfer_value
+   
+   
+
+   
+   
+   

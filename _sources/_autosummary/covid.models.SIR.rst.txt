@@ -1,0 +1,38 @@
+covid.models.SIR
+================
+
+.. currentmodule:: covid.models
+
+.. autoclass:: SIR
+   :members:
+   :show-inheritance:
+   :inherited-members:
+   :special-members: __call__, __add__, __mul__
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~SIR.define_parameters
+      ~SIR.define_transfer_matrix
+      ~SIR.fit_parameters
+      ~SIR.get_parameters_from_data
+      ~SIR.initialize
+      ~SIR.last_compartment_value
+      ~SIR.model_eqns
+      ~SIR.model_fit_function
+      ~SIR.rk_step
+      ~SIR.run_model
+      ~SIR.set_initial_values
+      ~SIR.transfer_value
+      ~SIR.update_parameters
+      ~SIR.update_transfer_matrix
+      ~SIR.update_transfer_value
+   
+   
+
+   
+   
+   

@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>covid.fetch &mdash; CoronaModeling v1.0 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> CoronaModeling
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../includeme.html">Home page</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../includeme.html#documentation">Documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../includeme.html#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../includeme.html#usage">Usage</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../misc/install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../_autosummary/covid.html">API reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../_autosummary/covid.covid_argparse.html">covid.covid_argparse</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../_autosummary/covid.environment.html">covid.environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../_autosummary/covid.fetch.html">covid.fetch</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.fetch.artificial_V.html">covid.fetch.artificial_V</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.fetch.init_estimation_params.html">covid.fetch.init_estimation_params</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.fetch.latlon_to_place.html">covid.fetch.latlon_to_place</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.fetch.Dataset.html">covid.fetch.Dataset</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../_autosummary/covid.models.html">covid.models</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.models.ramp_function.html">covid.models.ramp_function</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.models.CompartmentalModel.html">covid.models.CompartmentalModel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.models.SEAIQHRD.html">covid.models.SEAIQHRD</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.models.SEIR.html">covid.models.SEIR</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.models.SIR.html">covid.models.SIR</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.models.SIRD.html">covid.models.SIRD</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.models.SIRV.html">covid.models.SIRV</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.models.SIRVD.html">covid.models.SIRVD</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.models.Spatial_SIR.html">covid.models.Spatial_SIR</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../_autosummary/covid.postprocessing.html">covid.postprocessing</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.postprocessing.get_colormap.html">covid.postprocessing.get_colormap</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.postprocessing.get_date_labels.html">covid.postprocessing.get_date_labels</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.postprocessing.get_map.html">covid.postprocessing.get_map</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.postprocessing.latlonrangetozoom.html">covid.postprocessing.latlonrangetozoom</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.postprocessing.latlontopixels.html">covid.postprocessing.latlontopixels</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.postprocessing.load_data.html">covid.postprocessing.load_data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.postprocessing.pixelstolatlon.html">covid.postprocessing.pixelstolatlon</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.postprocessing.plot_compartment.html">covid.postprocessing.plot_compartment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.postprocessing.plot_compartment_comparison.html">covid.postprocessing.plot_compartment_comparison</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.postprocessing.plot_compartments.html">covid.postprocessing.plot_compartments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.postprocessing.plot_compartments_comparison.html">covid.postprocessing.plot_compartments_comparison</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.postprocessing.plot_doubling_trend.html">covid.postprocessing.plot_doubling_trend</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../_autosummary/covid.utilities.html">covid.utilities</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.utilities.beta_interp.html">covid.utilities.beta_interp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.utilities.cases_to_beta.html">covid.utilities.cases_to_beta</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.utilities.cost_func.html">covid.utilities.cost_func</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.utilities.csv_to_json.html">covid.utilities.csv_to_json</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.utilities.date_to_int.html">covid.utilities.date_to_int</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.utilities.doubling_time.html">covid.utilities.doubling_time</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.utilities.doubling_trend_to_Sd.html">covid.utilities.doubling_trend_to_Sd</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.utilities.exp_decay_func.html">covid.utilities.exp_decay_func</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.utilities.exp_func.html">covid.utilities.exp_func</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.utilities.exp_lin_func.html">covid.utilities.exp_lin_func</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.utilities.flatten.html">covid.utilities.flatten</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.utilities.get_beta_ramp.html">covid.utilities.get_beta_ramp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.utilities.get_logger.html">covid.utilities.get_logger</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.utilities.get_seasonal_beta_variation.html">covid.utilities.get_seasonal_beta_variation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.utilities.grad_descent.html">covid.utilities.grad_descent</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.utilities.int_to_date.html">covid.utilities.int_to_date</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.utilities.interp_mat.html">covid.utilities.interp_mat</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.utilities.json_handler.html">covid.utilities.json_handler</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.utilities.laplacian.html">covid.utilities.laplacian</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.utilities.logistic_func.html">covid.utilities.logistic_func</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.utilities.vec_diff.html">covid.utilities.vec_diff</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.utilities.initial_values.html">covid.utilities.initial_values</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../misc/cmd.html">Command Line Use</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../misc/cmd_covid.html">Run COVID model</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../misc/cmd_covid.html#Named Arguments">Named Arguments</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">CoronaModeling</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+          <li><a href="../covid.html">covid</a> &raquo;</li>
+      <li>covid.fetch</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for covid.fetch</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Fetch data&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">date</span><span class="p">,</span> <span class="n">timedelta</span>
+<span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">environ</span><span class="p">,</span> <span class="n">path</span>
+<span class="kn">import</span> <span class="nn">urllib.request</span>
+<span class="kn">from</span> <span class="nn">tempfile</span> <span class="kn">import</span> <span class="n">gettempdir</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="kn">import</span> <span class="nn">covid.environment</span> <span class="k">as</span> <span class="nn">env</span>
+<span class="kn">from</span> <span class="nn">covid.utilities</span> <span class="kn">import</span> <span class="n">get_logger</span><span class="p">,</span> <span class="n">int_to_date</span><span class="p">,</span> <span class="n">date_to_int</span>
+
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">get_logger</span><span class="p">()</span>
+
+<span class="n">pop_path</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;LAMBDA_TASK_ROOT&#39;</span><span class="p">],</span> <span class="s1">&#39;pop.json&#39;</span><span class="p">)</span>
+<span class="n">states_path</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;LAMBDA_TASK_ROOT&#39;</span><span class="p">],</span> <span class="s1">&#39;us_states.json&#39;</span><span class="p">)</span>
+
+<span class="n">cases_path</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">gettempdir</span><span class="p">(),</span>
+                       <span class="s1">&#39;case_data_</span><span class="si">%s</span><span class="s1">-</span><span class="si">%s</span><span class="s1">-</span><span class="si">%s</span><span class="s1">.json&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">()</span><span class="o">.</span><span class="n">day</span><span class="p">,</span>
+                                                    <span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">()</span><span class="o">.</span><span class="n">month</span><span class="p">,</span>
+                                                    <span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">()</span><span class="o">.</span><span class="n">year</span><span class="p">))</span>
+
+<span class="n">params_path</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">gettempdir</span><span class="p">(),</span>
+                        <span class="s1">&#39;params_</span><span class="si">%s</span><span class="s1">-</span><span class="si">%s</span><span class="s1">-</span><span class="si">%s</span><span class="s1">.json&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">()</span><span class="o">.</span><span class="n">day</span><span class="p">,</span>
+                                                  <span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">()</span><span class="o">.</span><span class="n">month</span><span class="p">,</span>
+                                                  <span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">()</span><span class="o">.</span><span class="n">year</span><span class="p">))</span>
+
+<span class="n">orders_path</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;LAMBDA_TASK_ROOT&#39;</span><span class="p">],</span> <span class="s1">&#39;sah_order_dates.json&#39;</span><span class="p">)</span>
+
+<span class="n">api_key</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">GOOGLE_API_KEY</span>
+
+
+<div class="viewcode-block" id="init_estimation_params"><a class="viewcode-back" href="../../_autosummary/covid.fetch.init_estimation_params.html#covid.fetch.init_estimation_params">[docs]</a><span class="k">def</span> <span class="nf">init_estimation_params</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Use estimated death rate and hospitalization rate to estimate infections</span>
+<span class="sd">    and recovered&quot;&quot;&quot;</span>
+
+    <span class="n">estimation_params</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">estimation_params</span><span class="p">[</span><span class="s1">&#39;death_rate&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.02</span>
+    <span class="n">estimation_params</span><span class="p">[</span><span class="s1">&#39;hospitalization_rate&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.005</span>
+    <span class="k">return</span> <span class="n">estimation_params</span></div>
+
+
+<div class="viewcode-block" id="artificial_V"><a class="viewcode-back" href="../../_autosummary/covid.fetch.artificial_V.html#covid.fetch.artificial_V">[docs]</a><span class="k">def</span> <span class="nf">artificial_V</span><span class="p">(</span><span class="n">n_days</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">estimation_params</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Get vaccination timeseries&quot;&quot;&quot;</span>
+    <span class="n">V_final</span> <span class="o">=</span> <span class="n">N</span> <span class="o">*</span> <span class="n">estimation_params</span><span class="p">[</span><span class="s1">&#39;vaccination_rate&#39;</span><span class="p">]</span>
+    <span class="n">V_initial</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">V_initial</span><span class="p">,</span> <span class="n">V_final</span><span class="p">,</span> <span class="n">n_days</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Dataset"><a class="viewcode-back" href="../../_autosummary/covid.fetch.Dataset.html#covid.fetch.Dataset">[docs]</a><span class="k">class</span> <span class="nc">Dataset</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Dataset class for getting and</span>
+<span class="sd">       formatting covid data for processing</span>
+<span class="sd">       and simluation by model</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameters</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_url</span> <span class="o">=</span> <span class="s1">&#39;https: //api.covidactnow.org/v2/states.json?&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_url</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;apiKey = </span><span class="si">{</span><span class="n">env</span><span class="o">.</span><span class="n">COVID_ACT_API</span><span class="si">}</span><span class="s1">&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">timeseries_url</span> <span class="o">=</span> <span class="s1">&#39;https: //api.covidactnow.org/v2/&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">timeseries_url</span> <span class="o">+=</span> <span class="s1">&#39;states.timeseries.json?&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">timeseries_url</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;apiKey = </span><span class="si">{</span><span class="n">env</span><span class="o">.</span><span class="n">COVID_ACT_API</span><span class="si">}</span><span class="s1">&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">raw_data</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">estimation_params</span> <span class="o">=</span> <span class="n">init_estimation_params</span><span class="p">()</span>
+
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">pop_path</span><span class="p">,</span> <span class="s1">&#39;rt&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">pop_json</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">pop_data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">pop_json</span><span class="p">)</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">states_path</span><span class="p">,</span> <span class="s1">&#39;rt&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">states_json</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">us_states</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">states_json</span><span class="p">)</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">orders_path</span><span class="p">,</span> <span class="s1">&#39;rt&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">orders_json</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">order_dates</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">orders_json</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">define_parameters</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">parameters</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">parameters</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;N&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_pop</span><span class="p">()</span>
+
+<div class="viewcode-block" id="Dataset.define_parameters"><a class="viewcode-back" href="../../_autosummary/covid.fetch.Dataset.html#covid.fetch.Dataset.define_parameters">[docs]</a>    <span class="k">def</span> <span class="nf">define_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Define location and model parameters&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;state&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Washington&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;county&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Washington&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;n_days&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">100</span></div>
+
+<div class="viewcode-block" id="Dataset.compartment_map"><a class="viewcode-back" href="../../_autosummary/covid.fetch.Dataset.html#covid.fetch.Dataset.compartment_map">[docs]</a>    <span class="k">def</span> <span class="nf">compartment_map</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Define data compartment map. Shows how to get initial vals for model</span>
+<span class="sd">        from data&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;H&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">raw_data</span><span class="p">[</span><span class="s1">&#39;hospital&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;H&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">raw_data</span><span class="p">[</span><span class="s1">&#39;icu&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;D&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">raw_data</span><span class="p">[</span><span class="s1">&#39;deaths&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;R&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;D&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">estimation_params</span><span class="p">[</span><span class="s1">&#39;death_rate&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;I&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">raw_data</span><span class="p">[</span><span class="s1">&#39;cases&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;R&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;I&#39;</span><span class="p">]</span> <span class="o">-=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;D&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;V&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">raw_data</span><span class="p">[</span><span class="s1">&#39;vaccinationsCompleted&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;S&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;N&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;I&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;R&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;S&#39;</span><span class="p">]</span> <span class="o">-=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;V&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;D&#39;</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span></div>
+
+<div class="viewcode-block" id="Dataset.get_data"><a class="viewcode-back" href="../../_autosummary/covid.fetch.Dataset.html#covid.fetch.Dataset.get_data">[docs]</a>    <span class="k">def</span> <span class="nf">get_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get data and map to model compartments&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">get_raw_data</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">compartment_map</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Dataset.get_raw_data"><a class="viewcode-back" href="../../_autosummary/covid.fetch.Dataset.html#covid.fetch.Dataset.get_raw_data">[docs]</a>    <span class="k">def</span> <span class="nf">get_raw_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get raw data from API&quot;&quot;&quot;</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_json</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">timeseries_url</span><span class="p">)</span>
+        <span class="n">mask</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;state&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">us_states</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;state&#39;</span><span class="p">]]</span>
+        <span class="n">data_metrics</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">mask</span><span class="p">][</span><span class="s1">&#39;metricsTimeseries&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">mask</span><span class="p">][</span><span class="s1">&#39;actualsTimeseries&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">data</span><span class="p">[</span><span class="s1">&#39;infections&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data_metrics</span><span class="p">[</span><span class="s1">&#39;caseDensity&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
+            <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;N&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="mi">10</span><span class="o">**</span><span class="mi">5</span><span class="p">)</span>
+        <span class="n">data</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;min_date&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">int_to_date</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;min_data&#39;</span><span class="p">]</span> <span class="o">-=</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;n_days&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;max_date&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">int_to_date</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">))</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">date_to_int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;min_date&#39;</span><span class="p">]))</span>
+                    <span class="o">&amp;</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">date_to_int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;max_date&#39;</span><span class="p">]))]</span>
+        <span class="n">data</span><span class="p">[</span><span class="s1">&#39;hospital&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;hospitalBeds&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
+            <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s1">&#39;currentUsageTotal&#39;</span><span class="p">])</span>
+        <span class="n">data</span><span class="p">[</span><span class="s1">&#39;icu&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;icuBeds&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s1">&#39;currentUsageTotal&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">raw_data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s1">&#39;date&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">raw_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">raw_data</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">raw_data</span><span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="n">min_periods</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">raw_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">raw_data</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">raw_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">raw_data</span><span class="o">.</span><span class="n">ewm</span><span class="p">(</span><span class="n">span</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">raw_data</span></div>
+
+<div class="viewcode-block" id="Dataset.get_pop"><a class="viewcode-back" href="../../_autosummary/covid.fetch.Dataset.html#covid.fetch.Dataset.get_pop">[docs]</a>    <span class="k">def</span> <span class="nf">get_pop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get population&quot;&quot;&quot;</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_json</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_url</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">data</span><span class="p">[</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;state&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">us_states</span><span class="p">[</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;state&#39;</span><span class="p">]]][</span><span class="s1">&#39;population&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span></div></div>
+
+
+<div class="viewcode-block" id="latlon_to_place"><a class="viewcode-back" href="../../_autosummary/covid.fetch.latlon_to_place.html#covid.fetch.latlon_to_place">[docs]</a><span class="k">def</span> <span class="nf">latlon_to_place</span><span class="p">(</span><span class="n">api_key</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">lon</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Get location info from lat lon&quot;&quot;&quot;</span>
+    <span class="n">uri</span> <span class="o">=</span> <span class="s1">&#39;https: //maps.googleapis.com/maps/api/geocode/json?&#39;</span>
+    <span class="n">uri</span> <span class="o">+=</span> <span class="s1">&#39;latlng=</span><span class="si">{Lat}</span><span class="s1">,</span><span class="si">{Lon}</span><span class="s1">&amp;key=</span><span class="si">{ApiKey}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ApiKey</span><span class="o">=</span><span class="n">api_key</span><span class="p">,</span> <span class="n">Lat</span><span class="o">=</span><span class="n">lat</span><span class="p">,</span>
+                                                    <span class="n">Lon</span><span class="o">=</span><span class="n">lon</span><span class="p">)</span>
+
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Retrieving GeoCoding for (</span><span class="si">{0}</span><span class="s1">, </span><span class="si">{1}</span><span class="s1">)...&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">lat</span><span class="p">,</span> <span class="n">lon</span><span class="p">))</span>
+
+    <span class="k">with</span> <span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span> <span class="k">as</span> <span class="n">v</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+        <span class="n">j</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+
+        <span class="n">components</span> <span class="o">=</span> <span class="n">j</span><span class="p">[</span><span class="s1">&#39;results&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;address_components&#39;</span><span class="p">]</span>
+        <span class="n">country</span> <span class="o">=</span> <span class="n">state</span> <span class="o">=</span> <span class="n">county</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">components</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s2">&quot;country&quot;</span> <span class="ow">in</span> <span class="n">c</span><span class="p">[</span><span class="s1">&#39;types&#39;</span><span class="p">]:</span>
+                <span class="n">country</span> <span class="o">=</span> <span class="n">c</span><span class="p">[</span><span class="s1">&#39;long_name&#39;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="s2">&quot;administrative_area_level_1&quot;</span> <span class="ow">in</span> <span class="n">c</span><span class="p">[</span><span class="s1">&#39;types&#39;</span><span class="p">]:</span>
+                <span class="n">state</span> <span class="o">=</span> <span class="n">c</span><span class="p">[</span><span class="s1">&#39;long_name&#39;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="s2">&quot;administrative_area_level_2&quot;</span> <span class="ow">in</span> <span class="n">c</span><span class="p">[</span><span class="s1">&#39;types&#39;</span><span class="p">]:</span>
+                <span class="n">county</span> <span class="o">=</span> <span class="n">c</span><span class="p">[</span><span class="s1">&#39;long_name&#39;</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">county</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">country</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Brandon Benton.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

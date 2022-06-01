@@ -1,0 +1,38 @@
+covid.models.SEIR
+=================
+
+.. currentmodule:: covid.models
+
+.. autoclass:: SEIR
+   :members:
+   :show-inheritance:
+   :inherited-members:
+   :special-members: __call__, __add__, __mul__
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~SEIR.define_parameters
+      ~SEIR.define_transfer_matrix
+      ~SEIR.fit_parameters
+      ~SEIR.get_parameters_from_data
+      ~SEIR.initialize
+      ~SEIR.last_compartment_value
+      ~SEIR.model_eqns
+      ~SEIR.model_fit_function
+      ~SEIR.rk_step
+      ~SEIR.run_model
+      ~SEIR.set_initial_values
+      ~SEIR.transfer_value
+      ~SEIR.update_parameters
+      ~SEIR.update_transfer_matrix
+      ~SEIR.update_transfer_value
+   
+   
+
+   
+   
+   

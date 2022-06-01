@@ -1,0 +1,28 @@
+covid.fetch.Dataset
+===================
+
+.. currentmodule:: covid.fetch
+
+.. autoclass:: Dataset
+   :members:
+   :show-inheritance:
+   :inherited-members:
+   :special-members: __call__, __add__, __mul__
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Dataset.compartment_map
+      ~Dataset.define_parameters
+      ~Dataset.get_data
+      ~Dataset.get_pop
+      ~Dataset.get_raw_data
+   
+   
+
+   
+   
+   

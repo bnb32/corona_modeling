@@ -1,0 +1,6 @@
+covid.postprocessing.plot\_compartments
+=======================================
+
+.. currentmodule:: covid.postprocessing
+
+.. autofunction:: plot_compartments

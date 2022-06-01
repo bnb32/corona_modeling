@@ -1,0 +1,45 @@
+covid.models
+============
+
+.. automodule:: covid.models
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+      :toctree:
+   
+      ramp_function
+   
+   
+
+   
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+      :toctree:
+      :template: custom-class-template.rst
+   
+      CompartmentalModel
+      SEAIQHRD
+      SEIR
+      SIR
+      SIRD
+      SIRV
+      SIRVD
+      Spatial_SIR
+   
+   
+
+   
+   
+   
+
+
+

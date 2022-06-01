@@ -1,0 +1,6 @@
+covid.postprocessing.latlonrangetozoom
+======================================
+
+.. currentmodule:: covid.postprocessing
+
+.. autofunction:: latlonrangetozoom

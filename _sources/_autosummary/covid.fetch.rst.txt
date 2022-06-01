@@ -1,0 +1,40 @@
+covid.fetch
+===========
+
+.. automodule:: covid.fetch
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+      :toctree:
+   
+      artificial_V
+      init_estimation_params
+      latlon_to_place
+   
+   
+
+   
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+      :toctree:
+      :template: custom-class-template.rst
+   
+      Dataset
+   
+   
+
+   
+   
+   
+
+
+

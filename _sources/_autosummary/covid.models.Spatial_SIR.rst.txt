@@ -1,0 +1,39 @@
+covid.models.Spatial\_SIR
+=========================
+
+.. currentmodule:: covid.models
+
+.. autoclass:: Spatial_SIR
+   :members:
+   :show-inheritance:
+   :inherited-members:
+   :special-members: __call__, __add__, __mul__
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Spatial_SIR.define_parameters
+      ~Spatial_SIR.define_transfer_matrix
+      ~Spatial_SIR.example
+      ~Spatial_SIR.fit_parameters
+      ~Spatial_SIR.get_parameters_from_data
+      ~Spatial_SIR.initialize
+      ~Spatial_SIR.last_compartment_value
+      ~Spatial_SIR.model_eqns
+      ~Spatial_SIR.model_fit_function
+      ~Spatial_SIR.rk_step
+      ~Spatial_SIR.run_model
+      ~Spatial_SIR.set_initial_values
+      ~Spatial_SIR.transfer_value
+      ~Spatial_SIR.update_parameters
+      ~Spatial_SIR.update_transfer_matrix
+      ~Spatial_SIR.update_transfer_value
+   
+   
+
+   
+   
+   

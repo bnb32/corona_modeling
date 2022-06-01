@@ -1,0 +1,6 @@
+covid.fetch.latlon\_to\_place
+=============================
+
+.. currentmodule:: covid.fetch
+
+.. autofunction:: latlon_to_place

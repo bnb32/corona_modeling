@@ -1,0 +1,6 @@
+covid.utilities.get\_seasonal\_beta\_variation
+==============================================
+
+.. currentmodule:: covid.utilities
+
+.. autofunction:: get_seasonal_beta_variation

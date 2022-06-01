@@ -1,0 +1,41 @@
+﻿covid
+=====
+
+.. automodule:: covid
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+      :toctree:
+   
+      covid_argparse
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+
+
+.. autosummary::
+   :toctree:
+   :template: custom-module-template.rst
+   :recursive:
+
+   covid.environment
+   covid.fetch
+   covid.models
+   covid.postprocessing
+   covid.utilities
+

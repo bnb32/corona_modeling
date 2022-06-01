@@ -1,0 +1,38 @@
+covid.models.SIRVD
+==================
+
+.. currentmodule:: covid.models
+
+.. autoclass:: SIRVD
+   :members:
+   :show-inheritance:
+   :inherited-members:
+   :special-members: __call__, __add__, __mul__
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~SIRVD.define_parameters
+      ~SIRVD.define_transfer_matrix
+      ~SIRVD.fit_parameters
+      ~SIRVD.get_parameters_from_data
+      ~SIRVD.initialize
+      ~SIRVD.last_compartment_value
+      ~SIRVD.model_eqns
+      ~SIRVD.model_fit_function
+      ~SIRVD.rk_step
+      ~SIRVD.run_model
+      ~SIRVD.set_initial_values
+      ~SIRVD.transfer_value
+      ~SIRVD.update_parameters
+      ~SIRVD.update_transfer_matrix
+      ~SIRVD.update_transfer_value
+   
+   
+
+   
+   
+   

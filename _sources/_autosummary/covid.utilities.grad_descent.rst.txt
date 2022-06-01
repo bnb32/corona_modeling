@@ -1,0 +1,6 @@
+covid.utilities.grad\_descent
+=============================
+
+.. currentmodule:: covid.utilities
+
+.. autofunction:: grad_descent

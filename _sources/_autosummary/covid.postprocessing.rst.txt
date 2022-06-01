@@ -1,0 +1,41 @@
+covid.postprocessing
+====================
+
+.. automodule:: covid.postprocessing
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+      :toctree:
+   
+      get_colormap
+      get_date_labels
+      get_map
+      latlonrangetozoom
+      latlontopixels
+      load_data
+      pixelstolatlon
+      plot_compartment
+      plot_compartment_comparison
+      plot_compartments
+      plot_compartments_comparison
+      plot_doubling_trend
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+
+

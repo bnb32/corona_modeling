@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>covid.postprocessing &mdash; CoronaModeling v1.0 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> CoronaModeling
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../includeme.html">Home page</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../includeme.html#documentation">Documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../includeme.html#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../includeme.html#usage">Usage</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../misc/install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../_autosummary/covid.html">API reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../_autosummary/covid.covid_argparse.html">covid.covid_argparse</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../_autosummary/covid.environment.html">covid.environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../_autosummary/covid.fetch.html">covid.fetch</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.fetch.artificial_V.html">covid.fetch.artificial_V</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.fetch.init_estimation_params.html">covid.fetch.init_estimation_params</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.fetch.latlon_to_place.html">covid.fetch.latlon_to_place</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.fetch.Dataset.html">covid.fetch.Dataset</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../_autosummary/covid.models.html">covid.models</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.models.ramp_function.html">covid.models.ramp_function</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.models.CompartmentalModel.html">covid.models.CompartmentalModel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.models.SEAIQHRD.html">covid.models.SEAIQHRD</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.models.SEIR.html">covid.models.SEIR</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.models.SIR.html">covid.models.SIR</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.models.SIRD.html">covid.models.SIRD</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.models.SIRV.html">covid.models.SIRV</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.models.SIRVD.html">covid.models.SIRVD</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.models.Spatial_SIR.html">covid.models.Spatial_SIR</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../_autosummary/covid.postprocessing.html">covid.postprocessing</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.postprocessing.get_colormap.html">covid.postprocessing.get_colormap</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.postprocessing.get_date_labels.html">covid.postprocessing.get_date_labels</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.postprocessing.get_map.html">covid.postprocessing.get_map</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.postprocessing.latlonrangetozoom.html">covid.postprocessing.latlonrangetozoom</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.postprocessing.latlontopixels.html">covid.postprocessing.latlontopixels</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.postprocessing.load_data.html">covid.postprocessing.load_data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.postprocessing.pixelstolatlon.html">covid.postprocessing.pixelstolatlon</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.postprocessing.plot_compartment.html">covid.postprocessing.plot_compartment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.postprocessing.plot_compartment_comparison.html">covid.postprocessing.plot_compartment_comparison</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.postprocessing.plot_compartments.html">covid.postprocessing.plot_compartments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.postprocessing.plot_compartments_comparison.html">covid.postprocessing.plot_compartments_comparison</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.postprocessing.plot_doubling_trend.html">covid.postprocessing.plot_doubling_trend</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../_autosummary/covid.utilities.html">covid.utilities</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.utilities.beta_interp.html">covid.utilities.beta_interp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.utilities.cases_to_beta.html">covid.utilities.cases_to_beta</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.utilities.cost_func.html">covid.utilities.cost_func</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.utilities.csv_to_json.html">covid.utilities.csv_to_json</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.utilities.date_to_int.html">covid.utilities.date_to_int</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.utilities.doubling_time.html">covid.utilities.doubling_time</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.utilities.doubling_trend_to_Sd.html">covid.utilities.doubling_trend_to_Sd</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.utilities.exp_decay_func.html">covid.utilities.exp_decay_func</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.utilities.exp_func.html">covid.utilities.exp_func</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.utilities.exp_lin_func.html">covid.utilities.exp_lin_func</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.utilities.flatten.html">covid.utilities.flatten</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.utilities.get_beta_ramp.html">covid.utilities.get_beta_ramp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.utilities.get_logger.html">covid.utilities.get_logger</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.utilities.get_seasonal_beta_variation.html">covid.utilities.get_seasonal_beta_variation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.utilities.grad_descent.html">covid.utilities.grad_descent</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.utilities.int_to_date.html">covid.utilities.int_to_date</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.utilities.interp_mat.html">covid.utilities.interp_mat</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.utilities.json_handler.html">covid.utilities.json_handler</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.utilities.laplacian.html">covid.utilities.laplacian</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.utilities.logistic_func.html">covid.utilities.logistic_func</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.utilities.vec_diff.html">covid.utilities.vec_diff</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.utilities.initial_values.html">covid.utilities.initial_values</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../misc/cmd.html">Command Line Use</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../misc/cmd_covid.html">Run COVID model</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../misc/cmd_covid.html#Named Arguments">Named Arguments</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">CoronaModeling</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+          <li><a href="../covid.html">covid</a> &raquo;</li>
+      <li>covid.postprocessing</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for covid.postprocessing</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">covid.environment</span> <span class="k">as</span> <span class="nn">env</span>
+<span class="kn">from</span> <span class="nn">covid.utilities</span> <span class="kn">import</span> <span class="n">get_logger</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">date</span><span class="p">,</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">matplotlib.colors</span> <span class="kn">import</span> <span class="n">ListedColormap</span>
+<span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+<span class="kn">import</span> <span class="nn">urllib.parse</span><span class="o">,</span> <span class="nn">urllib.request</span>
+<span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">log</span><span class="p">,</span> <span class="n">exp</span><span class="p">,</span> <span class="n">tan</span><span class="p">,</span> <span class="n">atan</span><span class="p">,</span> <span class="n">pi</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">matplotlib.dates</span> <span class="k">as</span> <span class="nn">mdates</span>
+<span class="kn">import</span> <span class="nn">io</span>
+<span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">path</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">get_logger</span><span class="p">()</span>
+
+<span class="n">long_names</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;S&#39;</span><span class="p">:</span> <span class="s1">&#39;Susceptible&#39;</span><span class="p">,</span>
+              <span class="s1">&#39;E&#39;</span><span class="p">:</span> <span class="s1">&#39;Exposed&#39;</span><span class="p">,</span>
+              <span class="s1">&#39;A&#39;</span><span class="p">:</span> <span class="s1">&#39;Asymptomatic&#39;</span><span class="p">,</span>
+              <span class="s1">&#39;I&#39;</span><span class="p">:</span> <span class="s1">&#39;Infected&#39;</span><span class="p">,</span>
+              <span class="s1">&#39;H&#39;</span><span class="p">:</span> <span class="s1">&#39;Hospitalized&#39;</span><span class="p">,</span>
+              <span class="s1">&#39;Q&#39;</span><span class="p">:</span> <span class="s1">&#39;Quarantined&#39;</span><span class="p">,</span>
+              <span class="s1">&#39;R&#39;</span><span class="p">:</span> <span class="s1">&#39;Recovered&#39;</span><span class="p">,</span>
+              <span class="s1">&#39;D&#39;</span><span class="p">:</span> <span class="s1">&#39;Deaths&#39;</span><span class="p">,</span>
+              <span class="s1">&#39;V&#39;</span><span class="p">:</span> <span class="s1">&#39;Vaccinated&#39;</span><span class="p">}</span>
+
+<div class="viewcode-block" id="plot_compartment"><a class="viewcode-back" href="../../_autosummary/covid.postprocessing.plot_compartment.html#covid.postprocessing.plot_compartment">[docs]</a><span class="k">def</span> <span class="nf">plot_compartment</span><span class="p">(</span><span class="n">sim_data</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">raw_data</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">params</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">compartment</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;state&quot;</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+    <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">raw_data</span><span class="p">[</span><span class="n">compartment</span><span class="p">],</span> <span class="n">sim_data</span><span class="p">[</span><span class="n">compartment</span><span class="p">]))</span>
+    <span class="n">dates</span> <span class="o">=</span> <span class="n">get_date_labels</span><span class="p">(</span><span class="n">n_days</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">min_date</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s1">&#39;min_date&#39;</span><span class="p">])</span>
+    <span class="n">x_values</span> <span class="o">=</span> <span class="p">[</span><span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">date</span><span class="p">()</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">dates</span><span class="p">]</span>
+
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
+    <span class="n">formatter</span> <span class="o">=</span> <span class="n">mdates</span><span class="o">.</span><span class="n">DateFormatter</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_major_formatter</span><span class="p">(</span><span class="n">formatter</span><span class="p">)</span>
+    <span class="n">locator</span> <span class="o">=</span> <span class="n">mdates</span><span class="o">.</span><span class="n">DayLocator</span><span class="p">(</span><span class="n">interval</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">dates</span><span class="p">)</span><span class="o">//</span><span class="mi">10</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_major_locator</span><span class="p">(</span><span class="n">locator</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_values</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">long_names</span><span class="p">[</span><span class="n">compartment</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="n">x_values</span><span class="p">[</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;n_days&#39;</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;black&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span> <span class="o">=</span> <span class="mi">60</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">env</span><span class="o">.</span><span class="n">COVID_FIG_DIR</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;state&quot;</span><span class="p">]</span><span class="si">}</span><span class="s1">_</span><span class="si">{</span><span class="n">compartment</span><span class="si">}</span><span class="s1">_fig.png&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Saved figure: </span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="plot_compartment_comparison"><a class="viewcode-back" href="../../_autosummary/covid.postprocessing.plot_compartment_comparison.html#covid.postprocessing.plot_compartment_comparison">[docs]</a><span class="k">def</span> <span class="nf">plot_compartment_comparison</span><span class="p">(</span><span class="n">sim_data</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">raw_data</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">params</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">compartment</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;state&quot;</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+    <span class="n">n_days</span> <span class="o">=</span> <span class="nb">max</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">raw_data</span><span class="p">[</span><span class="n">compartment</span><span class="p">]),</span> <span class="nb">len</span><span class="p">(</span><span class="n">sim_data</span><span class="p">[</span><span class="n">compartment</span><span class="p">])))</span>
+    <span class="n">dates</span> <span class="o">=</span> <span class="n">get_date_labels</span><span class="p">(</span><span class="n">n_days</span> <span class="o">=</span> <span class="n">n_days</span><span class="p">,</span> <span class="n">min_date</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s1">&#39;min_date&#39;</span><span class="p">])</span>
+    <span class="n">x_values</span> <span class="o">=</span> <span class="p">[</span><span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">date</span><span class="p">()</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">dates</span><span class="p">]</span>
+
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
+    <span class="n">formatter</span> <span class="o">=</span> <span class="n">mdates</span><span class="o">.</span><span class="n">DateFormatter</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_major_formatter</span><span class="p">(</span><span class="n">formatter</span><span class="p">)</span>
+    <span class="n">locator</span> <span class="o">=</span> <span class="n">mdates</span><span class="o">.</span><span class="n">DayLocator</span><span class="p">(</span><span class="n">interval</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">dates</span><span class="p">)</span><span class="o">//</span><span class="mi">10</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_major_locator</span><span class="p">(</span><span class="n">locator</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_values</span><span class="p">[:</span> <span class="nb">len</span><span class="p">(</span><span class="n">sim_data</span><span class="p">[</span><span class="n">compartment</span><span class="p">])],</span> <span class="n">sim_data</span><span class="p">[</span><span class="n">compartment</span><span class="p">],</span> <span class="n">label</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">long_names</span><span class="p">[</span><span class="n">compartment</span><span class="p">]</span><span class="si">}</span><span class="s1"> - Simulation&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_values</span><span class="p">[:</span> <span class="nb">len</span><span class="p">(</span><span class="n">raw_data</span><span class="p">[</span><span class="n">compartment</span><span class="p">])],</span> <span class="n">raw_data</span><span class="p">[</span><span class="n">compartment</span><span class="p">],</span> <span class="n">label</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">long_names</span><span class="p">[</span><span class="n">compartment</span><span class="p">]</span><span class="si">}</span><span class="s1"> - Data&#39;</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span> <span class="o">=</span> <span class="mi">60</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">env</span><span class="o">.</span><span class="n">COVID_FIG_DIR</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;state&quot;</span><span class="p">]</span><span class="si">}</span><span class="s1">_</span><span class="si">{</span><span class="n">compartment</span><span class="si">}</span><span class="s1">_comparison_fig.png&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Saved figure: </span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="plot_compartments"><a class="viewcode-back" href="../../_autosummary/covid.postprocessing.plot_compartments.html#covid.postprocessing.plot_compartments">[docs]</a><span class="k">def</span> <span class="nf">plot_compartments</span><span class="p">(</span><span class="n">sim_data</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">raw_data</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">params</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;state&quot;</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+    <span class="n">first_key</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">sim_data</span><span class="o">.</span><span class="n">keys</span><span class="p">())[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">raw_data</span><span class="p">[</span><span class="n">first_key</span><span class="p">],</span> <span class="n">sim_data</span><span class="p">[</span><span class="n">first_key</span><span class="p">]))</span>
+    <span class="n">dates</span> <span class="o">=</span> <span class="n">get_date_labels</span><span class="p">(</span><span class="n">n_days</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">min_date</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s1">&#39;min_date&#39;</span><span class="p">])</span>
+    <span class="n">x_values</span> <span class="o">=</span> <span class="p">[</span><span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">date</span><span class="p">()</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">dates</span><span class="p">]</span>
+
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
+    <span class="n">formatter</span> <span class="o">=</span> <span class="n">mdates</span><span class="o">.</span><span class="n">DateFormatter</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_major_formatter</span><span class="p">(</span><span class="n">formatter</span><span class="p">)</span>
+    <span class="n">locator</span> <span class="o">=</span> <span class="n">mdates</span><span class="o">.</span><span class="n">DayLocator</span><span class="p">(</span><span class="n">interval</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">dates</span><span class="p">)</span><span class="o">//</span><span class="mi">10</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_major_locator</span><span class="p">(</span><span class="n">locator</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">sim_data</span><span class="p">):</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">raw_data</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">sim_data</span><span class="p">[</span><span class="n">k</span><span class="p">]))</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_values</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">long_names</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span> <span class="o">=</span> <span class="mi">60</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="n">x_values</span><span class="p">[</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;n_days&#39;</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;black&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">env</span><span class="o">.</span><span class="n">COVID_FIG_DIR</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;state&quot;</span><span class="p">]</span><span class="si">}</span><span class="s1">_fig.png&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Saved figure: </span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="plot_compartments_comparison"><a class="viewcode-back" href="../../_autosummary/covid.postprocessing.plot_compartments_comparison.html#covid.postprocessing.plot_compartments_comparison">[docs]</a><span class="k">def</span> <span class="nf">plot_compartments_comparison</span><span class="p">(</span><span class="n">sim_data</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">raw_data</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">params</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;state&quot;</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+    <span class="n">first_key</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">sim_data</span><span class="o">.</span><span class="n">keys</span><span class="p">())[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">n_days</span> <span class="o">=</span> <span class="nb">max</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">raw_data</span><span class="p">[</span><span class="n">first_key</span><span class="p">]),</span> <span class="nb">len</span><span class="p">(</span><span class="n">sim_data</span><span class="p">[</span><span class="n">first_key</span><span class="p">])))</span>
+    <span class="n">dates</span> <span class="o">=</span> <span class="n">get_date_labels</span><span class="p">(</span><span class="n">n_days</span> <span class="o">=</span> <span class="n">n_days</span><span class="p">,</span> <span class="n">min_date</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s1">&#39;min_date&#39;</span><span class="p">])</span>
+    <span class="n">x_values</span> <span class="o">=</span> <span class="p">[</span><span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">date</span><span class="p">()</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">dates</span><span class="p">]</span>
+
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
+    <span class="n">formatter</span> <span class="o">=</span> <span class="n">mdates</span><span class="o">.</span><span class="n">DateFormatter</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_major_formatter</span><span class="p">(</span><span class="n">formatter</span><span class="p">)</span>
+    <span class="n">locator</span> <span class="o">=</span> <span class="n">mdates</span><span class="o">.</span><span class="n">DayLocator</span><span class="p">(</span><span class="n">interval</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">dates</span><span class="p">)</span><span class="o">//</span><span class="mi">10</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_major_locator</span><span class="p">(</span><span class="n">locator</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">sim_data</span><span class="p">):</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_values</span><span class="p">[:</span> <span class="nb">len</span><span class="p">(</span><span class="n">sim_data</span><span class="p">[</span><span class="n">k</span><span class="p">])],</span> <span class="n">sim_data</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">label</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">long_names</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="si">}</span><span class="s1"> - Simulation&#39;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_values</span><span class="p">[:</span> <span class="nb">len</span><span class="p">(</span><span class="n">raw_data</span><span class="p">[</span><span class="n">k</span><span class="p">])],</span> <span class="n">raw_data</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">label</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">long_names</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="si">}</span><span class="s1"> - Data&#39;</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span> <span class="o">=</span> <span class="mi">60</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">env</span><span class="o">.</span><span class="n">COVID_FIG_DIR</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;state&quot;</span><span class="p">]</span><span class="si">}</span><span class="s1">_comparison_fig.png&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Saved figure: </span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="get_date_labels"><a class="viewcode-back" href="../../_autosummary/covid.postprocessing.get_date_labels.html#covid.postprocessing.get_date_labels">[docs]</a><span class="k">def</span> <span class="nf">get_date_labels</span><span class="p">(</span><span class="n">n_days</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">min_date</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+
+    <span class="n">dates</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_days</span><span class="p">):</span>
+        <span class="n">day</span> <span class="o">=</span> <span class="p">(</span><span class="n">min_date</span><span class="o">+</span><span class="n">timedelta</span><span class="p">(</span><span class="n">days</span> <span class="o">=</span> <span class="n">i</span><span class="p">))</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="n">dates</span><span class="o">+=</span> <span class="p">[</span><span class="n">day</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">dates</span></div>
+
+<div class="viewcode-block" id="get_colormap"><a class="viewcode-back" href="../../_autosummary/covid.postprocessing.get_colormap.html#covid.postprocessing.get_colormap">[docs]</a><span class="k">def</span> <span class="nf">get_colormap</span><span class="p">():</span>
+
+    <span class="c1"># get colormap</span>
+    <span class="n">cmap</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">jet</span>
+    <span class="n">color_array</span> <span class="o">=</span> <span class="n">cmap</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">cmap</span><span class="o">.</span><span class="n">N</span><span class="p">))</span>
+
+    <span class="c1"># change alpha values</span>
+    <span class="n">color_array</span><span class="p">[:</span> <span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">cmap</span><span class="o">.</span><span class="n">N</span><span class="p">)</span>
+
+    <span class="c1"># create a colormap object</span>
+    <span class="n">my_cmap</span> <span class="o">=</span> <span class="n">ListedColormap</span><span class="p">(</span><span class="n">color_array</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">my_cmap</span></div>
+
+<div class="viewcode-block" id="get_map"><a class="viewcode-back" href="../../_autosummary/covid.postprocessing.get_map.html#covid.postprocessing.get_map">[docs]</a><span class="k">def</span> <span class="nf">get_map</span><span class="p">(</span><span class="n">domain</span><span class="p">):</span>
+
+    <span class="n">lon_min</span> <span class="o">=</span> <span class="n">domain</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">lon_max</span> <span class="o">=</span> <span class="n">domain</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">lat_min</span> <span class="o">=</span> <span class="n">domain</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+    <span class="n">lat_max</span> <span class="o">=</span> <span class="n">domain</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+    <span class="n">lat_mid</span> <span class="o">=</span> <span class="p">(</span><span class="n">lat_min</span><span class="o">+</span><span class="n">lat_max</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span>
+    <span class="n">lon_mid</span> <span class="o">=</span> <span class="p">(</span><span class="n">lon_min</span><span class="o">+</span><span class="n">lon_max</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span>
+
+    <span class="n">upperleft</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">, </span><span class="si">%s</span><span class="s1">&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">lat_max</span><span class="p">,</span> <span class="n">lon_min</span><span class="p">)</span>
+    <span class="n">lowerright</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">, </span><span class="si">%s</span><span class="s1">&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">lat_min</span><span class="p">,</span> <span class="n">lon_max</span><span class="p">)</span>
+
+    <span class="n">zoom</span> <span class="o">=</span> <span class="n">latlonrangetozoom</span><span class="p">(</span><span class="n">lat_min</span><span class="p">,</span> <span class="n">lat_max</span><span class="p">,</span> <span class="n">lon_min</span><span class="p">,</span> <span class="n">lon_max</span><span class="p">)</span>
+
+    <span class="n">ullat</span><span class="p">,</span> <span class="n">ullon</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="n">upperleft</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;, &#39;</span><span class="p">))</span>
+    <span class="n">lrlat</span><span class="p">,</span> <span class="n">lrlon</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="n">lowerright</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;, &#39;</span><span class="p">))</span>
+
+    <span class="n">ulx</span><span class="p">,</span> <span class="n">uly</span> <span class="o">=</span> <span class="n">latlontopixels</span><span class="p">(</span><span class="n">ullat</span><span class="p">,</span> <span class="n">ullon</span><span class="p">,</span> <span class="n">zoom</span><span class="p">)</span>
+    <span class="n">lrx</span><span class="p">,</span> <span class="n">lry</span> <span class="o">=</span> <span class="n">latlontopixels</span><span class="p">(</span><span class="n">lrlat</span><span class="p">,</span> <span class="n">lrlon</span><span class="p">,</span> <span class="n">zoom</span><span class="p">)</span>
+    <span class="n">dx</span><span class="p">,</span> <span class="n">dy</span> <span class="o">=</span> <span class="n">lrx</span> <span class="o">-</span> <span class="n">ulx</span><span class="p">,</span> <span class="n">uly</span> <span class="o">-</span> <span class="n">lry</span>
+    <span class="n">position</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">, </span><span class="si">%s</span><span class="s1">&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">lat_mid</span><span class="p">,</span> <span class="n">lon_mid</span><span class="p">)</span>
+    <span class="n">urlparams</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">parse</span><span class="o">.</span><span class="n">urlencode</span><span class="p">({</span><span class="s1">&#39;center&#39;</span><span class="p">:</span> <span class="n">position</span><span class="p">,</span>
+                                  <span class="s1">&#39;zoom&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">zoom</span><span class="p">),</span>
+                                  <span class="s1">&#39;size&#39;</span><span class="p">:</span> <span class="s1">&#39;</span><span class="si">%d</span><span class="s1">x</span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span><span class="p">(</span><span class="n">dx</span><span class="p">,</span> <span class="n">dy</span><span class="p">),</span>
+                                  <span class="s1">&#39;sensor&#39;</span><span class="p">:</span> <span class="s1">&#39;false&#39;</span><span class="p">,</span>
+                                  <span class="s1">&#39;key&#39;</span><span class="p">:</span> <span class="n">api_key</span><span class="p">,</span>
+                                  <span class="s1">&#39;scale&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">})</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;http: //maps.google.com/maps/api/staticmap?&#39;</span> <span class="o">+</span> <span class="n">urlparams</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+    <span class="n">im</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()))</span>
+
+    <span class="k">return</span> <span class="n">im</span></div>
+
+<span class="n">EARTH_RADIUS</span> <span class="o">=</span> <span class="mi">6378137</span>
+<span class="n">EQUATOR_CIRCUMFERENCE</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">pi</span> <span class="o">*</span> <span class="n">EARTH_RADIUS</span>
+<span class="n">INITIAL_RESOLUTION</span> <span class="o">=</span> <span class="n">EQUATOR_CIRCUMFERENCE</span> <span class="o">/</span> <span class="mf">256.0</span>
+<span class="n">ORIGIN_SHIFT</span> <span class="o">=</span> <span class="n">EQUATOR_CIRCUMFERENCE</span> <span class="o">/</span> <span class="mf">2.0</span>
+
+<div class="viewcode-block" id="latlonrangetozoom"><a class="viewcode-back" href="../../_autosummary/covid.postprocessing.latlonrangetozoom.html#covid.postprocessing.latlonrangetozoom">[docs]</a><span class="k">def</span> <span class="nf">latlonrangetozoom</span><span class="p">(</span><span class="n">lat_min</span><span class="p">,</span> <span class="n">lat_max</span><span class="p">,</span> <span class="n">lon_min</span><span class="p">,</span> <span class="n">lon_max</span><span class="p">):</span>
+
+    <span class="n">mx_min</span> <span class="o">=</span> <span class="p">(</span><span class="n">lon_min</span> <span class="o">*</span> <span class="n">ORIGIN_SHIFT</span><span class="p">)</span> <span class="o">/</span> <span class="mf">180.0</span>
+    <span class="n">my_min</span> <span class="o">=</span> <span class="n">log</span><span class="p">(</span><span class="n">tan</span><span class="p">((</span><span class="mi">90</span> <span class="o">+</span> <span class="n">lat_min</span><span class="p">)</span> <span class="o">*</span> <span class="n">pi</span><span class="o">/</span><span class="mf">360.0</span><span class="p">))</span><span class="o">/</span><span class="p">(</span><span class="n">pi</span><span class="o">/</span><span class="mf">180.0</span><span class="p">)</span>
+    <span class="n">my_min</span> <span class="o">=</span> <span class="p">(</span><span class="n">my_min</span> <span class="o">*</span> <span class="n">ORIGIN_SHIFT</span><span class="p">)</span> <span class="o">/</span><span class="mf">180.0</span>
+
+    <span class="n">mx_max</span> <span class="o">=</span> <span class="p">(</span><span class="n">lon_max</span> <span class="o">*</span> <span class="n">ORIGIN_SHIFT</span><span class="p">)</span> <span class="o">/</span> <span class="mf">180.0</span>
+    <span class="n">my_max</span> <span class="o">=</span> <span class="n">log</span><span class="p">(</span><span class="n">tan</span><span class="p">((</span><span class="mi">90</span> <span class="o">+</span> <span class="n">lat_max</span><span class="p">)</span> <span class="o">*</span> <span class="n">pi</span><span class="o">/</span><span class="mf">360.0</span><span class="p">))</span><span class="o">/</span><span class="p">(</span><span class="n">pi</span><span class="o">/</span><span class="mf">180.0</span><span class="p">)</span>
+    <span class="n">my_max</span> <span class="o">=</span> <span class="p">(</span><span class="n">my_max</span> <span class="o">*</span> <span class="n">ORIGIN_SHIFT</span><span class="p">)</span> <span class="o">/</span><span class="mf">180.0</span>
+
+    <span class="n">x_zoom</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="mf">640.0</span><span class="o">/</span><span class="p">(</span><span class="n">mx_max</span><span class="o">-</span><span class="n">mx_min</span><span class="p">)</span><span class="o">*</span><span class="n">INITIAL_RESOLUTION</span><span class="p">)</span>
+    <span class="n">y_zoom</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="mf">640.0</span><span class="o">/</span><span class="p">(</span><span class="n">my_max</span><span class="o">-</span><span class="n">my_min</span><span class="p">)</span><span class="o">*</span><span class="n">INITIAL_RESOLUTION</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">([</span><span class="nb">int</span><span class="p">(</span><span class="n">x_zoom</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">y_zoom</span><span class="p">)])</span></div>
+
+<div class="viewcode-block" id="latlontopixels"><a class="viewcode-back" href="../../_autosummary/covid.postprocessing.latlontopixels.html#covid.postprocessing.latlontopixels">[docs]</a><span class="k">def</span> <span class="nf">latlontopixels</span><span class="p">(</span><span class="n">lat</span><span class="p">,</span> <span class="n">lon</span><span class="p">,</span> <span class="n">zoom</span><span class="p">):</span>
+    <span class="n">mx</span> <span class="o">=</span> <span class="p">(</span><span class="n">lon</span> <span class="o">*</span> <span class="n">ORIGIN_SHIFT</span><span class="p">)</span> <span class="o">/</span> <span class="mf">180.0</span>
+    <span class="n">my</span> <span class="o">=</span> <span class="n">log</span><span class="p">(</span><span class="n">tan</span><span class="p">((</span><span class="mi">90</span> <span class="o">+</span> <span class="n">lat</span><span class="p">)</span> <span class="o">*</span> <span class="n">pi</span><span class="o">/</span><span class="mf">360.0</span><span class="p">))</span><span class="o">/</span><span class="p">(</span><span class="n">pi</span><span class="o">/</span><span class="mf">180.0</span><span class="p">)</span>
+    <span class="n">my</span> <span class="o">=</span> <span class="p">(</span><span class="n">my</span> <span class="o">*</span> <span class="n">ORIGIN_SHIFT</span><span class="p">)</span> <span class="o">/</span><span class="mf">180.0</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">INITIAL_RESOLUTION</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="n">zoom</span><span class="p">)</span>
+    <span class="n">px</span> <span class="o">=</span> <span class="p">(</span><span class="n">mx</span> <span class="o">+</span> <span class="n">ORIGIN_SHIFT</span><span class="p">)</span> <span class="o">/</span> <span class="n">res</span>
+    <span class="n">py</span> <span class="o">=</span> <span class="p">(</span><span class="n">my</span> <span class="o">+</span> <span class="n">ORIGIN_SHIFT</span><span class="p">)</span> <span class="o">/</span> <span class="n">res</span>
+    <span class="k">return</span> <span class="n">px</span><span class="p">,</span> <span class="n">py</span></div>
+
+<div class="viewcode-block" id="pixelstolatlon"><a class="viewcode-back" href="../../_autosummary/covid.postprocessing.pixelstolatlon.html#covid.postprocessing.pixelstolatlon">[docs]</a><span class="k">def</span> <span class="nf">pixelstolatlon</span><span class="p">(</span><span class="n">px</span><span class="p">,</span> <span class="n">py</span><span class="p">,</span> <span class="n">zoom</span><span class="p">):</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">INITIAL_RESOLUTION</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="n">zoom</span><span class="p">)</span>
+    <span class="n">mx</span> <span class="o">=</span> <span class="n">px</span> <span class="o">*</span> <span class="n">res</span> <span class="o">-</span> <span class="n">ORIGIN_SHIFT</span>
+    <span class="n">my</span> <span class="o">=</span> <span class="n">py</span> <span class="o">*</span> <span class="n">res</span> <span class="o">-</span> <span class="n">ORIGIN_SHIFT</span>
+    <span class="n">lat</span> <span class="o">=</span> <span class="p">(</span><span class="n">my</span> <span class="o">/</span> <span class="n">ORIGIN_SHIFT</span><span class="p">)</span> <span class="o">*</span> <span class="mf">180.0</span>
+    <span class="n">lat</span> <span class="o">=</span> <span class="mi">180</span> <span class="o">/</span> <span class="n">pi</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">atan</span><span class="p">(</span><span class="n">exp</span><span class="p">(</span><span class="n">lat</span><span class="o">*</span><span class="n">pi</span><span class="o">/</span><span class="mf">180.0</span><span class="p">))</span> <span class="o">-</span> <span class="n">pi</span><span class="o">/</span><span class="mf">2.0</span><span class="p">)</span>
+    <span class="n">lon</span> <span class="o">=</span> <span class="p">(</span><span class="n">mx</span> <span class="o">/</span> <span class="n">ORIGIN_SHIFT</span><span class="p">)</span> <span class="o">*</span> <span class="mf">180.0</span>
+    <span class="k">return</span> <span class="n">lat</span><span class="p">,</span> <span class="n">lon</span></div>
+
+<div class="viewcode-block" id="load_data"><a class="viewcode-back" href="../../_autosummary/covid.postprocessing.load_data.html#covid.postprocessing.load_data">[docs]</a><span class="k">def</span> <span class="nf">load_data</span><span class="p">(</span><span class="n">infile</span><span class="p">):</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">infile</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
+    <span class="n">lines</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
+        <span class="k">if</span> <span class="s2">&quot;ncols&quot;</span> <span class="ow">in</span> <span class="n">l</span><span class="p">:</span>
+            <span class="n">ncols</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">l</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;ncols&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">))</span>
+        <span class="k">elif</span> <span class="s2">&quot;nrows&quot;</span> <span class="ow">in</span> <span class="n">l</span><span class="p">:</span>
+            <span class="n">nrows</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">l</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;nrows&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">))</span>
+        <span class="k">elif</span> <span class="s2">&quot;xllcorner&quot;</span> <span class="ow">in</span> <span class="n">l</span><span class="p">:</span>
+            <span class="n">xllcorner</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">l</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;xllcorner&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">))</span>
+        <span class="k">elif</span> <span class="s2">&quot;yllcorner&quot;</span> <span class="ow">in</span> <span class="n">l</span><span class="p">:</span>
+            <span class="n">yllcorner</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">l</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;yllcorner&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">))</span>
+        <span class="k">elif</span> <span class="s2">&quot;cellsize&quot;</span> <span class="ow">in</span> <span class="n">l</span><span class="p">:</span>
+            <span class="n">cellsize</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">l</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;cellsize&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">))</span>
+        <span class="k">elif</span> <span class="s2">&quot;NODATA_value&quot;</span> <span class="ow">in</span> <span class="n">l</span><span class="p">:</span>
+            <span class="n">NODATA_value</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">l</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;NODATA_value&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">l</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">))[</span><span class="mi">0</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+
+    <span class="n">out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">dtype</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">float</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">out</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">out</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+            <span class="k">if</span> <span class="n">out</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">==</span> <span class="n">NODATA_value</span><span class="p">:</span> <span class="n">out</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">return</span> <span class="n">out</span><span class="p">,</span> <span class="n">xllcorner</span><span class="p">,</span> <span class="n">yllcorner</span><span class="p">,</span> <span class="n">cellsize</span><span class="p">,</span> <span class="n">NODATA_value</span></div>
+
+<div class="viewcode-block" id="plot_doubling_trend"><a class="viewcode-back" href="../../_autosummary/covid.postprocessing.plot_doubling_trend.html#covid.postprocessing.plot_doubling_trend">[docs]</a><span class="k">def</span> <span class="nf">plot_doubling_trend</span><span class="p">(</span><span class="n">dates</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+    <span class="n">days</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dates</span><span class="p">))]</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">days</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+    <span class="n">tick_step</span> <span class="o">=</span> <span class="nb">max</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">days</span><span class="p">)</span><span class="o">/</span><span class="mi">3</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">days</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span> <span class="p">:</span> <span class="n">tick_step</span><span class="p">],</span> <span class="n">dates</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span> <span class="p">:</span> <span class="n">tick_step</span><span class="p">],</span> <span class="n">rotation</span> <span class="o">=</span> <span class="mi">30</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Doubling Time (days)&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Date&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">env</span><span class="o">.</span><span class="n">COVID_FIG_DIR</span><span class="si">}</span><span class="s1">/Td_trend.png&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">clf</span><span class="p">()</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Brandon Benton.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

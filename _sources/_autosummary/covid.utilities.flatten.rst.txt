@@ -1,0 +1,6 @@
+covid.utilities.flatten
+=======================
+
+.. currentmodule:: covid.utilities
+
+.. autofunction:: flatten

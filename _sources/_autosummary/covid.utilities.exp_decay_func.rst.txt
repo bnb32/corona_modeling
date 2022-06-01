@@ -1,0 +1,6 @@
+covid.utilities.exp\_decay\_func
+================================
+
+.. currentmodule:: covid.utilities
+
+.. autofunction:: exp_decay_func

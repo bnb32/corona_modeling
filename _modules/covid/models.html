@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>covid.models &mdash; CoronaModeling v1.0 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> CoronaModeling
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../includeme.html">Home page</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../includeme.html#documentation">Documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../includeme.html#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../includeme.html#usage">Usage</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../misc/install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../_autosummary/covid.html">API reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../_autosummary/covid.covid_argparse.html">covid.covid_argparse</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../_autosummary/covid.environment.html">covid.environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../_autosummary/covid.fetch.html">covid.fetch</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.fetch.artificial_V.html">covid.fetch.artificial_V</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.fetch.init_estimation_params.html">covid.fetch.init_estimation_params</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.fetch.latlon_to_place.html">covid.fetch.latlon_to_place</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.fetch.Dataset.html">covid.fetch.Dataset</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../_autosummary/covid.models.html">covid.models</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.models.ramp_function.html">covid.models.ramp_function</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.models.CompartmentalModel.html">covid.models.CompartmentalModel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.models.SEAIQHRD.html">covid.models.SEAIQHRD</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.models.SEIR.html">covid.models.SEIR</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.models.SIR.html">covid.models.SIR</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.models.SIRD.html">covid.models.SIRD</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.models.SIRV.html">covid.models.SIRV</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.models.SIRVD.html">covid.models.SIRVD</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.models.Spatial_SIR.html">covid.models.Spatial_SIR</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../_autosummary/covid.postprocessing.html">covid.postprocessing</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.postprocessing.get_colormap.html">covid.postprocessing.get_colormap</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.postprocessing.get_date_labels.html">covid.postprocessing.get_date_labels</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.postprocessing.get_map.html">covid.postprocessing.get_map</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.postprocessing.latlonrangetozoom.html">covid.postprocessing.latlonrangetozoom</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.postprocessing.latlontopixels.html">covid.postprocessing.latlontopixels</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.postprocessing.load_data.html">covid.postprocessing.load_data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.postprocessing.pixelstolatlon.html">covid.postprocessing.pixelstolatlon</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.postprocessing.plot_compartment.html">covid.postprocessing.plot_compartment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.postprocessing.plot_compartment_comparison.html">covid.postprocessing.plot_compartment_comparison</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.postprocessing.plot_compartments.html">covid.postprocessing.plot_compartments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.postprocessing.plot_compartments_comparison.html">covid.postprocessing.plot_compartments_comparison</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.postprocessing.plot_doubling_trend.html">covid.postprocessing.plot_doubling_trend</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../_autosummary/covid.utilities.html">covid.utilities</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.utilities.beta_interp.html">covid.utilities.beta_interp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.utilities.cases_to_beta.html">covid.utilities.cases_to_beta</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.utilities.cost_func.html">covid.utilities.cost_func</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.utilities.csv_to_json.html">covid.utilities.csv_to_json</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.utilities.date_to_int.html">covid.utilities.date_to_int</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.utilities.doubling_time.html">covid.utilities.doubling_time</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.utilities.doubling_trend_to_Sd.html">covid.utilities.doubling_trend_to_Sd</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.utilities.exp_decay_func.html">covid.utilities.exp_decay_func</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.utilities.exp_func.html">covid.utilities.exp_func</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.utilities.exp_lin_func.html">covid.utilities.exp_lin_func</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.utilities.flatten.html">covid.utilities.flatten</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.utilities.get_beta_ramp.html">covid.utilities.get_beta_ramp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.utilities.get_logger.html">covid.utilities.get_logger</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.utilities.get_seasonal_beta_variation.html">covid.utilities.get_seasonal_beta_variation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.utilities.grad_descent.html">covid.utilities.grad_descent</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.utilities.int_to_date.html">covid.utilities.int_to_date</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.utilities.interp_mat.html">covid.utilities.interp_mat</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.utilities.json_handler.html">covid.utilities.json_handler</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.utilities.laplacian.html">covid.utilities.laplacian</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.utilities.logistic_func.html">covid.utilities.logistic_func</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.utilities.vec_diff.html">covid.utilities.vec_diff</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../_autosummary/covid.utilities.initial_values.html">covid.utilities.initial_values</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../misc/cmd.html">Command Line Use</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../misc/cmd_covid.html">Run COVID model</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../misc/cmd_covid.html#Named Arguments">Named Arguments</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">CoronaModeling</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+          <li><a href="../covid.html">covid</a> &raquo;</li>
+      <li>covid.models</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for covid.models</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Compartmental models&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">ABC</span><span class="p">,</span> <span class="n">abstractmethod</span>
+<span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">curve_fit</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">covid.utilities</span> <span class="kn">import</span> <span class="n">laplacian</span><span class="p">,</span> <span class="n">flatten</span><span class="p">,</span> <span class="n">get_logger</span><span class="p">,</span> <span class="n">vec_diff</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">get_logger</span><span class="p">()</span>
+
+
+<div class="viewcode-block" id="ramp_function"><a class="viewcode-back" href="../../_autosummary/covid.models.ramp_function.html#covid.models.ramp_function">[docs]</a><span class="k">def</span> <span class="nf">ramp_function</span><span class="p">(</span><span class="n">constant</span><span class="p">,</span> <span class="n">amplitude</span><span class="p">,</span> <span class="n">ramp_rate</span><span class="p">,</span> <span class="n">shift</span><span class="p">,</span> <span class="n">t_step</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Function to ramp model parameters over time&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">constant</span> <span class="o">+</span> <span class="n">amplitude</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">ramp_rate</span> <span class="o">*</span> <span class="p">(</span><span class="n">t_step</span> <span class="o">+</span> <span class="n">shift</span><span class="p">)))</span></div>
+
+
+<div class="viewcode-block" id="CompartmentalModel"><a class="viewcode-back" href="../../_autosummary/covid.models.CompartmentalModel.html#covid.models.CompartmentalModel">[docs]</a><span class="k">class</span> <span class="nc">CompartmentalModel</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Base class for compartmental models</span>
+<span class="sd">       from which specific models like SIR</span>
+<span class="sd">       can be derived</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">compartment_names</span><span class="p">,</span> <span class="n">parameters</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">compartment_number</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">compartment_names</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">transfer_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">compartment_number</span><span class="p">,</span>
+                                         <span class="bp">self</span><span class="o">.</span><span class="n">compartment_number</span><span class="p">),</span>
+                                        <span class="n">dtype</span><span class="o">=</span><span class="nb">object</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">compartment_names</span> <span class="o">=</span> <span class="p">{</span><span class="n">compartment_names</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span> <span class="n">i</span>
+                                  <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">compartment_number</span><span class="p">)}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">compartment_index</span> <span class="o">=</span> <span class="p">{</span><span class="n">i</span><span class="p">:</span> <span class="n">compartment_names</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                                  <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">compartment_number</span><span class="p">)}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">compartment_series</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">initial_values</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fit_compartments</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">compartment_names</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fit_derivatives</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parameter_index</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model_params</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">epsilon</span> <span class="o">=</span> <span class="mf">1.0e-3</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_substeps</span> <span class="o">=</span> <span class="mi">20</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dt</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_substeps</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">start_step</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">define_parameters</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">parameters</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">parameters</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">define_transfer_matrix</span><span class="p">()</span>
+
+<div class="viewcode-block" id="CompartmentalModel.define_parameters"><a class="viewcode-back" href="../../_autosummary/covid.models.CompartmentalModel.html#covid.models.CompartmentalModel.define_parameters">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">define_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Define compartmental model parameters&quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="CompartmentalModel.define_transfer_matrix"><a class="viewcode-back" href="../../_autosummary/covid.models.CompartmentalModel.html#covid.models.CompartmentalModel.define_transfer_matrix">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">define_transfer_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Define transfer matrix used in simulating model&quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="CompartmentalModel.update_transfer_matrix"><a class="viewcode-back" href="../../_autosummary/covid.models.CompartmentalModel.html#covid.models.CompartmentalModel.update_transfer_matrix">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">update_transfer_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">last_compartments</span><span class="p">,</span> <span class="n">step_number</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Update transfer matrix values to calculate next time step&quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="CompartmentalModel.get_parameters_from_data"><a class="viewcode-back" href="../../_autosummary/covid.models.CompartmentalModel.html#covid.models.CompartmentalModel.get_parameters_from_data">[docs]</a>    <span class="k">def</span> <span class="nf">get_parameters_from_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get model parameters from data&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">initialize</span><span class="p">(</span><span class="n">initial_values</span><span class="o">=</span><span class="p">{</span><span class="n">compartment</span><span class="p">:</span> <span class="n">data</span><span class="p">[</span><span class="n">compartment</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+                                        <span class="k">for</span> <span class="n">compartment</span> <span class="ow">in</span> <span class="n">data</span><span class="p">})</span>
+
+        <span class="nb">input</span> <span class="o">=</span> <span class="n">flatten</span><span class="p">([</span><span class="nb">list</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">name</span><span class="p">])</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">fit_compartments</span><span class="p">])</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">fit_derivatives</span><span class="p">:</span>
+            <span class="nb">input</span> <span class="o">+=</span> <span class="n">flatten</span><span class="p">([</span><span class="n">vec_diff</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">name</span><span class="p">]))</span>
+                              <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">fit_compartments</span><span class="p">])</span>
+
+        <span class="n">lower_bounds</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_params</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s1">&#39;ramp&#39;</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="ow">or</span> <span class="s1">&#39;adjustment&#39;</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">k</span><span class="p">):</span>
+                <span class="n">lower_bounds</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">lower_bounds</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="n">upper_bounds</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_params</span><span class="p">}</span>
+        <span class="n">initial_parameters</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_params</span><span class="p">}</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">fit_parameters</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">lower_bounds</span><span class="p">,</span> <span class="n">upper_bounds</span><span class="p">,</span>
+                                   <span class="n">initial_parameters</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CompartmentalModel.update_parameters"><a class="viewcode-back" href="../../_autosummary/covid.models.CompartmentalModel.html#covid.models.CompartmentalModel.update_parameters">[docs]</a>    <span class="k">def</span> <span class="nf">update_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Update model parameters from dict&quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">define_transfer_matrix</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="CompartmentalModel.transfer_value"><a class="viewcode-back" href="../../_autosummary/covid.models.CompartmentalModel.html#covid.models.CompartmentalModel.transfer_value">[docs]</a>    <span class="k">def</span> <span class="nf">transfer_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">to_compartment</span><span class="p">,</span> <span class="n">from_compartment</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get transfer matrix entry&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">transfer_matrix</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">compartment_names</span><span class="p">[</span><span class="n">to_compartment</span><span class="p">],</span>
+                                    <span class="bp">self</span><span class="o">.</span><span class="n">compartment_names</span><span class="p">[</span><span class="n">from_compartment</span><span class="p">]]</span></div>
+
+<div class="viewcode-block" id="CompartmentalModel.update_transfer_value"><a class="viewcode-back" href="../../_autosummary/covid.models.CompartmentalModel.html#covid.models.CompartmentalModel.update_transfer_value">[docs]</a>    <span class="k">def</span> <span class="nf">update_transfer_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">to_compartment</span><span class="p">,</span> <span class="n">from_compartment</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Update transfer matrix entry&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">transfer_matrix</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">compartment_names</span><span class="p">[</span><span class="n">to_compartment</span><span class="p">],</span>
+                             <span class="bp">self</span><span class="o">.</span><span class="n">compartment_names</span><span class="p">[</span><span class="n">from_compartment</span><span class="p">]]</span> <span class="o">=</span> <span class="n">value</span></div>
+
+<div class="viewcode-block" id="CompartmentalModel.last_compartment_value"><a class="viewcode-back" href="../../_autosummary/covid.models.CompartmentalModel.html#covid.models.CompartmentalModel.last_compartment_value">[docs]</a>    <span class="k">def</span> <span class="nf">last_compartment_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">compartment</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get last entry in timeseries&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">compartment_series</span><span class="p">[</span><span class="n">compartment</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="CompartmentalModel.fit_parameters"><a class="viewcode-back" href="../../_autosummary/covid.models.CompartmentalModel.html#covid.models.CompartmentalModel.fit_parameters">[docs]</a>    <span class="k">def</span> <span class="nf">fit_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">lower_bounds</span><span class="p">,</span> <span class="n">upper_bounds</span><span class="p">,</span>
+                       <span class="n">initial_parameters</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Determine model parameters from data fit&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parameter_index</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span>
+                                <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">initial_parameters</span><span class="o">.</span><span class="n">keys</span><span class="p">())}</span>
+        <span class="n">lower_bounds</span> <span class="o">=</span> <span class="p">[</span><span class="n">lower_bounds</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameter_index</span><span class="o">.</span><span class="n">values</span><span class="p">()]</span>
+        <span class="n">upper_bounds</span> <span class="o">=</span> <span class="p">[</span><span class="n">upper_bounds</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameter_index</span><span class="o">.</span><span class="n">values</span><span class="p">()]</span>
+        <span class="n">initial_parameters</span> <span class="o">=</span> <span class="p">[</span><span class="n">initial_parameters</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+                              <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameter_index</span><span class="o">.</span><span class="n">values</span><span class="p">()]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">start_step</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">n_days</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">//</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fit_compartments</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">fit_derivatives</span><span class="p">:</span>
+            <span class="n">n_days</span> <span class="o">//=</span> <span class="mi">2</span>
+
+        <span class="n">days</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">n_days</span><span class="p">))</span>
+        <span class="n">popt</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">curve_fit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_fit_function</span><span class="p">,</span>
+                            <span class="n">days</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;trf&#39;</span><span class="p">,</span>
+                            <span class="n">bounds</span><span class="o">=</span><span class="p">(</span><span class="n">lower_bounds</span><span class="p">,</span>
+                                    <span class="n">upper_bounds</span><span class="p">),</span>
+                            <span class="n">p0</span><span class="o">=</span><span class="n">initial_parameters</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameter_index</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="n">v</span><span class="p">]</span> <span class="o">=</span> <span class="n">popt</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">start_step</span> <span class="o">=</span> <span class="n">n_days</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span></div>
+
+<div class="viewcode-block" id="CompartmentalModel.model_fit_function"><a class="viewcode-back" href="../../_autosummary/covid.models.CompartmentalModel.html#covid.models.CompartmentalModel.model_fit_function">[docs]</a>    <span class="k">def</span> <span class="nf">model_fit_function</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Model function providing fit interface&quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">parameter_index</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">=</span> <span class="n">v</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">run_model</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+
+        <span class="n">output</span> <span class="o">=</span> <span class="n">flatten</span><span class="p">([</span><span class="nb">list</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="n">name</span><span class="p">])</span>
+                          <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">fit_compartments</span><span class="p">])</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">fit_derivatives</span><span class="p">:</span>
+            <span class="n">output</span> <span class="o">+=</span> <span class="n">flatten</span><span class="p">([</span><span class="n">vec_diff</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="n">name</span><span class="p">]))</span>
+                               <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">fit_compartments</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">output</span></div>
+
+<div class="viewcode-block" id="CompartmentalModel.set_initial_values"><a class="viewcode-back" href="../../_autosummary/covid.models.CompartmentalModel.html#covid.models.CompartmentalModel.set_initial_values">[docs]</a>    <span class="k">def</span> <span class="nf">set_initial_values</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">initial_values</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Set initial values for model compartments&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">initial_values</span> <span class="o">=</span> <span class="n">initial_values</span></div>
+
+<div class="viewcode-block" id="CompartmentalModel.initialize"><a class="viewcode-back" href="../../_autosummary/covid.models.CompartmentalModel.html#covid.models.CompartmentalModel.initialize">[docs]</a>    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">initial_values</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Initialize each model compartment&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">initial_values</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_initial_values</span><span class="p">(</span><span class="n">initial_values</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">compartment_names</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">compartment_series</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">initial_values</span><span class="p">[</span><span class="n">name</span><span class="p">]]</span></div>
+
+<div class="viewcode-block" id="CompartmentalModel.model_eqns"><a class="viewcode-back" href="../../_autosummary/covid.models.CompartmentalModel.html#covid.models.CompartmentalModel.model_eqns">[docs]</a>    <span class="k">def</span> <span class="nf">model_eqns</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">last_compartments</span><span class="p">,</span> <span class="n">step_number</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Model equation definition used in rk step&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_transfer_matrix</span><span class="p">(</span><span class="n">last_compartments</span><span class="p">,</span> <span class="n">step_number</span><span class="p">)</span>
+
+        <span class="n">next_compartments</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">compartment_number</span><span class="p">):</span>
+            <span class="n">entry</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">compartment_number</span><span class="p">):</span>
+                <span class="n">entry</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">transfer_matrix</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">*</span> <span class="n">last_compartments</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+            <span class="n">next_compartments</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">entry</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">dt</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">next_compartments</span></div>
+
+<div class="viewcode-block" id="CompartmentalModel.rk_step"><a class="viewcode-back" href="../../_autosummary/covid.models.CompartmentalModel.html#covid.models.CompartmentalModel.rk_step">[docs]</a>    <span class="k">def</span> <span class="nf">rk_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">last_compartments</span><span class="p">,</span> <span class="n">step_number</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Runge-Kutta step for model simulation&quot;&quot;&quot;</span>
+        <span class="n">rk_step</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="n">tmp</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">last_compartments</span><span class="p">)</span>
+        <span class="n">compartments_k</span> <span class="o">=</span> <span class="p">[[]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">compartment_number</span><span class="p">)]</span>
+
+        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+
+            <span class="n">tmp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_eqns</span><span class="p">(</span><span class="n">tmp</span><span class="p">,</span> <span class="n">step_number</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">compartment_number</span><span class="p">):</span>
+                <span class="n">compartments_k</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tmp</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+            <span class="n">tmp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">tmp</span><span class="p">,</span> <span class="n">rk_step</span><span class="p">[</span><span class="n">t</span><span class="p">])</span> <span class="o">+</span> <span class="n">last_compartments</span>
+
+        <span class="n">stencil</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="n">next_compartments</span> <span class="o">=</span> <span class="p">(</span><span class="n">last_compartments</span>
+                             <span class="o">+</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="mf">6.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">tensordot</span><span class="p">(</span><span class="n">compartments_k</span><span class="p">,</span>
+                                                        <span class="n">stencil</span><span class="p">,</span>
+                                                        <span class="n">axes</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)))</span>
+        <span class="n">next_compartments</span><span class="p">[</span><span class="n">next_compartments</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+        <span class="k">return</span> <span class="n">next_compartments</span></div>
+
+<div class="viewcode-block" id="CompartmentalModel.run_model"><a class="viewcode-back" href="../../_autosummary/covid.models.CompartmentalModel.html#covid.models.CompartmentalModel.run_model">[docs]</a>    <span class="k">def</span> <span class="nf">run_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_days</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Run model simulation for n_days&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">initialize</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">define_transfer_matrix</span><span class="p">()</span>
+
+        <span class="n">last_compartments</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">compartment_series</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+                             <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">compartment_names</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">day</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_days</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_substeps</span><span class="p">):</span>
+                <span class="n">last_compartments</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rk_step</span><span class="p">(</span><span class="n">last_compartments</span><span class="p">,</span> <span class="n">day</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">name</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">compartment_names</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">compartment_series</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">last_compartments</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">compartment_series</span></div></div>
+
+
+<div class="viewcode-block" id="SIR"><a class="viewcode-back" href="../../_autosummary/covid.models.SIR.html#covid.models.SIR">[docs]</a><span class="k">class</span> <span class="nc">SIR</span><span class="p">(</span><span class="n">CompartmentalModel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Susceptible, Infected, Recovered Compartmental Model&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameters</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">([</span><span class="s1">&#39;S&#39;</span><span class="p">,</span> <span class="s1">&#39;I&#39;</span><span class="p">,</span> <span class="s1">&#39;R&#39;</span><span class="p">],</span> <span class="n">parameters</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model_params</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;recovery_rate&#39;</span><span class="p">,</span>
+                             <span class="s1">&#39;infection_rate&#39;</span><span class="p">,</span>
+                             <span class="s1">&#39;infection_rate_adjustment&#39;</span><span class="p">,</span>
+                             <span class="s1">&#39;infection_rate_ramp&#39;</span><span class="p">]</span>
+
+<div class="viewcode-block" id="SIR.define_parameters"><a class="viewcode-back" href="../../_autosummary/covid.models.SIR.html#covid.models.SIR.define_parameters">[docs]</a>    <span class="k">def</span> <span class="nf">define_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;recovery_rate&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="mf">14.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;infection_rate&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">3.0</span> <span class="o">/</span> <span class="mf">14.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;infection_rate_ramp&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;infection_rate_adjustment&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span></div>
+
+<div class="viewcode-block" id="SIR.define_transfer_matrix"><a class="viewcode-back" href="../../_autosummary/covid.models.SIR.html#covid.models.SIR.define_transfer_matrix">[docs]</a>    <span class="k">def</span> <span class="nf">define_transfer_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;R0&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;infection_rate&#39;</span><span class="p">]</span>
+                             <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;recovery_rate&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_transfer_value</span><span class="p">(</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;recovery_rate&#39;</span><span class="p">],</span> <span class="s1">&#39;I&#39;</span><span class="p">,</span> <span class="s1">&#39;I&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_transfer_value</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;recovery_rate&#39;</span><span class="p">],</span> <span class="s1">&#39;R&#39;</span><span class="p">,</span> <span class="s1">&#39;I&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SIR.update_transfer_matrix"><a class="viewcode-back" href="../../_autosummary/covid.models.SIR.html#covid.models.SIR.update_transfer_matrix">[docs]</a>    <span class="k">def</span> <span class="nf">update_transfer_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">last_compartments</span><span class="p">,</span> <span class="n">step_number</span><span class="p">):</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;N&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">last_compartments</span><span class="p">)</span>
+        <span class="n">infection_rate_ramped</span> <span class="o">=</span> <span class="n">ramp_function</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;infection_rate&#39;</span><span class="p">],</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;infection_rate_adjustment&#39;</span><span class="p">],</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;infection_rate_ramp&#39;</span><span class="p">],</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">start_step</span><span class="p">,</span> <span class="n">step_number</span><span class="p">)</span>
+        <span class="n">infection_rate_ramped</span> <span class="o">*=</span> <span class="n">last_compartments</span><span class="p">[</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">compartment_names</span><span class="p">[</span><span class="s1">&#39;I&#39;</span><span class="p">]]</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;N&#39;</span><span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_transfer_value</span><span class="p">(</span><span class="o">-</span><span class="n">infection_rate_ramped</span><span class="p">,</span> <span class="s1">&#39;S&#39;</span><span class="p">,</span> <span class="s1">&#39;S&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_transfer_value</span><span class="p">(</span><span class="n">infection_rate_ramped</span><span class="p">,</span> <span class="s1">&#39;I&#39;</span><span class="p">,</span> <span class="s1">&#39;S&#39;</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="SIRV"><a class="viewcode-back" href="../../_autosummary/covid.models.SIRV.html#covid.models.SIRV">[docs]</a><span class="k">class</span> <span class="nc">SIRV</span><span class="p">(</span><span class="n">CompartmentalModel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Susceptible, Infected, Recovered, Vaccinated Model&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameters</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">([</span><span class="s1">&#39;S&#39;</span><span class="p">,</span> <span class="s1">&#39;I&#39;</span><span class="p">,</span> <span class="s1">&#39;R&#39;</span><span class="p">,</span> <span class="s1">&#39;V&#39;</span><span class="p">],</span> <span class="n">parameters</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model_params</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;recovery_rate&#39;</span><span class="p">,</span>
+                             <span class="s1">&#39;infection_rate&#39;</span><span class="p">,</span>
+                             <span class="s1">&#39;vaccination_rate&#39;</span><span class="p">,</span>
+                             <span class="s1">&#39;recovery_rate_adjustment&#39;</span><span class="p">,</span>
+                             <span class="s1">&#39;infection_rate_adjustment&#39;</span><span class="p">,</span>
+                             <span class="s1">&#39;vaccination_rate_adjustment&#39;</span><span class="p">,</span>
+                             <span class="s1">&#39;infection_rate_ramp&#39;</span><span class="p">,</span>
+                             <span class="s1">&#39;vaccination_rate_ramp&#39;</span><span class="p">,</span>
+                             <span class="s1">&#39;recovery_rate_ramp&#39;</span><span class="p">]</span>
+
+<div class="viewcode-block" id="SIRV.define_parameters"><a class="viewcode-back" href="../../_autosummary/covid.models.SIRV.html#covid.models.SIRV.define_parameters">[docs]</a>    <span class="k">def</span> <span class="nf">define_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;recovery_rate&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="mf">14.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;infection_rate&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">3.0</span> <span class="o">/</span> <span class="mf">14.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;vaccination_rate&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="mf">7.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;recovery_rate_adjustment&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;infection_rate_adjustment&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;vaccination_rate_adjustment&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;infection_rate_ramp&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;vaccination_rate_ramp&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;recovery_rate_ramp&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span></div>
+
+<div class="viewcode-block" id="SIRV.define_transfer_matrix"><a class="viewcode-back" href="../../_autosummary/covid.models.SIRV.html#covid.models.SIRV.define_transfer_matrix">[docs]</a>    <span class="k">def</span> <span class="nf">define_transfer_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;R0&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;infection_rate&#39;</span><span class="p">]</span>
+                             <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;recovery_rate&#39;</span><span class="p">])</span></div>
+
+<div class="viewcode-block" id="SIRV.update_transfer_matrix"><a class="viewcode-back" href="../../_autosummary/covid.models.SIRV.html#covid.models.SIRV.update_transfer_matrix">[docs]</a>    <span class="k">def</span> <span class="nf">update_transfer_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">last_compartments</span><span class="p">,</span> <span class="n">step_number</span><span class="p">):</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;N&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">last_compartments</span><span class="p">)</span>
+        <span class="n">recovery_rate_ramped</span> <span class="o">=</span> <span class="n">ramp_function</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;recovery_rate&#39;</span><span class="p">],</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;recovery_rate_adjustment&#39;</span><span class="p">],</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;recovery_rate_ramp&#39;</span><span class="p">],</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">start_step</span><span class="p">,</span> <span class="n">step_number</span><span class="p">)</span>
+        <span class="n">vaccination_rate_ramped</span> <span class="o">=</span> <span class="n">ramp_function</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;vaccination_rate&#39;</span><span class="p">],</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;vaccination_rate_adjustment&#39;</span><span class="p">],</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;vaccination_rate_ramp&#39;</span><span class="p">],</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">start_step</span><span class="p">,</span> <span class="n">step_number</span><span class="p">)</span>
+        <span class="n">infection_rate_ramped</span> <span class="o">=</span> <span class="n">ramp_function</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;infection_rate&#39;</span><span class="p">],</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;infection_rate_adjustment&#39;</span><span class="p">],</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;infection_rate_ramp&#39;</span><span class="p">],</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">start_step</span><span class="p">,</span> <span class="n">step_number</span><span class="p">)</span>
+        <span class="n">infection_rate_ramped</span> <span class="o">*=</span> <span class="n">last_compartments</span><span class="p">[</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">compartment_names</span><span class="p">[</span><span class="s1">&#39;I&#39;</span><span class="p">]]</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;N&#39;</span><span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_transfer_value</span><span class="p">(</span><span class="o">-</span><span class="n">recovery_rate_ramped</span><span class="p">,</span> <span class="s1">&#39;I&#39;</span><span class="p">,</span> <span class="s1">&#39;I&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_transfer_value</span><span class="p">(</span><span class="n">recovery_rate_ramped</span><span class="p">,</span> <span class="s1">&#39;R&#39;</span><span class="p">,</span> <span class="s1">&#39;I&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_transfer_value</span><span class="p">(</span><span class="n">vaccination_rate_ramped</span><span class="p">,</span> <span class="s1">&#39;V&#39;</span><span class="p">,</span> <span class="s1">&#39;S&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_transfer_value</span><span class="p">(</span>
+            <span class="o">-</span><span class="n">infection_rate_ramped</span> <span class="o">-</span> <span class="n">vaccination_rate_ramped</span><span class="p">,</span> <span class="s1">&#39;S&#39;</span><span class="p">,</span> <span class="s1">&#39;S&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_transfer_value</span><span class="p">(</span><span class="n">infection_rate_ramped</span><span class="p">,</span> <span class="s1">&#39;I&#39;</span><span class="p">,</span> <span class="s1">&#39;S&#39;</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="SIRVD"><a class="viewcode-back" href="../../_autosummary/covid.models.SIRVD.html#covid.models.SIRVD">[docs]</a><span class="k">class</span> <span class="nc">SIRVD</span><span class="p">(</span><span class="n">CompartmentalModel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Susceptible, Infected, Recovered, Vaccinated, Died Model&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameters</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">([</span><span class="s1">&#39;S&#39;</span><span class="p">,</span> <span class="s1">&#39;I&#39;</span><span class="p">,</span> <span class="s1">&#39;R&#39;</span><span class="p">,</span> <span class="s1">&#39;V&#39;</span><span class="p">,</span> <span class="s1">&#39;D&#39;</span><span class="p">],</span> <span class="n">parameters</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model_params</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;recovery_rate&#39;</span><span class="p">,</span>
+                             <span class="s1">&#39;infection_rate&#39;</span><span class="p">,</span>
+                             <span class="s1">&#39;vaccination_rate&#39;</span><span class="p">,</span>
+                             <span class="s1">&#39;death_rate&#39;</span><span class="p">,</span>
+                             <span class="c1"># &#39;recovery_rate_adjustment&#39;,</span>
+                             <span class="s1">&#39;infection_rate_adjustment&#39;</span><span class="p">,</span>
+                             <span class="s1">&#39;vaccination_rate_adjustment&#39;</span><span class="p">,</span>
+                             <span class="s1">&#39;death_rate_adjustment&#39;</span><span class="p">,</span>
+                             <span class="s1">&#39;infection_rate_ramp&#39;</span><span class="p">,</span>
+                             <span class="s1">&#39;vaccination_rate_ramp&#39;</span><span class="p">,</span>
+                             <span class="c1"># &#39;recovery_rate_ramp&#39;,</span>
+                             <span class="s1">&#39;death_rate_ramp&#39;</span><span class="p">,</span>
+                             <span class="p">]</span>
+
+<div class="viewcode-block" id="SIRVD.define_parameters"><a class="viewcode-back" href="../../_autosummary/covid.models.SIRVD.html#covid.models.SIRVD.define_parameters">[docs]</a>    <span class="k">def</span> <span class="nf">define_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;recovery_rate&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="mf">14.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;infection_rate&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">3.0</span> <span class="o">/</span> <span class="mf">14.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;vaccination_rate&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="mf">7.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;death_rate&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.02</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;recovery_rate_adjustment&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;infection_rate_adjustment&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;vaccination_rate_adjustment&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;death_rate_adjustment&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;infection_rate_ramp&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;vaccination_rate_ramp&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;recovery_rate_ramp&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;death_rate_ramp&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span></div>
+
+<div class="viewcode-block" id="SIRVD.define_transfer_matrix"><a class="viewcode-back" href="../../_autosummary/covid.models.SIRVD.html#covid.models.SIRVD.define_transfer_matrix">[docs]</a>    <span class="k">def</span> <span class="nf">define_transfer_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;R0&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;infection_rate&#39;</span><span class="p">]</span>
+                             <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;recovery_rate&#39;</span><span class="p">])</span></div>
+
+<div class="viewcode-block" id="SIRVD.update_transfer_matrix"><a class="viewcode-back" href="../../_autosummary/covid.models.SIRVD.html#covid.models.SIRVD.update_transfer_matrix">[docs]</a>    <span class="k">def</span> <span class="nf">update_transfer_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">last_compartments</span><span class="p">,</span> <span class="n">step_number</span><span class="p">):</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;N&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">last_compartments</span><span class="p">)</span>
+        <span class="n">recovery_rate_ramped</span> <span class="o">=</span> <span class="n">ramp_function</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;recovery_rate&#39;</span><span class="p">],</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;recovery_rate_adjustment&#39;</span><span class="p">],</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;recovery_rate_ramp&#39;</span><span class="p">],</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">start_step</span><span class="p">,</span> <span class="n">step_number</span><span class="p">)</span>
+        <span class="n">vaccination_rate_ramped</span> <span class="o">=</span> <span class="n">ramp_function</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;vaccination_rate&#39;</span><span class="p">],</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;vaccination_rate_adjustment&#39;</span><span class="p">],</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;vaccination_rate_ramp&#39;</span><span class="p">],</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">start_step</span><span class="p">,</span> <span class="n">step_number</span><span class="p">)</span>
+        <span class="n">death_rate_ramped</span> <span class="o">=</span> <span class="n">ramp_function</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;death_rate&#39;</span><span class="p">],</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;death_rate_adjustment&#39;</span><span class="p">],</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;death_rate_ramp&#39;</span><span class="p">],</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">start_step</span><span class="p">,</span> <span class="n">step_number</span><span class="p">)</span>
+        <span class="n">infection_rate_ramped</span> <span class="o">=</span> <span class="n">ramp_function</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;infection_rate&#39;</span><span class="p">],</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;infection_rate_adjustment&#39;</span><span class="p">],</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;infection_rate_ramp&#39;</span><span class="p">],</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">start_step</span><span class="p">,</span> <span class="n">step_number</span><span class="p">)</span>
+        <span class="n">infection_rate_ramped</span> <span class="o">*=</span> <span class="n">last_compartments</span><span class="p">[</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">compartment_names</span><span class="p">[</span><span class="s1">&#39;I&#39;</span><span class="p">]]</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;N&#39;</span><span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_transfer_value</span><span class="p">(</span>
+            <span class="o">-</span><span class="n">recovery_rate_ramped</span> <span class="o">-</span> <span class="n">death_rate_ramped</span><span class="p">,</span> <span class="s1">&#39;I&#39;</span><span class="p">,</span> <span class="s1">&#39;I&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_transfer_value</span><span class="p">(</span><span class="n">recovery_rate_ramped</span><span class="p">,</span> <span class="s1">&#39;R&#39;</span><span class="p">,</span> <span class="s1">&#39;I&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_transfer_value</span><span class="p">(</span><span class="n">death_rate_ramped</span><span class="p">,</span> <span class="s1">&#39;D&#39;</span><span class="p">,</span> <span class="s1">&#39;I&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_transfer_value</span><span class="p">(</span><span class="n">vaccination_rate_ramped</span><span class="p">,</span> <span class="s1">&#39;V&#39;</span><span class="p">,</span> <span class="s1">&#39;S&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_transfer_value</span><span class="p">(</span>
+            <span class="o">-</span><span class="n">infection_rate_ramped</span> <span class="o">-</span> <span class="n">vaccination_rate_ramped</span><span class="p">,</span> <span class="s1">&#39;S&#39;</span><span class="p">,</span> <span class="s1">&#39;S&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_transfer_value</span><span class="p">(</span><span class="n">infection_rate_ramped</span><span class="p">,</span> <span class="s1">&#39;I&#39;</span><span class="p">,</span> <span class="s1">&#39;S&#39;</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="SIRD"><a class="viewcode-back" href="../../_autosummary/covid.models.SIRD.html#covid.models.SIRD">[docs]</a><span class="k">class</span> <span class="nc">SIRD</span><span class="p">(</span><span class="n">CompartmentalModel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Susceptible, Infected, Recovered, Died Model&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameters</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">([</span><span class="s1">&#39;S&#39;</span><span class="p">,</span> <span class="s1">&#39;I&#39;</span><span class="p">,</span> <span class="s1">&#39;R&#39;</span><span class="p">,</span> <span class="s1">&#39;D&#39;</span><span class="p">],</span> <span class="n">parameters</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model_params</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;recovery_rate&#39;</span><span class="p">,</span>
+                             <span class="s1">&#39;infection_rate&#39;</span><span class="p">,</span>
+                             <span class="s1">&#39;death_rate&#39;</span><span class="p">]</span>
+
+<div class="viewcode-block" id="SIRD.define_parameters"><a class="viewcode-back" href="../../_autosummary/covid.models.SIRD.html#covid.models.SIRD.define_parameters">[docs]</a>    <span class="k">def</span> <span class="nf">define_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;recovery_rate&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="mf">14.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;infection_rate&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">3.0</span> <span class="o">/</span> <span class="mf">14.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;death_rate&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="mf">14.0</span></div>
+
+<div class="viewcode-block" id="SIRD.define_transfer_matrix"><a class="viewcode-back" href="../../_autosummary/covid.models.SIRD.html#covid.models.SIRD.define_transfer_matrix">[docs]</a>    <span class="k">def</span> <span class="nf">define_transfer_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;R0&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;infection_rate&#39;</span><span class="p">]</span>
+                             <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;recovery_rate&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_transfer_value</span><span class="p">(</span>
+            <span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;recovery_rate&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;death_rate&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;I&#39;</span><span class="p">,</span> <span class="s1">&#39;I&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_transfer_value</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;recovery_rate&#39;</span><span class="p">],</span> <span class="s1">&#39;R&#39;</span><span class="p">,</span> <span class="s1">&#39;I&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_transfer_value</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;death_rate&#39;</span><span class="p">],</span> <span class="s1">&#39;D&#39;</span><span class="p">,</span> <span class="s1">&#39;I&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SIRD.update_transfer_matrix"><a class="viewcode-back" href="../../_autosummary/covid.models.SIRD.html#covid.models.SIRD.update_transfer_matrix">[docs]</a>    <span class="k">def</span> <span class="nf">update_transfer_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">last_compartments</span><span class="p">):</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;N&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">last_compartments</span><span class="p">)</span>
+        <span class="n">alpha</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;infection_rate&#39;</span><span class="p">]</span>
+                 <span class="o">*</span> <span class="n">last_compartments</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">compartment_names</span><span class="p">[</span><span class="s1">&#39;I&#39;</span><span class="p">]]</span>
+                 <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;N&#39;</span><span class="p">])</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_transfer_value</span><span class="p">(</span><span class="o">-</span><span class="n">alpha</span><span class="p">,</span> <span class="s1">&#39;S&#39;</span><span class="p">,</span> <span class="s1">&#39;S&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_transfer_value</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="s1">&#39;I&#39;</span><span class="p">,</span> <span class="s1">&#39;S&#39;</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="Spatial_SIR"><a class="viewcode-back" href="../../_autosummary/covid.models.Spatial_SIR.html#covid.models.Spatial_SIR">[docs]</a><span class="k">class</span> <span class="nc">Spatial_SIR</span><span class="p">(</span><span class="n">CompartmentalModel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Susceptible, Infected, Recovered Model with spatial variation&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameters</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">([</span><span class="s1">&#39;S&#39;</span><span class="p">,</span> <span class="s1">&#39;I&#39;</span><span class="p">,</span> <span class="s1">&#39;R&#39;</span><span class="p">],</span> <span class="n">parameters</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model_params</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;recovery_rate&#39;</span><span class="p">,</span>
+                             <span class="s1">&#39;infection_rate&#39;</span><span class="p">]</span>
+
+<div class="viewcode-block" id="Spatial_SIR.define_parameters"><a class="viewcode-back" href="../../_autosummary/covid.models.Spatial_SIR.html#covid.models.Spatial_SIR.define_parameters">[docs]</a>    <span class="k">def</span> <span class="nf">define_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;recovery_rate&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="mf">14.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;infection_rate&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">3.0</span> <span class="o">/</span> <span class="mf">14.0</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;grid_size_x&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">20</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;grid_size_y&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">20</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;dx&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;dy&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;nx&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;grid_size_x&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;dx&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;ny&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;grid_size_y&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;dy&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;r0&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span></div>
+
+<div class="viewcode-block" id="Spatial_SIR.define_transfer_matrix"><a class="viewcode-back" href="../../_autosummary/covid.models.Spatial_SIR.html#covid.models.Spatial_SIR.define_transfer_matrix">[docs]</a>    <span class="k">def</span> <span class="nf">define_transfer_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;R0&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;infection_rate&#39;</span><span class="p">]</span>
+                             <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;recovery_rate&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_transfer_value</span><span class="p">(</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;recovery_rate&#39;</span><span class="p">],</span> <span class="s1">&#39;I&#39;</span><span class="p">,</span> <span class="s1">&#39;I&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_transfer_value</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;recovery_rate&#39;</span><span class="p">],</span> <span class="s1">&#39;R&#39;</span><span class="p">,</span> <span class="s1">&#39;I&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Spatial_SIR.update_transfer_matrix"><a class="viewcode-back" href="../../_autosummary/covid.models.Spatial_SIR.html#covid.models.Spatial_SIR.update_transfer_matrix">[docs]</a>    <span class="k">def</span> <span class="nf">update_transfer_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">last_compartments</span><span class="p">):</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;N&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">last_compartments</span><span class="p">)</span>
+        <span class="n">alpha</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;infection_rate&#39;</span><span class="p">]</span>
+                 <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;N&#39;</span><span class="p">]</span>
+                 <span class="o">*</span> <span class="p">(</span><span class="n">last_compartments</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">compartment_names</span><span class="p">[</span><span class="s1">&#39;I&#39;</span><span class="p">]]</span>
+                    <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;r0&#39;</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="mf">8.0</span>
+                    <span class="o">*</span> <span class="n">laplacian</span><span class="p">(</span><span class="n">last_compartments</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">compartment_names</span><span class="p">[</span><span class="s1">&#39;I&#39;</span><span class="p">]],</span>
+                                <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;dx&#39;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;dy&#39;</span><span class="p">])))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_transfer_value</span><span class="p">(</span><span class="o">-</span><span class="n">alpha</span><span class="p">,</span> <span class="s1">&#39;S&#39;</span><span class="p">,</span> <span class="s1">&#39;S&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_transfer_value</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="s1">&#39;I&#39;</span><span class="p">,</span> <span class="s1">&#39;S&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Spatial_SIR.example"><a class="viewcode-back" href="../../_autosummary/covid.models.Spatial_SIR.html#covid.models.Spatial_SIR.example">[docs]</a>    <span class="k">def</span> <span class="nf">example</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Spatial SIR example&quot;&quot;&quot;</span>
+        <span class="n">S</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;nx&#39;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;ny&#39;</span><span class="p">]))</span>
+        <span class="n">I</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;nx&#39;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;ny&#39;</span><span class="p">]))</span>  <span class="c1"># noqa: E741</span>
+        <span class="n">R</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;nx&#39;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;ny&#39;</span><span class="p">]))</span>
+
+        <span class="n">S</span><span class="p">[:,</span> <span class="p">:]</span> <span class="o">=</span> <span class="mi">10</span>
+        <span class="n">midx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;nx&#39;</span><span class="p">]</span> <span class="o">//</span> <span class="mi">2</span>
+        <span class="n">midy</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;ny&#39;</span><span class="p">]</span> <span class="o">//</span> <span class="mi">2</span>
+        <span class="n">I</span><span class="p">[</span><span class="n">midx</span> <span class="o">-</span> <span class="mi">2</span><span class="p">:</span> <span class="n">midx</span> <span class="o">+</span> <span class="mi">2</span><span class="p">,</span> <span class="n">midy</span> <span class="o">-</span> <span class="mi">2</span><span class="p">:</span> <span class="n">midy</span> <span class="o">+</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mi">3</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">compartment_series</span><span class="p">[</span><span class="s1">&#39;S&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">S</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">compartment_series</span><span class="p">[</span><span class="s1">&#39;I&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">I</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">compartment_series</span><span class="p">[</span><span class="s1">&#39;R&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">R</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="Spatial_SIR.initialize"><a class="viewcode-back" href="../../_autosummary/covid.models.Spatial_SIR.html#covid.models.Spatial_SIR.initialize">[docs]</a>    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">initial_values</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+
+        <span class="k">if</span> <span class="n">initial_values</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">example</span><span class="p">()</span></div></div>
+
+
+<div class="viewcode-block" id="SEIR"><a class="viewcode-back" href="../../_autosummary/covid.models.SEIR.html#covid.models.SEIR">[docs]</a><span class="k">class</span> <span class="nc">SEIR</span><span class="p">(</span><span class="n">CompartmentalModel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Susceptible, Exposed, Infected, Recovered Model&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameters</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">([</span><span class="s1">&#39;S&#39;</span><span class="p">,</span> <span class="s1">&#39;E&#39;</span><span class="p">,</span> <span class="s1">&#39;I&#39;</span><span class="p">,</span> <span class="s1">&#39;R&#39;</span><span class="p">],</span> <span class="n">parameters</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model_params</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;recovery_rate&#39;</span><span class="p">,</span>
+                             <span class="s1">&#39;infection_rate&#39;</span><span class="p">,</span>
+                             <span class="s1">&#39;latency_rate&#39;</span><span class="p">]</span>
+
+<div class="viewcode-block" id="SEIR.define_parameters"><a class="viewcode-back" href="../../_autosummary/covid.models.SEIR.html#covid.models.SEIR.define_parameters">[docs]</a>    <span class="k">def</span> <span class="nf">define_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;recovery_rate&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="mf">14.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;infection_rate&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">3.0</span> <span class="o">/</span> <span class="mf">14.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;latency_rate&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="mf">7.0</span></div>
+
+<div class="viewcode-block" id="SEIR.define_transfer_matrix"><a class="viewcode-back" href="../../_autosummary/covid.models.SEIR.html#covid.models.SEIR.define_transfer_matrix">[docs]</a>    <span class="k">def</span> <span class="nf">define_transfer_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;R0&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;infection_rate&#39;</span><span class="p">]</span>
+                             <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;recovery_rate&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_transfer_value</span><span class="p">(</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;latency_rate&#39;</span><span class="p">],</span> <span class="s1">&#39;E&#39;</span><span class="p">,</span> <span class="s1">&#39;E&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_transfer_value</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;latency_rate&#39;</span><span class="p">],</span> <span class="s1">&#39;I&#39;</span><span class="p">,</span> <span class="s1">&#39;E&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_transfer_value</span><span class="p">(</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;recovery_rate&#39;</span><span class="p">],</span> <span class="s1">&#39;I&#39;</span><span class="p">,</span> <span class="s1">&#39;I&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_transfer_value</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;recovery_rate&#39;</span><span class="p">],</span> <span class="s1">&#39;R&#39;</span><span class="p">,</span> <span class="s1">&#39;I&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SEIR.update_transfer_matrix"><a class="viewcode-back" href="../../_autosummary/covid.models.SEIR.html#covid.models.SEIR.update_transfer_matrix">[docs]</a>    <span class="k">def</span> <span class="nf">update_transfer_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">last_compartments</span><span class="p">):</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;N&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">last_compartments</span><span class="p">)</span>
+        <span class="n">alpha</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;infection_rate&#39;</span><span class="p">]</span>
+                 <span class="o">*</span> <span class="n">last_compartments</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">compartment_names</span><span class="p">[</span><span class="s1">&#39;I&#39;</span><span class="p">]]</span>
+                 <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;N&#39;</span><span class="p">])</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_transfer_value</span><span class="p">(</span><span class="o">-</span><span class="n">alpha</span><span class="p">,</span> <span class="s1">&#39;S&#39;</span><span class="p">,</span> <span class="s1">&#39;S&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_transfer_value</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="s1">&#39;E&#39;</span><span class="p">,</span> <span class="s1">&#39;S&#39;</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="SEAIQHRD"><a class="viewcode-back" href="../../_autosummary/covid.models.SEAIQHRD.html#covid.models.SEAIQHRD">[docs]</a><span class="k">class</span> <span class="nc">SEAIQHRD</span><span class="p">(</span><span class="n">CompartmentalModel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Susceptible, Exposed, Asymptomatic, Infected, Quarantined, Hospitalized,</span>
+<span class="sd">    Recovered, Died Model&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameters</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">([</span><span class="s1">&#39;S&#39;</span><span class="p">,</span> <span class="s1">&#39;E&#39;</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;I&#39;</span><span class="p">,</span> <span class="s1">&#39;Q&#39;</span><span class="p">,</span> <span class="s1">&#39;H&#39;</span><span class="p">,</span> <span class="s1">&#39;R&#39;</span><span class="p">,</span> <span class="s1">&#39;D&#39;</span><span class="p">],</span> <span class="n">parameters</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model_params</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;infection_rate&#39;</span><span class="p">,</span>
+                             <span class="s1">&#39;E_to_A_rate&#39;</span><span class="p">,</span> <span class="s1">&#39;A_to_I_rate&#39;</span><span class="p">,</span>
+                             <span class="s1">&#39;A_to_R_rate&#39;</span><span class="p">,</span> <span class="s1">&#39;I_to_Q_rate&#39;</span><span class="p">,</span>
+                             <span class="s1">&#39;I_to_H_rate&#39;</span><span class="p">,</span> <span class="s1">&#39;I_to_R_rate&#39;</span><span class="p">,</span>
+                             <span class="s1">&#39;I_to_D_rate&#39;</span><span class="p">,</span> <span class="s1">&#39;Q_to_H_rate&#39;</span><span class="p">,</span>
+                             <span class="s1">&#39;Q_to_R_rate&#39;</span><span class="p">,</span> <span class="s1">&#39;Q_to_D_rate&#39;</span><span class="p">,</span>
+                             <span class="s1">&#39;H_to_R_rate&#39;</span><span class="p">,</span> <span class="s1">&#39;H_to_D_rate&#39;</span><span class="p">]</span>
+
+<div class="viewcode-block" id="SEAIQHRD.define_parameters"><a class="viewcode-back" href="../../_autosummary/covid.models.SEAIQHRD.html#covid.models.SEAIQHRD.define_parameters">[docs]</a>    <span class="k">def</span> <span class="nf">define_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;infection_rate&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">3.0</span> <span class="o">/</span> <span class="mf">14.0</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;E_to_A_rate&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="mf">4.0</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;A_to_I_rate&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="mf">7.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;A_to_R_rate&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="mf">3.0</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;I_to_Q_rate&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="mf">2.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;I_to_H_rate&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="mf">3.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;I_to_R_rate&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="mf">3.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;I_to_D_rate&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="mf">3.0</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;Q_to_H_rate&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="mf">5.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;Q_to_R_rate&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="mf">3.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;Q_to_D_rate&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="mf">3.0</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;H_to_R_rate&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="mf">3.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;H_to_D_rate&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="mf">3.0</span></div>
+
+<div class="viewcode-block" id="SEAIQHRD.define_transfer_matrix"><a class="viewcode-back" href="../../_autosummary/covid.models.SEAIQHRD.html#covid.models.SEAIQHRD.define_transfer_matrix">[docs]</a>    <span class="k">def</span> <span class="nf">define_transfer_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;recovery_rate&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;A_to_R_rate&#39;</span><span class="p">],</span>
+                                               <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;I_to_R_rate&#39;</span><span class="p">],</span>
+                                               <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;Q_to_R_rate&#39;</span><span class="p">],</span>
+                                               <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;H_to_R_rate&#39;</span><span class="p">]])</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;R0&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;infection_rate&#39;</span><span class="p">]</span>
+                             <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;recovery_rate&#39;</span><span class="p">])</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;E_decay_rate&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;E_to_A_rate&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;A_decay_rate&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;A_to_I_rate&#39;</span><span class="p">],</span>
+                                              <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;A_to_R_rate&#39;</span><span class="p">]])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;H_decay_rate&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;H_to_R_rate&#39;</span><span class="p">],</span>
+                                              <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;H_to_D_rate&#39;</span><span class="p">]])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;Q_decay_rate&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;Q_to_H_rate&#39;</span><span class="p">],</span>
+                                              <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;Q_to_R_rate&#39;</span><span class="p">],</span>
+                                              <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;Q_to_D_rate&#39;</span><span class="p">]])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;I_decay_rate&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;I_to_Q_rate&#39;</span><span class="p">],</span>
+                                              <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;I_to_H_rate&#39;</span><span class="p">],</span>
+                                              <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;I_to_R_rate&#39;</span><span class="p">],</span>
+                                              <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;I_to_D_rate&#39;</span><span class="p">]])</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_transfer_value</span><span class="p">(</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;A_decay_rate&#39;</span><span class="p">],</span> <span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_transfer_value</span><span class="p">(</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;E_decay_rate&#39;</span><span class="p">],</span> <span class="s1">&#39;E&#39;</span><span class="p">,</span> <span class="s1">&#39;E&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_transfer_value</span><span class="p">(</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;I_decay_rate&#39;</span><span class="p">],</span> <span class="s1">&#39;I&#39;</span><span class="p">,</span> <span class="s1">&#39;I&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_transfer_value</span><span class="p">(</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;Q_decay_rate&#39;</span><span class="p">],</span> <span class="s1">&#39;Q&#39;</span><span class="p">,</span> <span class="s1">&#39;Q&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_transfer_value</span><span class="p">(</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;H_decay_rate&#39;</span><span class="p">],</span> <span class="s1">&#39;H&#39;</span><span class="p">,</span> <span class="s1">&#39;H&#39;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_transfer_value</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;E_to_A_rate&#39;</span><span class="p">],</span> <span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;E&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_transfer_value</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;A_to_I_rate&#39;</span><span class="p">],</span> <span class="s1">&#39;I&#39;</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_transfer_value</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;A_to_R_rate&#39;</span><span class="p">],</span> <span class="s1">&#39;R&#39;</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_transfer_value</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;I_to_Q_rate&#39;</span><span class="p">],</span> <span class="s1">&#39;Q&#39;</span><span class="p">,</span> <span class="s1">&#39;I&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_transfer_value</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;I_to_H_rate&#39;</span><span class="p">],</span> <span class="s1">&#39;H&#39;</span><span class="p">,</span> <span class="s1">&#39;I&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_transfer_value</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;I_to_D_rate&#39;</span><span class="p">],</span> <span class="s1">&#39;D&#39;</span><span class="p">,</span> <span class="s1">&#39;I&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_transfer_value</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;I_to_R_rate&#39;</span><span class="p">],</span> <span class="s1">&#39;R&#39;</span><span class="p">,</span> <span class="s1">&#39;I&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_transfer_value</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;Q_to_H_rate&#39;</span><span class="p">],</span> <span class="s1">&#39;H&#39;</span><span class="p">,</span> <span class="s1">&#39;Q&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_transfer_value</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;Q_to_R_rate&#39;</span><span class="p">],</span> <span class="s1">&#39;R&#39;</span><span class="p">,</span> <span class="s1">&#39;Q&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_transfer_value</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;Q_to_D_rate&#39;</span><span class="p">],</span> <span class="s1">&#39;D&#39;</span><span class="p">,</span> <span class="s1">&#39;Q&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_transfer_value</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;H_to_R_rate&#39;</span><span class="p">],</span> <span class="s1">&#39;R&#39;</span><span class="p">,</span> <span class="s1">&#39;H&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_transfer_value</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;H_to_D_rate&#39;</span><span class="p">],</span> <span class="s1">&#39;D&#39;</span><span class="p">,</span> <span class="s1">&#39;H&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SEAIQHRD.update_transfer_matrix"><a class="viewcode-back" href="../../_autosummary/covid.models.SEAIQHRD.html#covid.models.SEAIQHRD.update_transfer_matrix">[docs]</a>    <span class="k">def</span> <span class="nf">update_transfer_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">last_compartments</span><span class="p">):</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;N&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">last_compartments</span><span class="p">)</span>
+        <span class="n">div</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;N&#39;</span><span class="p">]</span>
+        <span class="n">div</span> <span class="o">-=</span> <span class="n">last_compartments</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">compartment_names</span><span class="p">[</span><span class="s1">&#39;Q&#39;</span><span class="p">]]</span>
+        <span class="n">div</span> <span class="o">-=</span> <span class="n">last_compartments</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">compartment_names</span><span class="p">[</span><span class="s1">&#39;H&#39;</span><span class="p">]]</span>
+        <span class="n">div</span> <span class="o">-=</span> <span class="n">last_compartments</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">compartment_names</span><span class="p">[</span><span class="s1">&#39;D&#39;</span><span class="p">]]</span>
+
+        <span class="n">alpha</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;infection_rate&#39;</span><span class="p">]</span>
+                 <span class="o">*</span> <span class="p">(</span><span class="n">last_compartments</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">compartment_names</span><span class="p">[</span><span class="s1">&#39;I&#39;</span><span class="p">]]</span>
+                    <span class="o">+</span> <span class="n">last_compartments</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">compartment_names</span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">]])</span> <span class="o">/</span> <span class="n">div</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_transfer_value</span><span class="p">(</span><span class="o">-</span><span class="n">alpha</span><span class="p">,</span> <span class="s1">&#39;S&#39;</span><span class="p">,</span> <span class="s1">&#39;S&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_transfer_value</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="s1">&#39;E&#39;</span><span class="p">,</span> <span class="s1">&#39;S&#39;</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Brandon Benton.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

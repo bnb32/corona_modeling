@@ -1,0 +1,6 @@
+covid.fetch.init\_estimation\_params
+====================================
+
+.. currentmodule:: covid.fetch
+
+.. autofunction:: init_estimation_params

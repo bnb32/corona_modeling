@@ -1,0 +1,6 @@
+covid.utilities.logistic\_func
+==============================
+
+.. currentmodule:: covid.utilities
+
+.. autofunction:: logistic_func

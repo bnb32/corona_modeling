@@ -1,0 +1,38 @@
+covid.models.CompartmentalModel
+===============================
+
+.. currentmodule:: covid.models
+
+.. autoclass:: CompartmentalModel
+   :members:
+   :show-inheritance:
+   :inherited-members:
+   :special-members: __call__, __add__, __mul__
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~CompartmentalModel.define_parameters
+      ~CompartmentalModel.define_transfer_matrix
+      ~CompartmentalModel.fit_parameters
+      ~CompartmentalModel.get_parameters_from_data
+      ~CompartmentalModel.initialize
+      ~CompartmentalModel.last_compartment_value
+      ~CompartmentalModel.model_eqns
+      ~CompartmentalModel.model_fit_function
+      ~CompartmentalModel.rk_step
+      ~CompartmentalModel.run_model
+      ~CompartmentalModel.set_initial_values
+      ~CompartmentalModel.transfer_value
+      ~CompartmentalModel.update_parameters
+      ~CompartmentalModel.update_transfer_matrix
+      ~CompartmentalModel.update_transfer_value
+   
+   
+
+   
+   
+   

@@ -1,0 +1,6 @@
+covid.utilities.json\_handler
+=============================
+
+.. currentmodule:: covid.utilities
+
+.. autofunction:: json_handler

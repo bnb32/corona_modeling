@@ -1,0 +1,6 @@
+covid.utilities.get\_logger
+===========================
+
+.. currentmodule:: covid.utilities
+
+.. autofunction:: get_logger

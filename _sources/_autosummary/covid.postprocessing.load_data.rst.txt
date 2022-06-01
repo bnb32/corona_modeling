@@ -1,0 +1,6 @@
+covid.postprocessing.load\_data
+===============================
+
+.. currentmodule:: covid.postprocessing
+
+.. autofunction:: load_data

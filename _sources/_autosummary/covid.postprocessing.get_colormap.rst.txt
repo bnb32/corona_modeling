@@ -1,0 +1,6 @@
+covid.postprocessing.get\_colormap
+==================================
+
+.. currentmodule:: covid.postprocessing
+
+.. autofunction:: get_colormap

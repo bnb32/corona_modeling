@@ -1,0 +1,6 @@
+covid.utilities.laplacian
+=========================
+
+.. currentmodule:: covid.utilities
+
+.. autofunction:: laplacian

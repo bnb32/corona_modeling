@@ -1,0 +1,6 @@
+covid.postprocessing.get\_date\_labels
+======================================
+
+.. currentmodule:: covid.postprocessing
+
+.. autofunction:: get_date_labels

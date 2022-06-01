@@ -1,0 +1,6 @@
+covid.postprocessing.plot\_compartments\_comparison
+===================================================
+
+.. currentmodule:: covid.postprocessing
+
+.. autofunction:: plot_compartments_comparison

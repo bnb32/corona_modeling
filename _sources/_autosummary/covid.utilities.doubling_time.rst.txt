@@ -1,0 +1,6 @@
+covid.utilities.doubling\_time
+==============================
+
+.. currentmodule:: covid.utilities
+
+.. autofunction:: doubling_time

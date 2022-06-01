@@ -1,0 +1,6 @@
+covid.utilities.cost\_func
+==========================
+
+.. currentmodule:: covid.utilities
+
+.. autofunction:: cost_func

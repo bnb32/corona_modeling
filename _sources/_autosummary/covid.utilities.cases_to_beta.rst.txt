@@ -1,0 +1,6 @@
+covid.utilities.cases\_to\_beta
+===============================
+
+.. currentmodule:: covid.utilities
+
+.. autofunction:: cases_to_beta
