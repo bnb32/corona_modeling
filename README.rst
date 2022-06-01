@@ -53,7 +53,7 @@ Plot output of specific compartment:
 .. code-block:: python
 
     from covid.postprocessing import plot_compartment
-    plot_compartment(sim_data=output, raw_data=data, params=ds.params, <compartment_name>)
+    plot_compartment(sim_data=output, raw_data=data, params=ds.params, compartment=<compartment_name>)
 
 Change model parameters:
 
